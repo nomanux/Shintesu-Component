@@ -20,6 +20,96 @@ body {
   width: 100%;
 }
 
+/* ── Showcase layout ─────────────────────────────────────────────────────── */
+
+.showcase-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #F1F5F9;
+}
+
+.showcase-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+
+.showcase-sidebar-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #94A3B8 !important;
+  padding: 8px 12px 4px;
+  display: block;
+}
+
+.showcase-nav-item {
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.showcase-nav-item:hover {
+  background: #E0F2F2;
+  color: #009B94;
+}
+
+.showcase-nav-item.active {
+  font-weight: 600;
+  color: #009B94;
+  background: #E0F2F2;
+  border-color: #99CDC8;
+}
+
+.showcase-content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+/* Mobile: stack sidebar on top as horizontal scrollable nav */
+@media (max-width: 768px) {
+  .showcase-layout {
+    flex-direction: column;
+  }
+
+  .showcase-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #E2E8F0;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .showcase-sidebar-label {
+    display: none;
+  }
+
+  .showcase-nav-item {
+    flex-shrink: 0;
+  }
+
+  .showcase-content {
+    padding: 20px 16px;
+  }
+}
+
 /* ── Button ───────────────────────────────────────────────────────────────── */
 
 /* Exclude icon-only buttons from min-width */

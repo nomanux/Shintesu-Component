@@ -253,47 +253,15 @@ export default function ComponentShowcase() {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: colors.gray[3] }}>
+    <div className="showcase-layout">
       {/* Sidebar */}
-      <div
-        style={{
-          width: 240,
-          flexShrink: 0,
-          padding: 16,
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          borderRight: `1px solid ${colors.gray[4]}`,
-          background: colors.gray[2],
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: 1,
-            textTransform: "uppercase",
-            color: colors.gray[6],
-            padding: "8px 12px 4px",
-          }}
-        >
-          Components
-        </Text>
+      <div className="showcase-sidebar">
+        <Text className="showcase-sidebar-label">Components</Text>
         {sections.map((s) => (
           <div
             key={s.key}
             onClick={() => setActive(s.key)}
-            style={{
-              padding: "10px 16px",
-              borderRadius: 8,
-              cursor: "pointer",
-              fontSize: 14,
-              fontWeight: active === s.key ? 600 : 400,
-              color: active === s.key ? colors.brand[6] : colors.gray[8],
-              background: active === s.key ? colors.brand[1] : colors.gray[1],
-              border: `1px solid ${active === s.key ? colors.brand[3] : "transparent"}`,
-              transition: "all 0.15s",
-            }}
+            className={`showcase-nav-item${active === s.key ? " active" : ""}`}
           >
             {s.label}
           </div>
@@ -301,7 +269,7 @@ export default function ComponentShowcase() {
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, padding: 32, overflowY: "auto", background: colors.gray[1] }}>
+      <div className="showcase-content">
         <Title level={3} style={{ marginBottom: 4 }}>
           {sections.find((s) => s.key === active)?.label}
         </Title>
