@@ -5,7 +5,6 @@ import {
   Space,
   Typography,
   Divider,
-  Collapse,
   Flex,
   Table,
   Select,
@@ -47,7 +46,7 @@ const DownOutlinedIcon = () => (
 );
 
 const { Title, Text } = Typography;
-const { TextArea, Search, Password } = Input;
+const { Search, Password } = Input;
 
 // ── Helper components ──────────────────────────────────────────────────────
 
@@ -110,223 +109,204 @@ function SectionLabel({ children }: { children: string }) {
   );
 }
 
+// ── Nav config ─────────────────────────────────────────────────────────────
+
+const sections = [
+  { key: "buttons", label: "Buttons" },
+  { key: "inputs", label: "Inputs" },
+  { key: "table", label: "Table" },
+  { key: "modal", label: "Modal" },
+  { key: "radio-tab", label: "Radio Button (Tab)" },
+  { key: "scroll", label: "Scroll" },
+] as const;
+
+type SectionKey = (typeof sections)[number]["key"];
+
+function ButtonsContent() {
+  return (
+    <>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr>
+              <th />
+              <GroupHeader span={1}>Primary</GroupHeader>
+              <th style={{ width: 24 }} />
+              <GroupHeader span={1}>Default</GroupHeader>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <RowLabel>Small</RowLabel>
+              <Cell>
+                <Button type="primary" size="small">Button</Button>
+              </Cell>
+              <td />
+              <Cell><Button size="small">Button</Button></Cell>
+            </tr>
+            <tr>
+              <RowLabel>Default</RowLabel>
+              <Cell><Button type="primary">Button</Button></Cell>
+              <td />
+              <Cell><Button>Button</Button></Cell>
+            </tr>
+            <tr>
+              <RowLabel>Large</RowLabel>
+              <Cell>
+                <Button type="primary" size="large">Button</Button>
+              </Cell>
+              <td />
+              <Cell><Button size="large">Button</Button></Cell>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Divider style={{ margin: "28px 0 20px" }} />
+      <Flex vertical gap={24}>
+        <div>
+          <SectionLabel>With Icons</SectionLabel>
+          <Divider style={{ margin: "8px 0 16px" }} />
+          <Flex wrap gap={8}>
+            <Button type="primary" icon={<DownloadOutlined />}>Download</Button>
+            <Button type="primary" icon={<UploadOutlined />}>Upload</Button>
+            <Button icon={<EditOutlined />}>Edit</Button>
+            <Button icon={<DeleteOutlined />}>Delete</Button>
+          </Flex>
+        </div>
+      </Flex>
+    </>
+  );
+}
+
+function InputsContent() {
+  return (
+    <Flex vertical gap={24}>
+      <div>
+        <SectionLabel>Basic</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Flex vertical gap={12}>
+          <Input placeholder="Basic input" />
+          <Input disabled value="This is disabled" />
+          <SpecialInput size="small" />
+        </Flex>
+      </div>
+      <div>
+        <SectionLabel>Password</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Flex vertical gap={12}>
+          <Password placeholder="Password input" prefix={<LockOutlined />} />
+          <Password
+            placeholder="Custom toggle icons"
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+        </Flex>
+      </div>
+      <div>
+        <SectionLabel>Search</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Flex vertical gap={12}>
+          <Search placeholder="Search anything…" allowClear enterButton />
+          <Search
+            placeholder="Search with button"
+            enterButton={<Button type="primary" icon={<SearchOutlined />} />}
+            size="large"
+          />
+        </Flex>
+      </div>
+      <div>
+        <SectionLabel>Sizes</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Flex vertical gap={12}>
+          <Input size="large" placeholder="Large input" prefix={<UserOutlined />} />
+          <Input placeholder="Default input" prefix={<UserOutlined />} />
+          <Input size="small" placeholder="Small input" prefix={<UserOutlined />} />
+        </Flex>
+      </div>
+      <div>
+        <SectionLabel>Compact Group</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Flex vertical gap={12}>
+          <Space.Compact>
+            <SpecialInput style={{ width: "15%" }} />
+            <Input style={{ width: "70%" }} placeholder="Amount" />
+          </Space.Compact>
+        </Flex>
+      </div>
+    </Flex>
+  );
+}
+
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function ComponentShowcase() {
-  return (
-    <div style={{ background: "#f5f5f5", minHeight: "100vh" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px" }}>
-        <Title level={2} style={{ marginBottom: 8 }}>
-          Shintesu Component Showcase
-        </Title>
-        <Text type="secondary">Buttons &amp; Inputs</Text>
+  const [active, setActive] = React.useState<SectionKey>("buttons");
 
-        <Collapse
-          defaultActiveKey={["buttons", "inputs"]}
-          style={{ marginTop: 32 }}
-          items={[
-            {
-              key: "buttons",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Buttons
-                </Title>
-              ),
-              children: (
-                <>
-                  <div style={{ overflowX: "auto" }}>
-                    <table
-                      style={{ borderCollapse: "collapse", width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th />
-                          <GroupHeader span={1}>Primary</GroupHeader>
-                          <th style={{ width: 24 }} />
-                          <GroupHeader span={1}>Default</GroupHeader>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <RowLabel>Small</RowLabel>
-                          <Cell>
-                            <Button type="primary" size="small">
-                              Button
-                            </Button>
-                          </Cell>
-                          <td />
-                          <Cell>
-                            <Button size="small">Button</Button>
-                          </Cell>
-                        </tr>
-                        <tr>
-                          <RowLabel>Default</RowLabel>
-                          <Cell>
-                            <Button type="primary">Button</Button>
-                          </Cell>
-                          <td />
-                          <Cell>
-                            <Button>Button</Button>
-                          </Cell>
-                        </tr>
-                        <tr>
-                          <RowLabel>Large</RowLabel>
-                          <Cell>
-                            <Button type="primary" size="large">
-                              Button
-                            </Button>
-                          </Cell>
-                          <td />
-                          <Cell>
-                            <Button size="large">Button</Button>
-                          </Cell>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <Divider style={{ margin: "28px 0 20px" }} />
-                  <Flex vertical gap={24}>
-                    <div>
-                      <SectionLabel>With Icons</SectionLabel>
-                      <Divider style={{ margin: "8px 0 16px" }} />
-                      <Flex wrap gap={8}>
-                        <Button type="primary" icon={<DownloadOutlined />}>
-                          Download
-                        </Button>
-                        <Button type="primary" icon={<UploadOutlined />}>
-                          Upload
-                        </Button>
-                        <Button icon={<EditOutlined />}>Edit</Button>
-                        <Button icon={<DeleteOutlined />}>Delete</Button>
-                      </Flex>
-                    </div>
-                  </Flex>
-                </>
-              ),
-            },
-            {
-              key: "inputs",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Inputs
-                </Title>
-              ),
-              children: (
-                <Flex vertical gap={24}>
-                  <div>
-                    <SectionLabel>Basic</SectionLabel>
-                    <Divider style={{ margin: "8px 0 16px" }} />
-                    <Flex vertical gap={12}>
-                      <Input placeholder="Basic input" />
-                      <Input disabled value="This is disabled" />
-                      <SpecialInput size="small" />
-                    </Flex>
-                  </div>
-                  <div>
-                    <SectionLabel>Password</SectionLabel>
-                    <Divider style={{ margin: "8px 0 16px" }} />
-                    <Flex vertical gap={12}>
-                      <Password
-                        placeholder="Password input"
-                        prefix={<LockOutlined />}
-                      />
-                      <Password
-                        placeholder="Custom toggle icons"
-                        iconRender={(visible) =>
-                          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                        }
-                      />
-                    </Flex>
-                  </div>
-                  <div>
-                    <SectionLabel>Search</SectionLabel>
-                    <Divider style={{ margin: "8px 0 16px" }} />
-                    <Flex vertical gap={12}>
-                      <Search
-                        placeholder="Search anything…"
-                        allowClear
-                        enterButton
-                      />
-                      <Search
-                        placeholder="Search with button"
-                        enterButton={
-                          <Button type="primary" icon={<SearchOutlined />} />
-                        }
-                        size="large"
-                      />
-                    </Flex>
-                  </div>
-                  <div>
-                    <SectionLabel>Sizes</SectionLabel>
-                    <Divider style={{ margin: "8px 0 16px" }} />
-                    <Flex vertical gap={12}>
-                      <Input
-                        size="large"
-                        placeholder="Large input"
-                        prefix={<UserOutlined />}
-                      />
-                      <Input
-                        placeholder="Default input"
-                        prefix={<UserOutlined />}
-                      />
-                      <Input
-                        size="small"
-                        placeholder="Small input"
-                        prefix={<UserOutlined />}
-                      />
-                    </Flex>
-                  </div>
-                  <div>
-                    <SectionLabel>Compact Group</SectionLabel>
-                    <Divider style={{ margin: "8px 0 16px" }} />
-                    <Flex vertical gap={12}>
-                      <Space.Compact>
-                        <SpecialInput style={{ width: "15%" }} />
-                        <Input style={{ width: "70%" }} placeholder="Amount" />
-                      </Space.Compact>
-                    </Flex>
-                  </div>
-                </Flex>
-              ),
-            },
-            {
-              key: "table",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Table
-                </Title>
-              ),
-              children: <ShowcaseTable />,
-            },
-            {
-              key: "modal",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Modal
-                </Title>
-              ),
-              children: <ShowcaseModal />,
-            },
-            {
-              key: "radio-tab",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Radio Button (Tab)
-                </Title>
-              ),
-              children: <ShowcaseRadioTab />,
-            },
-            {
-              key: "scroll",
-              label: (
-                <Title level={4} style={{ margin: 0 }}>
-                  Scroll
-                </Title>
-              ),
-              children: <ShowcaseScroll />,
-            },
-          ]}
-        />
+  const contentMap: Record<SectionKey, React.ReactNode> = {
+    buttons: <ButtonsContent />,
+    inputs: <InputsContent />,
+    table: <ShowcaseTable />,
+    modal: <ShowcaseModal />,
+    "radio-tab": <ShowcaseRadioTab />,
+    scroll: <ShowcaseScroll />,
+  };
+
+  return (
+    <div style={{ display: "flex", minHeight: "100vh", background: colors.gray[3] }}>
+      {/* Sidebar */}
+      <div
+        style={{
+          width: 240,
+          flexShrink: 0,
+          padding: 16,
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          borderRight: `1px solid ${colors.gray[4]}`,
+          background: colors.gray[2],
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: 1,
+            textTransform: "uppercase",
+            color: colors.gray[6],
+            padding: "8px 12px 4px",
+          }}
+        >
+          Components
+        </Text>
+        {sections.map((s) => (
+          <div
+            key={s.key}
+            onClick={() => setActive(s.key)}
+            style={{
+              padding: "10px 16px",
+              borderRadius: 8,
+              cursor: "pointer",
+              fontSize: 14,
+              fontWeight: active === s.key ? 600 : 400,
+              color: active === s.key ? colors.brand[6] : colors.gray[8],
+              background: active === s.key ? colors.brand[1] : colors.gray[1],
+              border: `1px solid ${active === s.key ? colors.brand[3] : "transparent"}`,
+              transition: "all 0.15s",
+            }}
+          >
+            {s.label}
+          </div>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: 1, padding: 32, overflowY: "auto", background: colors.gray[1] }}>
+        <Title level={3} style={{ marginBottom: 4 }}>
+          {sections.find((s) => s.key === active)?.label}
+        </Title>
+        <Divider style={{ margin: "16px 0 24px" }} />
+        {contentMap[active]}
       </div>
     </div>
   );
