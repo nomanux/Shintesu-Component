@@ -1,4 +1,12 @@
-const colors = {
+export const groupBorderColor = "#4DACA5"; // colors.brand[5] — used for group/container borders
+
+export const specialInputColors = {
+  rims: "#C8FFFF",
+  rimsBorder: "#A3EAEA",
+  cyberbridge: "#A8B4DC",
+};
+
+export const colors = {
   brand: {
     1: "#E0F2F2",
     2: "#CCEBE9",
@@ -53,6 +61,7 @@ const tokens = {
     "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   fontSize: 14,
   fontWeightStrong: 500,
+  lineHeightSM: 18,
 
   // SHAPE
   borderRadius: 0,
@@ -97,9 +106,44 @@ export const shintetsuTheme = {
       // SHADOW
       primaryShadow: "none",
       defaultShadow: "none",
-      dangerShadow: "none",
 
       controlMinWidth: BUTTON_MIN_WIDTH,
+    },
+
+    Radio: {
+      buttonBg: colors.gray[1],
+      buttonCheckedBg: colors.brand[1],
+      buttonSolidCheckedBg: colors.brand[1],
+      buttonSolidCheckedHoverBg: colors.brand[1],
+      buttonSolidCheckedColor: colors.brand[6],
+      colorPrimary: colors.brand[6],
+      colorBorder: colors.gray[5],
+    },
+
+    Pagination: {
+      itemActiveBg: colors.brand[6],
+      itemActiveColor: colors.gray[1],
+      itemActiveColorHover: colors.gray[1],
+    },
+
+    Select: {
+      optionSelectedBg: colors.brand[1],
+      optionActiveBg: colors.brand[1],
+      optionSelectedColor: colors.brand[6],
+    },
+
+    Table: {
+      colorBorderSecondary: colors.gray[5],
+      colorBgContainer: colors.gray[2],
+      rowHoverBg: colors.gray[1],
+      rowSelectedBg: colors.brand[1],
+      rowSelectedHoverBg: colors.brand[1],
+      headerBg: colors.gray[1],
+      headerColor: colors.gray[9],
+      colorText: colors.gray[9],
+      columnSortBg: colors.brand[1],
+      headerSortActiveBg: colors.brand[1],
+      headerSortHoverBg: colors.brand[1],
     },
 
     Input: {
@@ -112,6 +156,11 @@ export const shintetsuTheme = {
       activeBorderColor: colors.brand[6],
       activeShadow: "0 0 0 2px rgba(0, 155, 148, 0.10)",
       colorIcon: colors.brand[6],
+      colorText: colors.gray[9],
+      colorTextPlaceholder: colors.gray[5],
+      colorTextDisabled: colors.gray[9],
+      colorBgContainerDisabled: colors.gray[3],
+      colorBorderDisabled: colors.gray[5],
     },
   },
 };

@@ -1,10 +1,18 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   background: #f5f5f5;
 }
 
@@ -12,28 +20,112 @@ body {
   width: 100%;
 }
 
-/* Button minimum width — exclude icon-only buttons */
+/* ── Button ───────────────────────────────────────────────────────────────── */
+
+/* Exclude icon-only buttons from min-width */
 .ant-btn:not(.ant-btn-icon-only) {
   min-width: 110px;
 }
 
-/* Primary button hover: white bg + teal text/border */
+/* Primary hover: white bg + teal text/border */
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: #ffffff !important;
-  color: #009B94 !important;
-  border-color: #009B94 !important;
+  color: #009b94 !important;
+  border-color: #009b94 !important;
 }
 
-/* Primary button disabled: brand-4 bg + brand-4 border + white text */
+/* Primary disabled: brand-4 bg + white text */
 .ant-btn-primary:disabled,
 .ant-btn-primary.ant-btn-disabled {
-  background-color: #76BCB6 !important;
-  border-color: #76BCB6 !important;
+  background-color: #76bcb6 !important;
+  border-color: #76bcb6 !important;
   color: #ffffff !important;
 }
 
-/* Default button disabled: transparent border */
+/* Default disabled: transparent border */
 .ant-btn-default:disabled,
 .ant-btn-default.ant-btn-disabled {
   border-color: transparent !important;
+}
+
+/* ── Input ────────────────────────────────────────────────────────────────── */
+
+/* Disabled cursor: default instead of not-allowed */
+.ant-input[disabled],
+.ant-input-disabled {
+  cursor: default !important;
+}
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+
+/* Cell padding */
+.ant-table-cell {
+  padding: 2px !important;
+}
+
+/* Header padding */
+.ant-table-thead > tr > th {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  text-align: center !important;
+  line-height: 18px !important;
+}
+
+/* Selected row (custom class — not covered by rowSelectedBg token) */
+.ant-table-tbody > tr.row-selected > td {
+  background-color: #e0f2f2 !important;
+}
+.ant-table-tbody > tr.row-selected:hover > td {
+  background-color: #e0f2f2 !important;
+}
+
+/* ── Radio Button (Tab) ───────────────────────────────────────────────────── */
+
+/* Remove bottom border so tab merges with content panel */
+.ant-radio-button-wrapper {
+  border-bottom: none !important;
+}
+
+/* Hover background */
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover {
+  background-color: #e0f2f2 !important;
+}
+
+/* Active: brand-4 border only (colorPrimary token controls text separately) */
+.ant-radio-button-wrapper-checked {
+  font-weight: 600 !important;
+  border-color: #76bcb6 !important;
+}
+
+/* Active divider between adjacent buttons */
+.ant-radio-button-wrapper-checked::before {
+  background-color: #76bcb6 !important;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e2e8f0;
+}
+
+.ant-modal-body::-webkit-scrollbar-thumb:hover {
+  background-color: #e2e8f0;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb:hover {
+  background-color: #e2e8f0;
 }

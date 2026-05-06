@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "./node_modules/.bin/parcel index.html",
+    "build": "./node_modules/.bin/parcel build index.html",
+    "preview": "./node_modules/.bin/parcel build index.html"
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.2",
