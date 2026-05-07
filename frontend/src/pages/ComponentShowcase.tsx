@@ -555,6 +555,7 @@ function TableHeaderCell({
             opacity: resizeHovered ? 1 : 0.6,
             transition: "all 0.2s",
             right: "2.5px",
+            pointerEvents: "none",
           }}
         />
       </span>
@@ -595,11 +596,13 @@ function ShowcaseTable() {
 
   const columns = order.map((key) => {
     const col = BASE_COLUMNS.find((c) => c.key === key)!;
+    const currentWidth = widths[key];
     return {
       ...col,
-      width: widths[key],
+      width: currentWidth,
       onHeaderCell: () => ({
         colKey: key,
+        style: { width: currentWidth },
         onResizeStart: (x: number) => startResize(key, x),
         onDragStart: (e: React.DragEvent) => {
           dragKey.current = key;
