@@ -1,3 +1,35 @@
+/* ── Design tokens (CSS custom properties) ───────────────────────────────── */
+/* Mirror of theme.ts colors — keep in sync. Single source of truth for CSS. */
+
+:root {
+  /* Brand */
+  --brand-1: #e0f2f2;
+  --brand-2: #ccebe9;
+  --brand-3: #99cdc8;
+  --brand-4: #76bcb6;
+  --brand-5: #4daca5;
+  --brand-6: #009b94;
+  --brand-7: #05807b;
+  --brand-8: #0a6563;
+  --brand-9: #0d5452;
+  --brand-10: #08312f;
+
+  /* Gray */
+  --gray-1: #ffffff;
+  --gray-2: #f8fafc;
+  --gray-3: #f1f5f9;
+  --gray-4: #e2e8f0;
+  --gray-5: #cbd5e1;
+  --gray-6: #94a3b8;
+  --gray-7: #64748b;
+  --gray-8: #334155;
+  --gray-9: #192a42;
+  --gray-10: #060f1c;
+
+  /* Semantic */
+  --color-bg-app: #f5f5f5;
+}
+
 *,
 *::before,
 *::after {
@@ -13,7 +45,7 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
-  background: #f5f5f5;
+  background: var(--color-bg-app);
 }
 
 #root {
@@ -25,7 +57,7 @@ body {
 .showcase-layout {
   display: flex;
   min-height: 100vh;
-  background: #f1f5f9;
+  background: var(--gray-3);
 }
 
 .showcase-sidebar {
@@ -35,8 +67,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-right: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border-right: 1px solid var(--gray-4);
+  background: var(--gray-2);
 }
 
 .showcase-sidebar-label {
@@ -44,7 +76,7 @@ body {
   font-weight: 600 !important;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #94a3b8 !important;
+  color: var(--gray-6) !important;
   padding: 8px 12px 4px;
   display: block;
 }
@@ -55,30 +87,30 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;
-  color: #334155;
-  background: #ffffff;
+  color: var(--gray-8);
+  background: var(--gray-1);
   border: 1px solid transparent;
   transition: all 0.15s;
   white-space: nowrap;
 }
 
 .showcase-nav-item:hover {
-  background: #e0f2f2;
-  color: #009b94;
+  background: var(--brand-1);
+  color: var(--brand-6);
 }
 
 .showcase-nav-item.active {
   font-weight: 600;
-  color: #009b94;
-  background: #e0f2f2;
-  border-color: #99cdc8;
+  color: var(--brand-6);
+  background: var(--brand-1);
+  border-color: var(--brand-3);
 }
 
 .showcase-content {
   flex: 1;
   padding: 32px;
   overflow-y: auto;
-  background: #ffffff;
+  background: var(--gray-1);
 }
 
 /* Mobile: stack sidebar on top as horizontal scrollable nav */
@@ -92,7 +124,7 @@ body {
     flex-direction: row;
     overflow-x: auto;
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--gray-4);
     padding: 12px;
     gap: 8px;
   }
@@ -134,7 +166,7 @@ body {
 /* Prefix and suffix icons */
 .ant-input-prefix .anticon,
 .ant-input-suffix .anticon {
-  color: #009b94 !important;
+  color: var(--brand-6) !important;
 }
 
 /* ── Button ───────────────────────────────────────────────────────────────── */
@@ -146,17 +178,17 @@ body {
 
 /* Primary hover: white bg + teal text/border */
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  background-color: #ffffff !important;
-  color: #009b94 !important;
-  border-color: #009b94 !important;
+  background-color: var(--gray-1) !important;
+  color: var(--brand-6) !important;
+  border-color: var(--brand-6) !important;
 }
 
 /* Primary disabled: brand-4 bg + white text */
 .ant-btn-primary:disabled,
 .ant-btn-primary.ant-btn-disabled {
-  background-color: #76bcb6 !important;
-  border-color: #76bcb6 !important;
-  color: #ffffff !important;
+  background-color: var(--brand-4) !important;
+  border-color: var(--brand-4) !important;
+  color: var(--gray-1) !important;
 }
 
 /* Default disabled: transparent border */
@@ -196,10 +228,10 @@ body {
 
 /* Selected row (custom class — not covered by rowSelectedBg token) */
 .ant-table-tbody > tr.row-selected > td {
-  background-color: #e0f2f2 !important;
+  background-color: var(--brand-1) !important;
 }
 .ant-table-tbody > tr.row-selected:hover > td {
-  background-color: #e0f2f2 !important;
+  background-color: var(--brand-1) !important;
 }
 
 /* ── Radio Button (Tab) ───────────────────────────────────────────────────── */
@@ -211,18 +243,18 @@ body {
 
 /* Hover background */
 .ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover {
-  background-color: #e0f2f2 !important;
+  background-color: var(--brand-1) !important;
 }
 
 /* Active: brand-4 border only (colorPrimary token controls text separately) */
 .ant-radio-button-wrapper-checked {
   font-weight: 600 !important;
-  border-color: #76bcb6 !important;
+  border-color: var(--brand-4) !important;
 }
 
 /* Active divider between adjacent buttons */
 .ant-radio-button-wrapper-checked::before {
-  background-color: #76bcb6 !important;
+  background-color: var(--brand-4) !important;
 }
 
 /* ── Scrollbar ────────────────────────────────────────────────────────────── */
@@ -237,18 +269,96 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--gray-5);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e2e8f0;
+  background: var(--gray-4);
 }
 
 .ant-modal-body::-webkit-scrollbar-thumb:hover {
-  background-color: #e2e8f0;
+  background-color: var(--gray-4);
 }
 
 .ant-table-body::-webkit-scrollbar-thumb:hover {
-  background-color: #e2e8f0;
+  background-color: var(--gray-4);
+}
+
+/* ── Code block (showcase reference) ──────────────────────────────────────── */
+
+.code-block {
+  position: relative;
+  background: var(--gray-9);
+  color: var(--gray-2);
+  font-family:
+    "SF Mono", Monaco, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 0;
+  border: 1px solid var(--gray-8);
+}
+
+.code-block-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--gray-8);
+  color: var(--gray-3);
+  border: 1px solid var(--gray-7);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.code-block-copy:hover {
+  background: var(--gray-7);
+  color: var(--gray-1);
+}
+
+.code-block-copy.copied {
+  background: var(--brand-7);
+  color: var(--gray-1);
+  border-color: var(--brand-6);
+}
+
+/* ── Foundations ──────────────────────────────────────────────────────────── */
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.swatch {
+  border: 1px solid var(--gray-4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.swatch-color {
+  height: 56px;
+}
+
+.swatch-meta {
+  padding: 6px 10px;
+  background: var(--gray-1);
+  font-size: 11px;
+}
+
+.swatch-name {
+  font-weight: 600;
+  color: var(--gray-9);
+}
+
+.swatch-hex {
+  color: var(--gray-7);
+  font-family:
+    "SF Mono", Monaco, Menlo, Consolas, monospace;
 }
