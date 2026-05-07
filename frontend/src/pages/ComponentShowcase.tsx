@@ -821,7 +821,7 @@ type SectionKey = (typeof sections)[number]["key"];
 
 const guidanceMap: Record<SectionKey, React.ReactNode> = {
   buttons:
-    "Primary buttons are used for main actions; default buttons for secondary actions. Always consider size and disabled state when implementing.",
+    "Primary buttons are used for main actions; default buttons for secondary actions. Always consider size and disabled state when implementing. Button minimum width is 110px (except for icon-only buttons).",
   inputs:
     "Use regular Input for text, Password for sensitive data, and SpecialInput for special cases. Inputs support sizes (small, middle, large) to match your layout needs.",
   form:
