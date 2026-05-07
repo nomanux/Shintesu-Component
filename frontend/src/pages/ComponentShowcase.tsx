@@ -829,18 +829,66 @@ const guidanceMap: Record<SectionKey, React.ReactNode> = {
       <li>Icons can be added to buttons for visual clarity</li>
     </ul>
   ),
-  inputs:
-    "Use regular Input for text, Password for sensitive data, and SpecialInput for special cases. Inputs support sizes (small, middle, large) to match your layout needs.",
-  form:
-    "Forms support two layouts: Vertical (stacked labels and fields) and Inline (horizontal alignment). Use Checkbox and Radio groups for selection options. Keep label widths consistent for visual alignment.",
-  table:
-    "Tables are interactive: click rows to select, drag column headers to reorder, and drag column edges to resize. Use pagination for large datasets. All columns are sortable by default.",
-  modal:
-    "Modals interrupt user flow with critical information. Include clear title, body content, and action buttons (Ok/Cancel). Keep content concise to maintain focus.",
-  "radio-tab":
-    "Radio buttons styled as tabs switch between tab panels. Active tab shows a teal bottom border connected to the panel. Each tab can contain tables, forms, or other components.",
-  scroll:
-    "Use vertical scroll for long lists and horizontal scroll for wide content. Both support custom scrollbar styling defined in the global theme.",
+  inputs: (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Regular Input for standard text entry</li>
+      <li>Password input for sensitive data with visibility toggle</li>
+      <li>SpecialInput for special cases (e.g., click-to-edit, double-click modal)</li>
+      <li>Support three sizes: small (24px), middle (32px), large (40px)</li>
+      <li>Add icons as prefixes for better visual context</li>
+      <li>Disabled inputs use default cursor instead of not-allowed</li>
+    </ul>
+  ),
+  form: (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Vertical layout: labels and fields stack on top of each other</li>
+      <li>Inline layout: labels and fields align horizontally</li>
+      <li>Use consistent label widths (typically 100px) for visual alignment</li>
+      <li>Combine with Input, Select, Checkbox, and Radio components</li>
+      <li>Keep form fields at 50% width on desktop, 100% with scroll on mobile</li>
+      <li>Use label alignment options (left/right) to match design requirements</li>
+    </ul>
+  ),
+  table: (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Click rows to select/deselect (selected rows highlight in brand color)</li>
+      <li>Drag column headers left/right to reorder columns</li>
+      <li>Drag column edges (right side) to resize column widths</li>
+      <li>All columns are sortable by default with visual indicators</li>
+      <li>Use pagination for large datasets (10 items per page shown)</li>
+      <li>Supports embedded components (Select, Input, Checkbox) in cells</li>
+    </ul>
+  ),
+  modal: (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Use modals to interrupt user flow for critical information</li>
+      <li>Include clear, descriptive title</li>
+      <li>Keep body content concise and focused</li>
+      <li>Always provide action buttons (typically Ok/Cancel or Yes/No)</li>
+      <li>Use custom header and footer styling for consistency</li>
+      <li>Consider icon + color combination for message severity</li>
+    </ul>
+  ),
+  "radio-tab": (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Radio buttons styled as tabs for visual tab interface</li>
+      <li>Active tab displays teal bottom border connected to panel</li>
+      <li>Each tab can contain different content (tables, forms, buttons)</li>
+      <li>Use for switching between related content sections</li>
+      <li>Panel sits in front of tab bar to create seamless appearance</li>
+      <li>Supports small and middle sizes for compact layouts</li>
+    </ul>
+  ),
+  scroll: (
+    <ul style={{ margin: 0, paddingLeft: 20 }}>
+      <li>Vertical scroll: Use for long lists of items</li>
+      <li>Horizontal scroll: Use for wide content that doesn't fit viewport</li>
+      <li>Custom scrollbar styling: 8px width/height with gray colors</li>
+      <li>Scrollbar thumb changes color on hover for better visibility</li>
+      <li>Always specify container height/width to trigger scrolling</li>
+      <li>Works seamlessly with global theme scrollbar styles</li>
+    </ul>
+  ),
 };
 
 // ── Main layout (default export) ─────────────────────────────────────────────
