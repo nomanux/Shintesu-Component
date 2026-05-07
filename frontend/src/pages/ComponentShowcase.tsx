@@ -443,6 +443,7 @@ const BASE_COLUMNS = [
     key: "no",
     defaultWidth: 60,
     sorter: (a: { key: number }, b: { key: number }) => a.key - b.key,
+    onCell: () => ({ className: "cell-text" }),
     render: (_: unknown, __: unknown, index: number) => `${index + 1}`,
   },
   {
@@ -475,7 +476,7 @@ const BASE_COLUMNS = [
     key: "text",
     defaultWidth: 160,
     sorter: true,
-    onCell: () => ({ style: { paddingLeft: 8, paddingRight: 8 } }),
+    onCell: () => ({ className: "cell-text" }),
     render: () => <span>Table cell text</span>,
   },
   {

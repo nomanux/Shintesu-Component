@@ -180,6 +180,12 @@ body {
   padding: 2px !important;
 }
 
+/* Text-only cells (no form controls): use 8px horizontal padding */
+.ant-table-cell.cell-text {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
 /* Header padding */
 .ant-table-thead > tr > th {
   padding-top: 6px !important;
