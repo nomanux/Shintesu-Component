@@ -145,6 +145,27 @@ function VariantLabel({
   );
 }
 
+/** Developer guidance box for section-specific instructions. */
+function DeveloperGuidance({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        padding: "12px 16px",
+        marginBottom: "24px",
+        backgroundColor: "#F0F9FF",
+        border: "1px solid #E0F2FE",
+        borderRadius: "4px",
+        fontSize: "13px",
+        lineHeight: "1.6",
+        color: colors.gray[8],
+      }}
+    >
+      <strong style={{ color: colors.brand[6], marginRight: "8px" }}>👨‍💻 For Developers:</strong>
+      {children}
+    </div>
+  );
+}
+
 // ── Section: Buttons ─────────────────────────────────────────────────────────
 
 function ButtonsContent() {
@@ -796,6 +817,25 @@ const sections = [
 
 type SectionKey = (typeof sections)[number]["key"];
 
+// ── Developer guidance for each section ──────────────────────────────────────
+
+const guidanceMap: Record<SectionKey, React.ReactNode> = {
+  buttons:
+    "Primary buttons are used for main actions; default buttons for secondary actions. Always consider size and disabled state when implementing.",
+  inputs:
+    "Use regular Input for text, Password for sensitive data, and SpecialInput for special cases. Inputs support sizes (small, middle, large) to match your layout needs.",
+  form:
+    "Forms support two layouts: Vertical (stacked labels and fields) and Inline (horizontal alignment). Use Checkbox and Radio groups for selection options. Keep label widths consistent for visual alignment.",
+  table:
+    "Tables are interactive: click rows to select, drag column headers to reorder, and drag column edges to resize. Use pagination for large datasets. All columns are sortable by default.",
+  modal:
+    "Modals interrupt user flow with critical information. Include clear title, body content, and action buttons (Ok/Cancel). Keep content concise to maintain focus.",
+  "radio-tab":
+    "Radio buttons styled as tabs switch between tab panels. Active tab shows a teal bottom border connected to the panel. Each tab can contain tables, forms, or other components.",
+  scroll:
+    "Use vertical scroll for long lists and horizontal scroll for wide content. Both support custom scrollbar styling defined in the global theme.",
+};
+
 // ── Main layout (default export) ─────────────────────────────────────────────
 
 export default function ComponentShowcase() {
@@ -833,6 +873,7 @@ export default function ComponentShowcase() {
           {sections.find((s) => s.key === active)?.label}
         </Title>
         <Divider style={{ margin: "16px 0 24px" }} />
+        <DeveloperGuidance>{guidanceMap[active]}</DeveloperGuidance>
         {contentMap[active]}
       </div>
     </div>
