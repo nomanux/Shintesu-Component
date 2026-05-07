@@ -580,18 +580,63 @@ function TableHeaderCell({
   );
 }
 
+const TABLE_STATE_KEY = "showcase-table-state";
+
+type TableState = {
+  order: string[];
+  widths: Record<string, number>;
+};
+
+function loadTableState(): TableState {
+  const defaults: TableState = {
+    order: BASE_COLUMNS.map((c) => c.key),
+    widths: Object.fromEntries(
+      BASE_COLUMNS.map((c) => [c.key, c.defaultWidth]),
+    ),
+  };
+  try {
+    const raw = localStorage.getItem(TABLE_STATE_KEY);
+    if (!raw) return defaults;
+    const saved = JSON.parse(raw) as Partial<TableState>;
+    const validKeys = new Set(BASE_COLUMNS.map((c) => c.key));
+    // Only keep saved keys that still exist in BASE_COLUMNS
+    const order = saved.order?.filter((k) => validKeys.has(k)) ?? [];
+    // Append any new columns not in saved order
+    BASE_COLUMNS.forEach((c) => {
+      if (!order.includes(c.key)) order.push(c.key);
+    });
+    return {
+      order,
+      widths: { ...defaults.widths, ...(saved.widths ?? {}) },
+    };
+  } catch {
+    return defaults;
+  }
+}
+
 function ShowcaseTable() {
   const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
 
+  const initial = React.useMemo(() => loadTableState(), []);
+
   // Column order (keys)
-  const [order, setOrder] = React.useState(() =>
-    BASE_COLUMNS.map((c) => c.key),
-  );
+  const [order, setOrder] = React.useState<string[]>(initial.order);
 
   // Column widths
-  const [widths, setWidths] = React.useState<Record<string, number>>(() =>
-    Object.fromEntries(BASE_COLUMNS.map((c) => [c.key, c.defaultWidth])),
-  );
+  const [widths, setWidths] =
+    React.useState<Record<string, number>>(initial.widths);
+
+  // Persist order and widths to localStorage
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(
+        TABLE_STATE_KEY,
+        JSON.stringify({ order, widths }),
+      );
+    } catch {
+      // Ignore quota or access errors
+    }
+  }, [order, widths]);
 
   const dragKey = React.useRef<string | null>(null);
 
