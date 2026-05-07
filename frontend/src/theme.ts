@@ -60,7 +60,7 @@ const tokens = {
   fontFamily:
     "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   fontSize: 14,
-  fontWeightStrong: 500,
+  fontWeightStrong: 600,
   lineHeightSM: 18,
 
   // SHAPE
@@ -127,6 +127,7 @@ export const shintetsuTheme = {
     },
 
     Select: {
+      colorBorder: colors.gray[5],
       optionSelectedBg: colors.brand[1],
       optionActiveBg: colors.brand[1],
       optionSelectedColor: colors.brand[6],
@@ -144,6 +145,10 @@ export const shintetsuTheme = {
       columnSortBg: colors.brand[1],
       headerSortActiveBg: colors.brand[1],
       headerSortHoverBg: colors.brand[1],
+    },
+
+    Form: {
+      labelColor: colors.gray[9],
     },
 
     Input: {
