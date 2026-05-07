@@ -506,21 +506,25 @@ function TableHeaderCell({
   onDrop?: React.DragEventHandler;
 }) {
   const [resizeHovered, setResizeHovered] = React.useState(false);
+  const [resizing, setResizing] = React.useState(false);
 
   if (!colKey) return <th {...rest}>{children}</th>;
+
+  // Disable native drag when hovering or resizing — prevents drag/resize conflict
+  const dragDisabled = resizeHovered || resizing;
 
   return (
     <th
       {...rest}
-      draggable
-      onDragStart={onDragStart}
+      draggable={!dragDisabled}
+      onDragStart={dragDisabled ? undefined : onDragStart}
       onDragOver={onDragOver}
       onDrop={onDrop}
       style={{
         ...rest.style,
         position: "relative",
         userSelect: "none",
-        cursor: "grab",
+        cursor: dragDisabled ? "col-resize" : "grab",
       }}
     >
       {children}
@@ -531,16 +535,28 @@ function TableHeaderCell({
           top: 0,
           right: 0,
           bottom: 0,
-          width: 6,
+          width: 8,
           cursor: "col-resize",
-          zIndex: 1,
+          zIndex: 2,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
+        draggable={false}
+        onDragStart={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         onMouseDown={(e) => {
           e.stopPropagation();
+          e.preventDefault();
+          setResizing(true);
           onResizeStart?.(e.clientX);
+          const onUp = () => {
+            setResizing(false);
+            document.removeEventListener("mouseup", onUp);
+          };
+          document.addEventListener("mouseup", onUp);
         }}
         onMouseEnter={() => setResizeHovered(true)}
         onMouseLeave={() => setResizeHovered(false)}
@@ -551,10 +567,11 @@ function TableHeaderCell({
             position: "absolute",
             width: "1px",
             height: "60%",
-            backgroundColor: resizeHovered ? colors.brand[6] : colors.gray[4],
-            opacity: resizeHovered ? 1 : 0.6,
+            backgroundColor:
+              resizeHovered || resizing ? colors.brand[6] : colors.gray[4],
+            opacity: resizeHovered || resizing ? 1 : 0.6,
             transition: "all 0.2s",
-            right: "2.5px",
+            right: "3.5px",
             pointerEvents: "none",
           }}
         />
