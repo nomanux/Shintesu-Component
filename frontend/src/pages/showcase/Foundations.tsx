@@ -1,5 +1,6 @@
 import React from "react";
-import { Divider, Flex, Typography } from "antd";
+import { App, Divider, Flex, Typography } from "antd";
+import { CopyOutlined } from "@ant-design/icons";
 import { colors } from "../../theme";
 import { SectionLabel, VariantLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
@@ -40,13 +41,38 @@ const palettes: Palette[] = [
 ];
 
 function ColorStrip({ palette }: { palette: Palette }) {
+  const { message } = App.useApp();
+
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      message.success(`Copied ${text}`);
+    } catch {
+      message.error("Copy failed");
+    }
+  };
+
   return (
     <div className="swatch-strip">
       {Object.entries(palette.scale).map(([step, hex]) => {
         const stepNum = Number(step);
         const lightText = stepNum >= palette.lightTextFrom;
+        const hexUpper = hex.toUpperCase();
         return (
-          <div key={step} className="swatch-card">
+          <div
+            key={step}
+            className="swatch-card"
+            role="button"
+            tabIndex={0}
+            title={`Click to copy ${hexUpper}`}
+            onClick={() => handleCopy(hexUpper)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleCopy(hexUpper);
+              }
+            }}
+          >
             <div
               className="swatch-color"
               style={{
@@ -55,9 +81,10 @@ function ColorStrip({ palette }: { palette: Palette }) {
               }}
             >
               {step}
+              <CopyOutlined className="swatch-copy-icon" />
             </div>
             <div className="swatch-meta">
-              <div className="swatch-meta-hex">{hex.toUpperCase()}</div>
+              <div className="swatch-meta-hex">{hexUpper}</div>
               <div className="swatch-meta-var">--{palette.name}-{step}</div>
             </div>
           </div>

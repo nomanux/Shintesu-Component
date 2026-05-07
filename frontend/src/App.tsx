@@ -1,11 +1,13 @@
-import { ConfigProvider } from "antd";
+import { App as AntApp, ConfigProvider } from "antd";
 import { shintetsuTheme } from "./theme";
 import ComponentShowcase from "./pages/ComponentShowcase";
 
 export default function App() {
   return (
     <ConfigProvider theme={shintetsuTheme}>
-      <ComponentShowcase />
+      <AntApp>
+        <ComponentShowcase />
+      </AntApp>
     </ConfigProvider>
   );
 }
