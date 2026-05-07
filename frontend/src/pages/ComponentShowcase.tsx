@@ -160,7 +160,9 @@ function DeveloperGuidance({ children }: { children: React.ReactNode }) {
         color: colors.gray[8],
       }}
     >
-      <strong style={{ color: colors.brand[6], marginRight: "8px" }}>👨‍💻 For Developers:</strong>
+      <strong style={{ color: colors.brand[6], marginRight: "8px" }}>
+        👨‍💻 For Developers:
+      </strong>
       {children}
     </div>
   );
@@ -503,6 +505,8 @@ function TableHeaderCell({
   onDragOver?: React.DragEventHandler;
   onDrop?: React.DragEventHandler;
 }) {
+  const [resizeHovered, setResizeHovered] = React.useState(false);
+
   if (!colKey) return <th {...rest}>{children}</th>;
 
   return (
@@ -512,10 +516,15 @@ function TableHeaderCell({
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDrop={onDrop}
-      style={{ ...rest.style, position: "relative", userSelect: "none", cursor: "grab" }}
+      style={{
+        ...rest.style,
+        position: "relative",
+        userSelect: "none",
+        cursor: "grab",
+      }}
     >
       {children}
-      {/* Resize handle — thin right edge */}
+      {/* Resize handle — visible divider on right edge */}
       <span
         style={{
           position: "absolute",
@@ -525,13 +534,30 @@ function TableHeaderCell({
           width: 6,
           cursor: "col-resize",
           zIndex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
         onMouseDown={(e) => {
           e.stopPropagation();
           onResizeStart?.(e.clientX);
         }}
+        onMouseEnter={() => setResizeHovered(true)}
+        onMouseLeave={() => setResizeHovered(false)}
         onClick={(e) => e.stopPropagation()}
-      />
+      >
+        <span
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "60%",
+            backgroundColor: resizeHovered ? colors.brand[6] : colors.gray[4],
+            opacity: resizeHovered ? 1 : 0.6,
+            transition: "all 0.2s",
+            right: "2.5px",
+          }}
+        />
+      </span>
     </th>
   );
 }
@@ -540,7 +566,9 @@ function ShowcaseTable() {
   const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
 
   // Column order (keys)
-  const [order, setOrder] = React.useState(() => BASE_COLUMNS.map((c) => c.key));
+  const [order, setOrder] = React.useState(() =>
+    BASE_COLUMNS.map((c) => c.key),
+  );
 
   // Column widths
   const [widths, setWidths] = React.useState<Record<string, number>>(() =>
@@ -552,7 +580,10 @@ function ShowcaseTable() {
   const startResize = (key: string, startX: number) => {
     const startW = widths[key];
     const onMove = (e: MouseEvent) => {
-      setWidths((prev) => ({ ...prev, [key]: Math.max(60, startW + e.clientX - startX) }));
+      setWidths((prev) => ({
+        ...prev,
+        [key]: Math.max(60, startW + e.clientX - startX),
+      }));
     };
     const onUp = () => {
       document.removeEventListener("mousemove", onMove);
@@ -822,36 +853,48 @@ type SectionKey = (typeof sections)[number]["key"];
 const guidanceMap: Record<SectionKey, React.ReactNode> = {
   buttons: (
     <ul style={{ margin: 0, paddingLeft: 20 }}>
-      <li>Primary buttons for main actions; default buttons for secondary actions</li>
-      <li>Always consider size (small, middle, large) when implementing</li>
-      <li>Consider disabled state — primary disabled shows brand-4 background</li>
-      <li>Button minimum width is 110px (except for icon-only buttons)</li>
-      <li>Icons can be added to buttons for visual clarity</li>
+      <li>
+        Primary buttons for main actions; default buttons for secondary actions
+      </li>
+      <li>
+        Inside the system we will use small size for onboarding we use large
+        size
+      </li>
+      <li>
+        Button minimum width "min-width" is 110px (except for icon-only buttons)
+      </li>
     </ul>
   ),
   inputs: (
     <ul style={{ margin: 0, paddingLeft: 20 }}>
       <li>Regular Input for standard text entry</li>
-      <li>Password input for sensitive data with visibility toggle</li>
-      <li>SpecialInput for special cases (e.g., click-to-edit, double-click modal)</li>
+      <li>
+        SpecialInput for special cases (e.g., click-to-edit, double-click modal)
+      </li>
       <li>Support three sizes: small (24px), middle (32px), large (40px)</li>
-      <li>Add icons as prefixes for better visual context</li>
-      <li>Disabled inputs use default cursor instead of not-allowed</li>
     </ul>
   ),
   form: (
     <ul style={{ margin: 0, paddingLeft: 20 }}>
       <li>Vertical layout: labels and fields stack on top of each other</li>
       <li>Inline layout: labels and fields align horizontally</li>
-      <li>Use consistent label widths (typically 100px) for visual alignment</li>
+      <li>
+        Use consistent label widths (typically 100px) for visual alignment
+      </li>
       <li>Combine with Input, Select, Checkbox, and Radio components</li>
-      <li>Keep form fields at 50% width on desktop, 100% with scroll on mobile</li>
-      <li>Use label alignment options (left/right) to match design requirements</li>
+      <li>
+        Keep form fields at 50% width on desktop, 100% with scroll on mobile
+      </li>
+      <li>
+        Use label alignment options (left/right) to match design requirements
+      </li>
     </ul>
   ),
   table: (
     <ul style={{ margin: 0, paddingLeft: 20 }}>
-      <li>Click rows to select/deselect (selected rows highlight in brand color)</li>
+      <li>
+        Click rows to select/deselect (selected rows highlight in brand color)
+      </li>
       <li>Drag column headers left/right to reorder columns</li>
       <li>Drag column edges (right side) to resize column widths</li>
       <li>All columns are sortable by default with visual indicators</li>
