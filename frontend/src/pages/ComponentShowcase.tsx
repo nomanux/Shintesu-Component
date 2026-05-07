@@ -475,6 +475,7 @@ const BASE_COLUMNS = [
     key: "text",
     defaultWidth: 160,
     sorter: true,
+    onCell: () => ({ style: { paddingLeft: 8, paddingRight: 8 } }),
     render: () => <span>Table cell text</span>,
   },
   {
