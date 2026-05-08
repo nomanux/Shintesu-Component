@@ -515,7 +515,6 @@ div.ant-divider-horizontal {
 
 .frame-dropzone {
   background: var(--gray-1);
-  border-bottom: 1px solid var(--gray-4);
   padding: var(--Space-Padding-paddingSM, 12px)
     var(--Space-Padding-paddingMD, 20px);
   display: flex;
@@ -526,23 +525,10 @@ div.ant-divider-horizontal {
   min-height: 56px;
 }
 
-.frame-dropzone-scroll {
-  height: 360px;
-  overflow: auto;
-  position: relative;
-  padding: 0;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-.frame-dropzone-scroll-inner {
-  width: 1400px;
-  min-height: 560px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gray-7);
-  font-size: 14px;
+.frame-table-wrapper {
+  background: var(--gray-1);
+  padding: 12px;
+  border: 1px solid var(--gray-4);
 }
 
 /* Typography spec grid */

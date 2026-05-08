@@ -6,6 +6,7 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
+import ShowcaseTable from "./Table";
 import shinetsuLogo from "../../assets/shinetsu.svg";
 
 export function FrameGuidance() {
@@ -88,8 +89,8 @@ export default function FrameSection() {
               <div> Remove this frame and add your content</div>
             </div>
             <Divider />
-            <div className="frame-dropzone frame-dropzone-scroll">
-              <div className="frame-dropzone-scroll-inner">Add table here</div>
+            <div className="frame-table-wrapper">
+              <ShowcaseTable />
             </div>
             <div className="frame-dropzone">
               Remove this frame and add your content
@@ -115,8 +116,9 @@ export default function FrameSection() {
 
   <div className="frame-content">
     <div className="frame-dropzone">{/* top content */}</div>
-    <div className="frame-dropzone frame-dropzone-scroll">
-      {/* main content (table) */}
+    <Divider />
+    <div className="frame-table-wrapper">
+      <ShowcaseTable />
     </div>
     <div className="frame-dropzone">{/* bottom content */}</div>
   </div>
