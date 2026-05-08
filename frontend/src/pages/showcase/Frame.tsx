@@ -1,12 +1,12 @@
 import React from "react";
 import { Divider, Flex, Typography } from "antd";
-
-const { Title } = Typography;
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import shinetsuLogo from "../../assets/shinetsu.svg";
+
+const { Title } = Typography;
 
 export function FrameGuidance() {
   return (
