@@ -1,12 +1,12 @@
 import React from "react";
 import { Divider, Flex, Typography } from "antd";
+
+const { Title } = Typography;
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import shinetsuLogo from "../../assets/shinetsu.svg";
-
-const { Title } = Typography;
 
 export function FrameGuidance() {
   return (
@@ -85,8 +85,9 @@ export default function FrameSection() {
           {/* Content with drop zones */}
           <div className="frame-content">
             <div className="frame-dropzone">
-              Remove this frame and add your content
+              <div> Remove this frame and add your content</div>
             </div>
+            <Divider style={{ margin: 0 }} />
             <div className="frame-dropzone frame-dropzone-scroll">
               <div className="frame-dropzone-scroll-inner">Add table here</div>
             </div>
@@ -110,9 +111,7 @@ export default function FrameSection() {
     <div className="frame-user">...</div>
   </div>
 
-  <div className="frame-page-title">
-    <Title level={5} style={{ margin: 0 }}>Page title</Title>
-  </div>
+  <div className="frame-page-title">Page title</div>
 
   <div className="frame-content">
     <div className="frame-dropzone">{/* top content */}</div>

@@ -499,16 +499,15 @@ body {
 .frame-content {
   padding: 12px;
   background: var(--st-gray);
-  margin: 16px;
+
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .frame-dropzone {
-  border: 1px dashed var(--gray-5);
-  background: var(--gray-2);
-  padding: 16px 24px;
+  background: var(--gray-1);
+  padding: var(--Space-Padding-paddingSM, 12px)
+    var(--Space-Padding-paddingMD, 20px);
   display: flex;
   align-items: center;
   justify-content: center;
