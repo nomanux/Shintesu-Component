@@ -7,26 +7,28 @@ import CodeBlock from "./CodeBlock";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
-export const tableGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Click rows to toggle selection (selected rows highlight in brand-1)",
-      "Drag column headers left/right to reorder columns",
-      "Drag the right edge of a column header (visible divider) to resize",
-      "Column order and widths persist to localStorage automatically",
-      "Use cell-text className for text-only columns to get 8px horizontal padding",
-      "Embed Select / Input / Checkbox in cells via the column render fn",
-    ]}
-    whenToUse={[
-      "Listing structured data with multiple attributes per row",
-      "When users need to sort, filter, or paginate the data",
-    ]}
-    whenNotToUse={[
-      "For a single-column list of items — use a simple list",
-      "For dashboards with charts and metrics — use Card layouts",
-    ]}
-  />
-);
+export function TableGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Click rows to toggle selection (selected rows highlight in brand-1)",
+        "Drag column headers left/right to reorder columns",
+        "Drag the right edge of a column header (visible divider) to resize",
+        "Column order and widths persist to localStorage automatically",
+        "Use cell-text className for text-only columns to get 8px horizontal padding",
+        "Embed Select / Input / Checkbox in cells via the column render fn",
+      ]}
+      whenToUse={[
+        "Listing structured data with multiple attributes per row",
+        "When users need to sort, filter, or paginate the data",
+      ]}
+      whenNotToUse={[
+        "For a single-column list of items — use a simple list",
+        "For dashboards with charts and metrics — use Card layouts",
+      ]}
+    />
+  );
+}
 
 const BASE_COLUMNS = [
   {

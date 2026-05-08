@@ -12,26 +12,28 @@ import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 
-export const modalGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Use AppModal for custom dialog content (forms, multi-step flows)",
-      "Use Modal.confirm/info/success/warning/error for one-off prompts",
-      "Always include a clear title and a primary action button",
-      "Keep body content focused — push edge cases to a follow-up screen",
-      "Match icon and color to the message severity (red/green/blue/yellow)",
-    ]}
-    whenToUse={[
-      "Confirming a destructive or irreversible action",
-      "Surfacing critical info that blocks further interaction",
-      "Capturing a small focused input without leaving the current page",
-    ]}
-    whenNotToUse={[
-      "For non-blocking notifications — use the toast/message API",
-      "For complex multi-page forms — open a full page or drawer",
-    ]}
-  />
-);
+export function ModalGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Use AppModal for custom dialog content (forms, multi-step flows)",
+        "Use Modal.confirm/info/success/warning/error for one-off prompts",
+        "Always include a clear title and a primary action button",
+        "Keep body content focused — push edge cases to a follow-up screen",
+        "Match icon and color to the message severity (red/green/blue/yellow)",
+      ]}
+      whenToUse={[
+        "Confirming a destructive or irreversible action",
+        "Surfacing critical info that blocks further interaction",
+        "Capturing a small focused input without leaving the current page",
+      ]}
+      whenNotToUse={[
+        "For non-blocking notifications — use the toast/message API",
+        "For complex multi-page forms — open a full page or drawer",
+      ]}
+    />
+  );
+}
 
 export default function ModalSection() {
   const [open, setOpen] = React.useState(false);

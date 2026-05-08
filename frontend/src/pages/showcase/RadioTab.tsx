@@ -5,24 +5,26 @@ import ShowcaseTable from "./Table";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 
-export const radioTabGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Radio buttons styled as tabs for switching between content panels",
-      "Active tab borders connect into the panel — gives a unified surface",
-      "Each tab can host any content: tables, forms, button groups, etc.",
-      "Use small or middle size to fit tighter layouts",
-    ]}
-    whenToUse={[
-      "Switching between mutually exclusive views of the same context",
-      "When you have 2–6 panels — more than that, consider a sidebar",
-    ]}
-    whenNotToUse={[
-      "For multi-select state — use Checkboxes",
-      "For single binary on/off — use Switch",
-    ]}
-  />
-);
+export function RadioTabGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Radio buttons styled as tabs for switching between content panels",
+        "Active tab borders connect into the panel — gives a unified surface",
+        "Each tab can host any content: tables, forms, button groups, etc.",
+        "Use small or middle size to fit tighter layouts",
+      ]}
+      whenToUse={[
+        "Switching between mutually exclusive views of the same context",
+        "When you have 2–6 panels — more than that, consider a sidebar",
+      ]}
+      whenNotToUse={[
+        "For multi-select state — use Checkboxes",
+        "For single binary on/off — use Switch",
+      ]}
+    />
+  );
+}
 
 const tabContent: Record<string, React.ReactNode> = {
   tab1: <ShowcaseTable />,

@@ -10,26 +10,28 @@ import { SectionLabel, GroupHeader, RowLabel, Cell } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 
-export const buttonsGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Primary buttons for main actions; default buttons for secondary actions",
-      "Available sizes: small (24px), middle (32px), large (40px)",
-      "Disabled primary uses brand-4 background; disabled default uses gray-3",
-      "Minimum width is 110px (icon-only buttons are excluded)",
-      "Use icons to reinforce common actions (Download, Upload, Edit, Delete)",
-    ]}
-    whenToUse={[
-      "User needs to commit an action (submit, save, confirm, navigate)",
-      "Choose primary for the single recommended action per view",
-      "Add a loading state when the action takes more than ~200ms",
-    ]}
-    whenNotToUse={[
-      "For navigation between pages — prefer a link",
-      "More than one primary button per view — pick the most important action",
-    ]}
-  />
-);
+export function ButtonsGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Primary buttons for main actions; default buttons for secondary actions",
+        "Available sizes: small (24px), middle (32px), large (40px)",
+        "Disabled primary uses brand-4 background; disabled default uses gray-3",
+        "Minimum width is 110px (icon-only buttons are excluded)",
+        "Use icons to reinforce common actions (Download, Upload, Edit, Delete)",
+      ]}
+      whenToUse={[
+        "User needs to commit an action (submit, save, confirm, navigate)",
+        "Choose primary for the single recommended action per view",
+        "Add a loading state when the action takes more than ~200ms",
+      ]}
+      whenNotToUse={[
+        "For navigation between pages — prefer a link",
+        "More than one primary button per view — pick the most important action",
+      ]}
+    />
+  );
+}
 
 export default function ButtonsSection() {
   const [loading, setLoading] = React.useState(false);

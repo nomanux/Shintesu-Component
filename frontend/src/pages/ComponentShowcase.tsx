@@ -14,15 +14,15 @@ import React from "react";
 import { Typography, Divider } from "antd";
 
 import FoundationsSection, {
-  foundationsGuidance,
+  FoundationsGuidance,
 } from "./showcase/Foundations";
-import ButtonsSection, { buttonsGuidance } from "./showcase/Buttons";
-import InputsSection, { inputsGuidance } from "./showcase/Inputs";
-import FormSection, { formGuidance } from "./showcase/Form";
-import { TableSection, tableGuidance } from "./showcase/Table";
-import ModalSection, { modalGuidance } from "./showcase/Modal";
-import RadioTabSection, { radioTabGuidance } from "./showcase/RadioTab";
-import ScrollSection, { scrollGuidance } from "./showcase/Scroll";
+import ButtonsSection, { ButtonsGuidance } from "./showcase/Buttons";
+import InputsSection, { InputsGuidance } from "./showcase/Inputs";
+import FormSection, { FormGuidance } from "./showcase/Form";
+import { TableSection, TableGuidance } from "./showcase/Table";
+import ModalSection, { ModalGuidance } from "./showcase/Modal";
+import RadioTabSection, { RadioTabGuidance } from "./showcase/RadioTab";
+import ScrollSection, { ScrollGuidance } from "./showcase/Scroll";
 
 const { Title, Text } = Typography;
 
@@ -45,18 +45,18 @@ const contentMap: Record<
 > = {
   foundations: {
     component: <FoundationsSection />,
-    guidance: foundationsGuidance,
+    guidance: <FoundationsGuidance />,
   },
-  buttons: { component: <ButtonsSection />, guidance: buttonsGuidance },
-  inputs: { component: <InputsSection />, guidance: inputsGuidance },
-  form: { component: <FormSection />, guidance: formGuidance },
-  table: { component: <TableSection />, guidance: tableGuidance },
-  modal: { component: <ModalSection />, guidance: modalGuidance },
+  buttons: { component: <ButtonsSection />, guidance: <ButtonsGuidance /> },
+  inputs: { component: <InputsSection />, guidance: <InputsGuidance /> },
+  form: { component: <FormSection />, guidance: <FormGuidance /> },
+  table: { component: <TableSection />, guidance: <TableGuidance /> },
+  modal: { component: <ModalSection />, guidance: <ModalGuidance /> },
   "radio-tab": {
     component: <RadioTabSection />,
-    guidance: radioTabGuidance,
+    guidance: <RadioTabGuidance />,
   },
-  scroll: { component: <ScrollSection />, guidance: scrollGuidance },
+  scroll: { component: <ScrollSection />, guidance: <ScrollGuidance /> },
 };
 
 export default function ComponentShowcase() {

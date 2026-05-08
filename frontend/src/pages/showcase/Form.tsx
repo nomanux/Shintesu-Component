@@ -17,25 +17,27 @@ const businessOptions = [
   { value: "biz2", label: "Business 2" },
 ];
 
-export const formGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Vertical layout: stacked label and field — best for narrow columns",
-      "Inline layout: label and field aligned horizontally — best for filters",
-      "Use a consistent label width (default 100px) so fields align across rows",
-      "Mark required fields with rules and a star prefix on labels",
-      "Submit button should show loading state while the request is in flight",
-      "Form fields render at 50% width on desktop and 100% with scroll on mobile",
-    ]}
-    whenToUse={[
-      "Collecting user input that will be submitted as a unit",
-      "Multi-field configurations like settings panels and search filters",
-    ]}
-    whenNotToUse={[
-      "For a single ad-hoc field — render Input directly without a Form wrapper",
-    ]}
-  />
-);
+export function FormGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Vertical layout: stacked label and field — best for narrow columns",
+        "Inline layout: label and field aligned horizontally — best for filters",
+        "Use a consistent label width (default 100px) so fields align across rows",
+        "Mark required fields with rules and a star prefix on labels",
+        "Submit button should show loading state while the request is in flight",
+        "Form fields render at 50% width on desktop and 100% with scroll on mobile",
+      ]}
+      whenToUse={[
+        "Collecting user input that will be submitted as a unit",
+        "Multi-field configurations like settings panels and search filters",
+      ]}
+      whenNotToUse={[
+        "For a single ad-hoc field — render Input directly without a Form wrapper",
+      ]}
+    />
+  );
+}
 
 function ValidationDemo() {
   const [form] = Form.useForm();

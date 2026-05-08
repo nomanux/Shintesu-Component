@@ -8,23 +8,25 @@ import CodeBlock from "./CodeBlock";
 
 const { Text } = Typography;
 
-export const foundationsGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Colors are exposed two ways: theme.ts (TS imports) and CSS variables (var(--brand-6))",
-      "Always reference tokens by name — never hardcode hex values",
-      "Brand 6 is the primary action color; brand 4 the disabled fill; brand 1 the soft fill",
-      "Gray 9 for text, gray 7 secondary, gray 6 tertiary, gray 4 borders",
-      "Use Ant Design's spacing tokens (token.marginSM/MD/LG) instead of magic numbers",
-    ]}
-    whenToUse={[
-      "Reach for these tokens whenever you write a color, font size, or spacing value",
-    ]}
-    whenNotToUse={[
-      "Never hardcode hex literals — they bypass theming and break dark mode",
-    ]}
-  />
-);
+export function FoundationsGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Colors are exposed two ways: theme.ts (TS imports) and CSS variables (var(--brand-6))",
+        "Always reference tokens by name — never hardcode hex values",
+        "Brand 6 is the primary action color; brand 4 the disabled fill; brand 1 the soft fill",
+        "Gray 9 for text, gray 7 secondary, gray 6 tertiary, gray 4 borders",
+        "Use Ant Design's spacing tokens (token.marginSM/MD/LG) instead of magic numbers",
+      ]}
+      whenToUse={[
+        "Reach for these tokens whenever you write a color, font size, or spacing value",
+      ]}
+      whenNotToUse={[
+        "Never hardcode hex literals — they bypass theming and break dark mode",
+      ]}
+    />
+  );
+}
 
 // ── Colors ───────────────────────────────────────────────────────────────
 

@@ -12,28 +12,30 @@ import CodeBlock from "./CodeBlock";
 
 const { Password } = Input;
 
-export const inputsGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Regular Input for standard text entry",
-      "Password input toggles visibility via iconRender",
-      "SpecialInput supports click-to-edit and double-click-to-modal patterns",
-      "Three sizes: small (24px), middle (32px, default), large (40px)",
-      "Use prefix icons to reinforce field meaning (user, lock, search)",
-      "Disabled inputs show default cursor — not the OS not-allowed icon",
-    ]}
-    whenToUse={[
-      "Single-line free-text entry where the value is unconstrained",
-      "Password fields when entering sensitive data",
-      "SpecialInput when a field has both a quick-edit and a full-edit mode",
-    ]}
-    whenNotToUse={[
-      "For multi-line text — use Input.TextArea",
-      "When the value is from a fixed list — use Select",
-      "For numbers with stepper UX — use InputNumber",
-    ]}
-  />
-);
+export function InputsGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Regular Input for standard text entry",
+        "Password input toggles visibility via iconRender",
+        "SpecialInput supports click-to-edit and double-click-to-modal patterns",
+        "Three sizes: small (24px), middle (32px, default), large (40px)",
+        "Use prefix icons to reinforce field meaning (user, lock, search)",
+        "Disabled inputs show default cursor — not the OS not-allowed icon",
+      ]}
+      whenToUse={[
+        "Single-line free-text entry where the value is unconstrained",
+        "Password fields when entering sensitive data",
+        "SpecialInput when a field has both a quick-edit and a full-edit mode",
+      ]}
+      whenNotToUse={[
+        "For multi-line text — use Input.TextArea",
+        "When the value is from a fixed list — use Select",
+        "For numbers with stepper UX — use InputNumber",
+      ]}
+    />
+  );
+}
 
 export default function InputsSection() {
   return (

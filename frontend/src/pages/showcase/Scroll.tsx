@@ -7,24 +7,26 @@ import CodeBlock from "./CodeBlock";
 const verticalItems = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
 const horizontalItems = Array.from({ length: 30 }, (_, i) => `Card ${i + 1}`);
 
-export const scrollGuidance = (
-  <DeveloperGuidance
-    bullets={[
-      "Vertical scroll for long lists; horizontal scroll for wide content",
-      "Custom scrollbars: 8px thick, gray-5 thumb, gray-4 on hover",
-      "Always set a fixed height/width on the scroll container",
-      "Scrollbar styles are global — applied via ::-webkit-scrollbar in index.css",
-    ]}
-    whenToUse={[
-      "Containing long content within a fixed area without page-level scroll",
-      "Showing more cards/items than fit horizontally without wrapping",
-    ]}
-    whenNotToUse={[
-      "On the page body itself — let the browser scrollbar do the work",
-      "For paginated data — use Table pagination instead",
-    ]}
-  />
-);
+export function ScrollGuidance() {
+  return (
+    <DeveloperGuidance
+      bullets={[
+        "Vertical scroll for long lists; horizontal scroll for wide content",
+        "Custom scrollbars: 8px thick, gray-5 thumb, gray-4 on hover",
+        "Always set a fixed height/width on the scroll container",
+        "Scrollbar styles are global — applied via ::-webkit-scrollbar in index.css",
+      ]}
+      whenToUse={[
+        "Containing long content within a fixed area without page-level scroll",
+        "Showing more cards/items than fit horizontally without wrapping",
+      ]}
+      whenNotToUse={[
+        "On the page body itself — let the browser scrollbar do the work",
+        "For paginated data — use Table pagination instead",
+      ]}
+    />
+  );
+}
 
 export default function ScrollSection() {
   return (
