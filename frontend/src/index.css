@@ -206,6 +206,15 @@ body {
   cursor: default !important;
 }
 
+/* ── Divider ──────────────────────────────────────────────────────────────── */
+
+/* Default to no margin — set inline style only when spacing is needed.
+   Higher specificity (tag + class) beats Ant's class default without
+   !important, so inline `style={{ margin: ... }}` still wins. */
+div.ant-divider-horizontal {
+  margin: 0;
+}
+
 /* ── Table ────────────────────────────────────────────────────────────────── */
 
 /* Cell padding */
@@ -506,6 +515,7 @@ body {
 
 .frame-dropzone {
   background: var(--gray-1);
+  border-bottom: 1px solid var(--gray-4);
   padding: var(--Space-Padding-paddingSM, 12px)
     var(--Space-Padding-paddingMD, 20px);
   display: flex;

@@ -87,7 +87,7 @@ export default function FrameSection() {
             <div className="frame-dropzone">
               <div> Remove this frame and add your content</div>
             </div>
-            <Divider style={{ margin: 0 }} />
+            <Divider />
             <div className="frame-dropzone frame-dropzone-scroll">
               <div className="frame-dropzone-scroll-inner">Add table here</div>
             </div>
