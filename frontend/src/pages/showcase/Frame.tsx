@@ -1,5 +1,7 @@
 import React from "react";
-import { Divider, Flex } from "antd";
+import { Divider, Flex, Typography } from "antd";
+
+const { Title } = Typography;
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
@@ -74,7 +76,11 @@ export default function FrameSection() {
           </div>
 
           {/* Page title */}
-          <div className="frame-page-title">Page title</div>
+          <div className="frame-page-title">
+            <Title level={5} style={{ margin: 0 }}>
+              Page title
+            </Title>
+          </div>
 
           {/* Content with drop zones */}
           <div className="frame-content">
@@ -104,7 +110,9 @@ export default function FrameSection() {
     <div className="frame-user">...</div>
   </div>
 
-  <div className="frame-page-title">Page title</div>
+  <div className="frame-page-title">
+    <Title level={5} style={{ margin: 0 }}>Page title</Title>
+  </div>
 
   <div className="frame-content">
     <div className="frame-dropzone">{/* top content */}</div>
