@@ -31,6 +31,8 @@ export const colors = {
     9: "#192A42",
     10: "#060F1C",
   },
+  // Semantic / app-specific surfaces
+  stGray: "#EDF3F7",
 };
 
 const BUTTON_MIN_WIDTH = 110;

@@ -26,8 +26,9 @@
   --gray-9: #192a42;
   --gray-10: #060f1c;
 
-  /* Semantic */
+  /* Semantic / app-specific surfaces */
   --color-bg-app: #f5f5f5;
+  --st-gray: #edf3f7;
 }
 
 *,
@@ -291,8 +292,7 @@ body {
   position: relative;
   background: var(--gray-9);
   color: var(--gray-2);
-  font-family:
-    "SF Mono", Monaco, Menlo, Consolas, "Liberation Mono", monospace;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   line-height: 1.6;
   padding: 14px 16px;
@@ -349,8 +349,7 @@ body {
   display: flex;
   align-items: flex-end;
   padding: 6px 8px;
-  font-family:
-    "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
   font-size: 11px;
   font-weight: 600;
   user-select: none;
@@ -381,8 +380,7 @@ body {
 
 .swatch-meta {
   padding: 6px 4px 0;
-  font-family:
-    "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
   font-size: 10px;
   line-height: 1.5;
   white-space: nowrap;
@@ -494,13 +492,13 @@ body {
 }
 
 .frame-page-title {
-  padding: 14px 24px;
+  padding: 8px 20px;
   border-bottom: 1px solid var(--gray-4);
 }
 
 .frame-content {
   padding: 12px;
-  background: var(--brand-1);
+  background: var(--st-gray);
   margin: 16px;
   display: flex;
   flex-direction: column;
@@ -548,8 +546,7 @@ body {
 
 .type-token,
 .type-spec {
-  font-family:
-    "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
   font-size: 11px;
   color: var(--gray-7);
   white-space: nowrap;
