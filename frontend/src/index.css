@@ -428,15 +428,10 @@ body {
 }
 
 .frame-logo {
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--gray-9);
-  font-style: italic;
-  white-space: nowrap;
-}
-
-.frame-logo-accent {
-  color: var(--brand-6);
+  height: 22px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
 }
 
 .frame-nav {

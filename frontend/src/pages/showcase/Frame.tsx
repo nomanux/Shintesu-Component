@@ -4,6 +4,7 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
+import shinetsuLogo from "../../assets/shinetsu.svg";
 
 export function FrameGuidance() {
   return (
@@ -45,9 +46,7 @@ export default function FrameSection() {
         <div className="frame-demo">
           {/* Header */}
           <div className="frame-header">
-            <div className="frame-logo">
-              Shin<span className="frame-logo-accent">Etsu</span>
-            </div>
+            <img src={shinetsuLogo} alt="ShinEtsu" className="frame-logo" />
 
             <div className="frame-nav">
               {navItems.map((item) => (
@@ -92,9 +91,11 @@ export default function FrameSection() {
         </div>
 
         <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`<div className="frame-demo">
+          <CodeBlock>{`import shinetsuLogo from "./assets/shinetsu.svg";
+
+<div className="frame-demo">
   <div className="frame-header">
-    <div className="frame-logo">Shin<span className="frame-logo-accent">Etsu</span></div>
+    <img src={shinetsuLogo} alt="ShinEtsu" className="frame-logo" />
     <div className="frame-nav">
       <div className="frame-nav-item active">Navigation Item</div>
       <div className="frame-nav-item">Navigation Item</div>
