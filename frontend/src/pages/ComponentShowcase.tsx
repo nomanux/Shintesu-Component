@@ -16,6 +16,7 @@ import { Typography, Divider } from "antd";
 import FoundationsSection, {
   FoundationsGuidance,
 } from "./showcase/Foundations";
+import FrameSection, { FrameGuidance } from "./showcase/Frame";
 import ButtonsSection, { ButtonsGuidance } from "./showcase/Buttons";
 import InputsSection, { InputsGuidance } from "./showcase/Inputs";
 import FormSection, { FormGuidance } from "./showcase/Form";
@@ -28,6 +29,7 @@ const { Title, Text } = Typography;
 
 const sections = [
   { key: "foundations", label: "Foundations", group: "DESIGN SYSTEM" },
+  { key: "frame", label: "Frame", group: "TEMPLATES" },
   { key: "buttons", label: "Buttons", group: "COMPONENTS" },
   { key: "inputs", label: "Inputs", group: "COMPONENTS" },
   { key: "form", label: "Form", group: "COMPONENTS" },
@@ -47,6 +49,7 @@ const contentMap: Record<
     component: <FoundationsSection />,
     guidance: <FoundationsGuidance />,
   },
+  frame: { component: <FrameSection />, guidance: <FrameGuidance /> },
   buttons: { component: <ButtonsSection />, guidance: <ButtonsGuidance /> },
   inputs: { component: <InputsSection />, guidance: <InputsGuidance /> },
   form: { component: <FormSection />, guidance: <FormGuidance /> },

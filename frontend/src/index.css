@@ -409,6 +409,143 @@ body {
   }
 }
 
+/* ── Frame template ──────────────────────────────────────────────────────── */
+
+.frame-demo {
+  border: 1px solid var(--gray-4);
+  background: var(--gray-1);
+  overflow: hidden;
+}
+
+.frame-header {
+  height: 56px;
+  border-bottom: 1px solid var(--gray-4);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 24px;
+  background: var(--gray-1);
+}
+
+.frame-logo {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gray-9);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.frame-logo-accent {
+  color: var(--brand-6);
+}
+
+.frame-nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+}
+
+.frame-nav-item {
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--gray-9);
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  transition: color 0.15s;
+}
+
+.frame-nav-item:hover {
+  color: var(--brand-6);
+}
+
+.frame-nav-item.active {
+  color: var(--brand-6);
+  font-weight: 600;
+  border-bottom-color: var(--brand-6);
+}
+
+.frame-tag {
+  background: var(--brand-1);
+  color: var(--brand-7);
+  border: 1px solid var(--brand-2);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.frame-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.frame-user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gray-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-7);
+}
+
+.frame-page-title {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--gray-4);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--gray-9);
+}
+
+.frame-content {
+  padding: 12px;
+  background: var(--brand-1);
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.frame-dropzone {
+  border: 1px dashed var(--gray-5);
+  background: var(--gray-2);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-7);
+  font-size: 14px;
+  min-height: 56px;
+}
+
+.frame-dropzone-scroll {
+  height: 360px;
+  overflow: auto;
+  position: relative;
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.frame-dropzone-scroll-inner {
+  width: 1400px;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-7);
+  font-size: 14px;
+}
+
 /* Typography spec grid */
 .type-grid {
   display: grid;
