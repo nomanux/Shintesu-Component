@@ -58,6 +58,11 @@ const tokens = {
   colorBorder: colors.gray[4],
   colorBorderSecondary: colors.gray[3],
 
+  // CONTROL ITEM (Dropdown/Select option hover & selected backgrounds)
+  controlItemBgHover: colors.brand[1],
+  controlItemBgActive: colors.brand[1],
+  controlItemBgActiveHover: colors.brand[1],
+
   // TYPOGRAPHY
   fontFamily:
     "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",

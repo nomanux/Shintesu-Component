@@ -206,6 +206,15 @@ body {
   cursor: default !important;
 }
 
+/* ── Dropdown menu ────────────────────────────────────────────────────────── */
+
+/* Ant Dropdown items don't expose a hover-color token — backgrounds come from
+   global controlItemBg* tokens (set in theme.ts), text color needs CSS. */
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-item.ant-dropdown-menu-item-selected {
+  color: var(--brand-6) !important;
+}
+
 /* ── Divider ──────────────────────────────────────────────────────────────── */
 
 /* Default to no margin — set inline style only when spacing is needed.
