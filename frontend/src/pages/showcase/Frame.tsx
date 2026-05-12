@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Flex, Typography } from "antd";
+import { Button, Divider, Flex, Typography } from "antd";
 
 const { Title } = Typography;
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
@@ -96,10 +96,11 @@ export default function FrameSection() {
               Remove this frame and add your content
             </div>
           </div>
-          <div className="frame-page-title">
-            <div>
-              <button>Button</button>
-            </div>
+          <div className="frame-footer">
+            <Flex gap={8} justify="end">
+              <Button type="primary">Save</Button>
+              <Button>Cancel</Button>
+            </Flex>
           </div>
         </div>
 
@@ -121,10 +122,18 @@ export default function FrameSection() {
 
   <div className="frame-content">
     <div className="frame-dropzone">{/* top content */}</div>
-    <div className="frame-dropzone frame-dropzone-scroll">
-      {/* main content (table) */}
+    <Divider />
+    <div className="frame-table-wrapper">
+      <ShowcaseTable />
     </div>
     <div className="frame-dropzone">{/* bottom content */}</div>
+  </div>
+
+  <div className="frame-footer">
+    <Flex gap={8} justify="end">
+      <Button type="primary">Save</Button>
+      <Button>Cancel</Button>
+    </Flex>
   </div>
 </div>`}</CodeBlock>
         </div>
