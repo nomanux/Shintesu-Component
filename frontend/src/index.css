@@ -527,8 +527,7 @@ div.ant-divider-horizontal {
 
 .frame-table-wrapper {
   background: var(--gray-1);
-  padding: 12px;
-  border: 1px solid var(--gray-4);
+  padding: 12px 20px;
 }
 
 /* Typography spec grid */

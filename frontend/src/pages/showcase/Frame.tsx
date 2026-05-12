@@ -96,6 +96,11 @@ export default function FrameSection() {
               Remove this frame and add your content
             </div>
           </div>
+          <div className="frame-page-title">
+            <div>
+              <button>Button</button>
+            </div>
+          </div>
         </div>
 
         <div style={{ marginTop: 16 }}>
@@ -116,9 +121,8 @@ export default function FrameSection() {
 
   <div className="frame-content">
     <div className="frame-dropzone">{/* top content */}</div>
-    <Divider />
-    <div className="frame-table-wrapper">
-      <ShowcaseTable />
+    <div className="frame-dropzone frame-dropzone-scroll">
+      {/* main content (table) */}
     </div>
     <div className="frame-dropzone">{/* bottom content */}</div>
   </div>
