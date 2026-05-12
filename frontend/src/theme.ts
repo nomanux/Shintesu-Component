@@ -156,6 +156,8 @@ export const shintetsuTheme = {
     Menu: {
       itemSelectedBg: colors.brand[1],
       itemSelectedColor: colors.brand[6],
+      itemHoverBg: colors.brand[1],
+      itemHoverColor: colors.brand[6],
     },
 
     Input: {
