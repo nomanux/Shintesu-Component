@@ -153,6 +153,11 @@ export const shintetsuTheme = {
       labelColor: colors.gray[9],
     },
 
+    Menu: {
+      itemSelectedBg: colors.brand[1],
+      itemSelectedColor: colors.brand[6],
+    },
+
     Input: {
       borderRadius: 0,
       colorBorder: colors.gray[5],
