@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Divider, Flex, Typography } from "antd";
+import { Button, Divider, Dropdown, Flex, Typography } from "antd";
+import type { MenuProps } from "antd";
 
 const { Title } = Typography;
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
@@ -32,9 +33,33 @@ export function FrameGuidance() {
   );
 }
 
-const navItems = [
-  { key: "n1", label: "Navigation Item" },
-  { key: "n2", label: "Navigation Item" },
+type NavItem = {
+  key: string;
+  label: string;
+  menu: MenuProps["items"];
+};
+
+const navItems: NavItem[] = [
+  {
+    key: "n1",
+    label: "Navigation Item",
+    menu: [
+      { key: "n1-1", label: "Submenu item 1" },
+      { key: "n1-2", label: "Submenu item 2" },
+      { key: "n1-3", label: "Submenu item 3" },
+      { key: "n1-4", label: "Submenu item 4" },
+    ],
+  },
+  {
+    key: "n2",
+    label: "Navigation Item",
+    menu: [
+      { key: "n2-1", label: "Submenu item 1" },
+      { key: "n2-2", label: "Submenu item 2" },
+      { key: "n2-3", label: "Submenu item 3" },
+      { key: "n2-4", label: "Submenu item 4" },
+    ],
+  },
 ];
 
 export default function FrameSection() {
@@ -53,14 +78,20 @@ export default function FrameSection() {
 
             <div className="frame-nav">
               {navItems.map((item) => (
-                <div
+                <Dropdown
                   key={item.key}
-                  className={`frame-nav-item${activeNav === item.key ? " active" : ""}`}
-                  onClick={() => setActiveNav(item.key)}
+                  menu={{ items: item.menu }}
+                  trigger={["hover"]}
+                  placement="bottomLeft"
                 >
-                  {item.label}
-                  <DownOutlined style={{ fontSize: 10 }} />
-                </div>
+                  <div
+                    className={`frame-nav-item${activeNav === item.key ? " active" : ""}`}
+                    onClick={() => setActiveNav(item.key)}
+                  >
+                    {item.label}
+                    <DownOutlined style={{ fontSize: 10 }} />
+                  </div>
+                </Dropdown>
               ))}
             </div>
 
@@ -107,8 +138,16 @@ export default function FrameSection() {
   <div className="frame-header">
     <img src={shinetsuLogo} alt="ShinEtsu" className="frame-logo" />
     <div className="frame-nav">
-      <div className="frame-nav-item active">Navigation Item</div>
-      <div className="frame-nav-item">Navigation Item</div>
+      <Dropdown
+        menu={{ items: [{ key: "1", label: "Submenu 1" }, /* ...3 more */] }}
+        trigger={["hover"]}
+        placement="bottomLeft"
+      >
+        <div className="frame-nav-item active">
+          Navigation Item <DownOutlined />
+        </div>
+      </Dropdown>
+      {/* …repeat for each nav item */}
     </div>
     <span className="frame-tag">Staging v0.1</span>
     <div className="frame-user">...</div>
