@@ -244,6 +244,11 @@ div.ant-divider-horizontal {
   background-color: var(--brand-1) !important;
 }
 
+/* Pagination: keep top margin, drop bottom margin */
+.ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin-bottom: 0;
+}
+
 /* ── Radio Button (Tab) ───────────────────────────────────────────────────── */
 
 /* Remove bottom border so tab merges with content panel */

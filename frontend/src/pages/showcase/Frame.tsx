@@ -85,21 +85,17 @@ export default function FrameSection() {
 
           {/* Content with drop zones */}
           <div className="frame-content">
-            <div className="frame-dropzone">
-              <div> Remove this frame and add your content</div>
-            </div>
             <Divider />
             <div className="frame-table-wrapper">
               <ShowcaseTable />
             </div>
-            <div className="frame-dropzone">
-              Remove this frame and add your content
-            </div>
           </div>
           <div className="frame-footer">
             <Flex gap={8} justify="end">
-              <Button type="primary">Save</Button>
-              <Button>Cancel</Button>
+              <Button size="small" type="primary">
+                Save
+              </Button>
+              <Button size="small">Cancel</Button>
             </Flex>
           </div>
         </div>
@@ -131,8 +127,12 @@ export default function FrameSection() {
 
   <div className="frame-footer">
     <Flex gap={8} justify="end">
-      <Button type="primary">Save</Button>
-      <Button>Cancel</Button>
+      <Button size="small" type="primary">
+        Save
+      </Button>
+      <Button size="small">
+        Cancel
+      </Button>
     </Flex>
   </div>
 </div>`}</CodeBlock>
