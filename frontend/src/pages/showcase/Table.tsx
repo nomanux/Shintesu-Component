@@ -395,6 +395,7 @@ const SPLIT_COLS = [
     title: "Table header",
     key: "c1",
     width: 120,
+    onCell: () => ({ className: "cell-checkbox" }),
     render: () => <Checkbox />,
   },
 ];
