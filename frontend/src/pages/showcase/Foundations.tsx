@@ -109,6 +109,14 @@ const typeScale = [
   { token: "Caption (small)", size: 12, weight: 400, line: 1.66, color: colors.gray[6] },
 ];
 
+// ── Font Weights ─────────────────────────────────────────────────────────
+
+const fontWeights = [
+  { weight: 400, label: "Regular", usage: "Body text, secondary labels" },
+  { weight: 500, label: "Medium",  usage: "Buttons" },
+  { weight: 600, label: "SemiBold", usage: "Titles, active nav, strong text" },
+];
+
 // ── Spacing ──────────────────────────────────────────────────────────────
 
 const spacingTokens = [
@@ -178,6 +186,19 @@ const teal = colors.brand[6]; // "#009B94"
                   color: t.color ?? colors.gray[9],
                 }}
               >
+                The quick brown fox
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
+
+        <VariantLabel style={{ marginTop: 24, marginBottom: 12 }}>Font Weights</VariantLabel>
+        <div className="type-grid">
+          {fontWeights.map((fw) => (
+            <React.Fragment key={fw.weight}>
+              <span className="type-token">{fw.weight} — {fw.label}</span>
+              <span className="type-spec">{fw.usage}</span>
+              <span style={{ fontSize: 14, fontWeight: fw.weight, color: colors.gray[9] }}>
                 The quick brown fox
               </span>
             </React.Fragment>

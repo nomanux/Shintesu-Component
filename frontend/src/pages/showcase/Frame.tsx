@@ -3,12 +3,31 @@ import { Button, Divider, Dropdown, Flex, Typography } from "antd";
 import type { MenuProps } from "antd";
 
 const { Title } = Typography;
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import ShowcaseTable from "./Table";
 import shinetsuLogo from "../../assets/shinetsu.svg";
+import profileIcon from "../../assets/Profile.svg";
+
+function DownArrow() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0.486251 3.1995C0.724828 2.94502 1.12452 2.93214 1.37899 3.1707L5.99974 7.50266L10.6204 3.1707C10.875 2.93214 11.2746 2.94502 11.5133 3.1995C11.7517 3.45398 11.7389 3.85367 11.4845 4.09224L6.4317 8.8292C6.18876 9.05695 5.81071 9.05695 5.56777 8.8292L0.515052 4.09224C0.260572 3.85367 0.247687 3.45398 0.486251 3.1995Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
 
 export function FrameGuidance() {
   return (
@@ -89,20 +108,18 @@ export default function FrameSection() {
                     onClick={() => setActiveNav(item.key)}
                   >
                     {item.label}
-                    <DownOutlined style={{ fontSize: 10 }} />
+                    <DownArrow />
                   </div>
                 </Dropdown>
               ))}
             </div>
 
-            <Flex gap={16} align="center">
+            <Flex gap={32} align="center">
               <span className="frame-tag">Staging v0.1</span>
               <div className="frame-user">
-                <div className="frame-user-avatar">
-                  <UserOutlined />
-                </div>
-                <span>hin01</span>
-                <DownOutlined style={{ fontSize: 10 }} />
+                <img src={profileIcon} alt="User" width={24} height={24} />
+                <span className="frame-user-name">hin01</span>
+                <DownArrow />
               </div>
             </Flex>
           </div>
