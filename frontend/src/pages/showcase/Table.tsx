@@ -523,10 +523,16 @@ function Variant({
 }
 
 const simpleColumns = [
-  { title: "ID", dataIndex: "key", key: "key" },
+  {
+    title: "ID",
+    dataIndex: "key",
+    key: "key",
+    onCell: () => ({ className: "cell-text" }),
+  },
   {
     title: "Name",
     key: "name",
+    onCell: () => ({ className: "cell-text" }),
     render: (_: unknown, __: unknown, i: number) => `Row ${i + 1}`,
   },
 ];
