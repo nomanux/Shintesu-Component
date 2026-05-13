@@ -1,9 +1,19 @@
 import React from "react";
-import { Table, Input, Select, Checkbox, Divider, Flex, Button } from "antd";
+import {
+  Table,
+  Input,
+  Select,
+  Checkbox,
+  Divider,
+  Flex,
+  Button,
+  Pagination,
+} from "antd";
 import { colors } from "../../theme";
 import { SectionLabel, DownIcon } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
+import SplitTable from "../../components/SplitTable";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
@@ -206,18 +216,16 @@ function TableHeaderCell({
 }
 
 export default function ShowcaseTable() {
-  const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
+  const [selectedKey, setSelectedKey] = React.useState<React.Key | null>(null);
   const initial = React.useMemo(() => loadTableState(), []);
   const [order, setOrder] = React.useState<string[]>(initial.order);
-  const [widths, setWidths] =
-    React.useState<Record<string, number>>(initial.widths);
+  const [widths, setWidths] = React.useState<Record<string, number>>(
+    initial.widths,
+  );
 
   React.useEffect(() => {
     try {
-      localStorage.setItem(
-        TABLE_STATE_KEY,
-        JSON.stringify({ order, widths }),
-      );
+      localStorage.setItem(TABLE_STATE_KEY, JSON.stringify({ order, widths }));
     } catch {
       // ignore
     }
@@ -281,15 +289,11 @@ export default function ShowcaseTable() {
       dataSource={tableData}
       scroll={{ x: true }}
       rowClassName={(record) =>
-        selectedKeys.includes(record.key) ? "row-selected" : ""
+        selectedKey === record.key ? "row-selected" : ""
       }
       onRow={(record) => ({
         onClick: () =>
-          setSelectedKeys((prev) =>
-            prev.includes(record.key)
-              ? prev.filter((k) => k !== record.key)
-              : [...prev, record.key],
-          ),
+          setSelectedKey((prev) => (prev === record.key ? null : record.key)),
         style: { cursor: "pointer" },
       })}
       pagination={{
@@ -297,14 +301,215 @@ export default function ShowcaseTable() {
         showSizeChanger: true,
         showQuickJumper: true,
         placement: ["bottomCenter"],
+        size: "small",
       }}
     />
+  );
+}
+
+const SPLIT_COLS = [
+  {
+    title: "No.",
+    key: "no",
+    width: 70,
+    onCell: () => ({ className: "cell-text" }),
+    render: (_: unknown, __: unknown, i: number) => `${i + 1}`,
+  },
+  {
+    title: "Table header",
+    key: "s1",
+    width: 180,
+    sorter: true,
+    render: () => (
+      <Select
+        size="small"
+        suffixIcon={<DownIcon />}
+        style={{ width: "100%" }}
+        options={[
+          { value: "1", label: "Option 1" },
+          { value: "2", label: "Option 2" },
+          { value: "3", label: "Option 3" },
+        ]}
+      />
+    ),
+  },
+  {
+    title: "Table header",
+    key: "i1",
+    width: 180,
+    sorter: true,
+    render: () => <Input size="small" />,
+  },
+  {
+    title: "Table header",
+    key: "t1",
+    width: 180,
+    sorter: true,
+    onCell: () => ({ className: "cell-text" }),
+    render: () => <span>Table cell text</span>,
+  },
+  {
+    title: "Table header",
+    key: "t2",
+    width: 180,
+    sorter: true,
+    onCell: () => ({ className: "cell-text" }),
+    render: () => <span>Table cell text</span>,
+  },
+  {
+    title: "Table header",
+    key: "s2",
+    width: 180,
+    sorter: true,
+    render: () => (
+      <Select
+        size="small"
+        suffixIcon={<DownIcon />}
+        style={{ width: "100%" }}
+        options={[
+          { value: "1", label: "Option 1" },
+          { value: "2", label: "Option 2" },
+        ]}
+      />
+    ),
+  },
+  {
+    title: "Table header",
+    key: "i2",
+    width: 180,
+    sorter: true,
+    render: () => <Input size="small" />,
+  },
+  {
+    title: "Table header",
+    key: "t3",
+    width: 180,
+    sorter: true,
+    onCell: () => ({ className: "cell-text" }),
+    render: () => <span>Table cell text</span>,
+  },
+  {
+    title: "Table header",
+    key: "c1",
+    width: 120,
+    render: () => <Checkbox />,
+  },
+];
+
+// Total column width: 70 + 180×7 + 120 = 1450px — wide enough to overflow and
+// demonstrate the split handle on any common viewport.
+const SPLIT_TOTAL_WIDTH = 1450;
+
+function ShowcaseTableForSplit({
+  dataSource,
+}: {
+  dataSource: typeof tableData;
+}) {
+  const [order, setOrder] = React.useState(() => SPLIT_COLS.map((c) => c.key));
+  const [widths, setWidths] = React.useState<Record<string, number>>(() =>
+    Object.fromEntries(SPLIT_COLS.map((c) => [c.key, c.width])),
+  );
+  const dragKey = React.useRef<string | null>(null);
+
+  const startResize = (key: string, startX: number) => {
+    const startW = widths[key];
+    const onMove = (e: MouseEvent) =>
+      setWidths((prev) => ({
+        ...prev,
+        [key]: Math.max(60, startW + e.clientX - startX),
+      }));
+    const onUp = () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+    };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  };
+
+  const columns = order.map((key) => {
+    const col = SPLIT_COLS.find((c) => c.key === key)!;
+    const w = widths[key];
+    return {
+      ...col,
+      width: w,
+      onHeaderCell: () => ({
+        colKey: key,
+        style: { width: w },
+        onResizeStart: (x: number) => startResize(key, x),
+        onDragStart: (e: React.DragEvent) => {
+          dragKey.current = key;
+          e.dataTransfer.effectAllowed = "move";
+        },
+        onDragOver: (e: React.DragEvent) => e.preventDefault(),
+        onDrop: () => {
+          if (!dragKey.current || dragKey.current === key) return;
+          setOrder((prev) => {
+            const from = prev.indexOf(dragKey.current!);
+            const to = prev.indexOf(key);
+            const next = [...prev];
+            next.splice(from, 1);
+            next.splice(to, 0, dragKey.current!);
+            return next;
+          });
+          dragKey.current = null;
+        },
+      }),
+    };
+  });
+
+  return (
+    <Table
+      bordered
+      size="small"
+      components={{ header: { cell: TableHeaderCell } }}
+      columns={columns}
+      dataSource={dataSource}
+      scroll={{ x: SPLIT_TOTAL_WIDTH, y: 360 }}
+      pagination={false}
+    />
+  );
+}
+
+export function GlobalTable({ height = 400 }: { height?: number }) {
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
+  const pagedData = tableData.slice((page - 1) * pageSize, page * pageSize);
+
+  return (
+    <div>
+      <div style={{ height, border: "1px solid var(--gray-4)" }}>
+        <SplitTable
+          data={pagedData}
+          dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}
+        />
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+        <Pagination
+          size="small"
+          current={page}
+          pageSize={pageSize}
+          total={tableData.length}
+          showSizeChanger
+          showQuickJumper
+          onChange={(p, ps) => {
+            setPage(p);
+            setPageSize(ps);
+          }}
+        />
+      </div>
+    </div>
   );
 }
 
 export function TableSection() {
   const [loading, setLoading] = React.useState(false);
   const [empty, setEmpty] = React.useState(false);
+  const [splitPage, setSplitPage] = React.useState(1);
+  const [splitPageSize, setSplitPageSize] = React.useState(10);
+  const splitPagedData = tableData.slice(
+    (splitPage - 1) * splitPageSize,
+    splitPage * splitPageSize,
+  );
 
   const simpleColumns = [
     { title: "ID", dataIndex: "key", key: "key" },
@@ -320,14 +525,38 @@ export function TableSection() {
       <div>
         <SectionLabel>Default</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <ShowcaseTable />
+        {/* Height required — split-table-container uses height: 100% */}
+        <div style={{ height: 400, border: "1px solid var(--gray-4)" }}>
+          <SplitTable
+            data={splitPagedData}
+            dataTable={<ShowcaseTableForSplit dataSource={splitPagedData} />}
+          />
+        </div>
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
+        >
+          <Pagination
+            size="small"
+            current={splitPage}
+            pageSize={splitPageSize}
+            total={tableData.length}
+            showSizeChanger
+            showQuickJumper
+            onChange={(page, pageSize) => {
+              setSplitPage(page);
+              setSplitPageSize(pageSize);
+            }}
+          />
+        </div>
         <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`<Table
-  columns={columns}
-  dataSource={data}
-  components={{ header: { cell: TableHeaderCell } }}
-  pagination={{ pageSize: 10, showSizeChanger: true }}
-/>`}</CodeBlock>
+          <CodeBlock>{`// Drag the handle at the bottom-left to freeze columns on the left panel.
+// Both panels sync vertical scroll automatically.
+<div style={{ height: 400 }}>
+  <SplitTable
+    data={yourData}
+    dataTable={<YourTable data={yourData} />}
+  />
+</div>`}</CodeBlock>
         </div>
       </div>
 
@@ -335,9 +564,7 @@ export function TableSection() {
         <SectionLabel>Loading &amp; Empty States</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <Flex gap={8} style={{ marginBottom: 12 }}>
-          <Button onClick={() => setLoading((v) => !v)}>
-            Toggle loading
-          </Button>
+          <Button onClick={() => setLoading((v) => !v)}>Toggle loading</Button>
           <Button onClick={() => setEmpty((v) => !v)}>Toggle empty</Button>
         </Flex>
         <Table

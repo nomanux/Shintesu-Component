@@ -6,7 +6,7 @@ const { Title } = Typography;
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
-import ShowcaseTable from "./Table";
+import { GlobalTable } from "./Table";
 import shinetsuLogo from "../../assets/shinetsu.svg";
 import profileIcon from "../../assets/Profile.svg";
 
@@ -37,16 +37,10 @@ export function FrameGuidance() {
         "Header: ShinEtsu logo (left), navigation items (center), staging tag + user (right)",
         "Active nav item shows teal text with a teal underline",
         "Page title sits in its own bar below the header",
-        "Content area uses dashed-border drop zones for empty regions",
-        "Replace any drop zone with the actual content (table, form, charts) when implementing",
       ]}
       whenToUse={[
         "As the base template for every authenticated page in the app",
         "When the page belongs to the main app shell (not auth, not modal)",
-      ]}
-      whenNotToUse={[
-        "For login or onboarding screens — use a centered card layout",
-        "For modal dialogs — use AppModal",
       ]}
     />
   );
@@ -135,7 +129,7 @@ export default function FrameSection() {
           <div className="frame-content">
             <Divider />
             <div className="frame-table-wrapper">
-              <ShowcaseTable />
+              <GlobalTable />
             </div>
           </div>
           <div className="frame-footer">

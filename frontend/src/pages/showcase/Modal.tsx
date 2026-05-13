@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Divider, Flex } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import AppModal from "../../components/AppModal";
+import { colors } from "../../theme";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
@@ -10,45 +11,62 @@ export function ModalGuidance() {
   return (
     <DeveloperGuidance
       bullets={[
-        "Use AppModal for custom dialog content (forms, multi-step flows)",
-        "Always include a clear title and a primary action button",
-        "Keep body content focused — push edge cases to a follow-up screen",
-        "Match icon and color to the message severity (red/green/blue/yellow)",
+        "One AppModal is used across the entire app — only the width changes per use case",
+        "Always include a clear title and at least one primary action button",
+        "Keep body content focused — one purpose per modal, no nested workflows",
       ]}
       whenToUse={[
-        "Confirming a destructive or irreversible action",
-        "Surfacing critical info that blocks further interaction",
-        "Capturing a small focused input without leaving the current page",
+        "Confirming a destructive or irreversible action before proceeding",
+        "Collecting a small form's input without leaving the current page",
       ]}
       whenNotToUse={[
-        "For non-blocking notifications — use the toast/message API",
-        "For complex multi-page forms — open a full page or drawer",
+        "For more than 5 form fields — use a dedicated page or drawer instead",
+        "For page-level navigation — use a separate route",
       ]}
     />
   );
 }
 
+const SIZE_VARIANTS = [
+  { label: "Small",   width: 400 },
+  { label: "Default", width: 520 },
+  { label: "Large",   width: 720 },
+  { label: "X-Large", width: 900 },
+];
+
 export default function ModalSection() {
-  const [open, setOpen] = React.useState(false);
+  const [width, setWidth] = React.useState<number | null>(null);
+  const open = width !== null;
+  const close = () => setWidth(null);
 
   return (
     <Flex vertical gap={32}>
       <div>
-        <SectionLabel>Custom Modal (AppModal)</SectionLabel>
+        <SectionLabel>Sizes</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <Button type="primary" onClick={() => setOpen(true)}>
-          Open Modal
-        </Button>
+
+        <Flex gap={8}>
+          {SIZE_VARIANTS.map((v) => (
+            <Button
+              key={v.label}
+              type={v.label === "Default" ? "primary" : "default"}
+              onClick={() => setWidth(v.width)}
+            >
+              {v.label} — {v.width}px
+            </Button>
+          ))}
+        </Flex>
 
         <AppModal
           title="Modal title"
+          width={width ?? 520}
           open={open}
-          onCancel={() => setOpen(false)}
+          onCancel={close}
           footer={[
-            <Button key="ok" type="primary" onClick={() => setOpen(false)}>
+            <Button key="ok" type="primary" onClick={close}>
               Ok
             </Button>,
-            <Button key="cancel" onClick={() => setOpen(false)}>
+            <Button key="cancel" onClick={close}>
               Cancel
             </Button>,
           ]}
@@ -66,29 +84,42 @@ export default function ModalSection() {
                 flexShrink: 0,
               }}
             >
-              <CloseCircleOutlined
-                style={{ fontSize: 32, color: "#EF4444" }}
-              />
+              <CloseCircleOutlined style={{ fontSize: 32, color: "#EF4444" }} />
             </div>
             <div>
-              <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 4 }}>
-                This is title
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 16,
+                  marginBottom: 4,
+                  color: colors.gray[9],
+                }}
+              >
+                Confirm action
               </div>
-              <div style={{ color: "#64748B", fontSize: 14 }}>
-                Place details here
+              <div style={{ color: colors.gray[7], fontSize: 14 }}>
+                Are you sure you want to proceed? This action cannot be undone.
               </div>
             </div>
           </Flex>
         </AppModal>
 
         <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`<AppModal
+          <CodeBlock>{`// Change only the width — everything else stays the same.
+// Presets: 400 (small), 520 (default), 720 (large)
+
+<AppModal
   title="Modal title"
+  width={520}
   open={open}
   onCancel={() => setOpen(false)}
   footer={[
     <Button key="ok" type="primary" onClick={onOk}>Ok</Button>,
     <Button key="cancel" onClick={() => setOpen(false)}>Cancel</Button>,
+  ]}
+>
+  {/* body content */}
+"cascel" onClick={() => setOpen(false)}>Cancel</Button>,
   ]}
 >
   {/* body */}

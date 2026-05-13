@@ -112,9 +112,9 @@ const typeScale = [
 // ── Font Weights ─────────────────────────────────────────────────────────
 
 const fontWeights = [
-  { weight: 400, label: "Regular", usage: "Body text, secondary labels" },
-  { weight: 500, label: "Medium",  usage: "Buttons" },
-  { weight: 600, label: "SemiBold", usage: "Titles, active nav, strong text" },
+  { weight: 400, label: "Regular",  token: "fontWeightNormal",   cssVar: "--font-weight-normal",   usage: "Body text, secondary labels" },
+  { weight: 500, label: "Medium",   token: "fontWeightMedium",   cssVar: "--font-weight-medium",   usage: "Buttons, dropdown items" },
+  { weight: 600, label: "SemiBold", token: "fontWeightSemibold", cssVar: "--font-weight-semibold", usage: "Titles, active nav, strong text" },
 ];
 
 // ── Spacing ──────────────────────────────────────────────────────────────
@@ -154,14 +154,15 @@ export default function FoundationsSection() {
         ))}
 
         <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`// TypeScript
+          <CodeBlock>{`// TypeScript — import and use in JSX styles
 import { colors } from "./theme";
-const teal = colors.brand[6]; // "#009B94"
+<div style={{ background: colors.brand[1], color: colors.brand[6] }} />
 
-// CSS
-.button {
-  background: var(--brand-6);
-  color: var(--gray-1);
+// CSS — reference via CSS custom properties
+.my-element {
+  color: var(--brand-6);
+  background: var(--brand-1);
+  border: 1px solid var(--brand-3);
 }`}</CodeBlock>
         </div>
       </div>
@@ -196,13 +197,30 @@ const teal = colors.brand[6]; // "#009B94"
         <div className="type-grid">
           {fontWeights.map((fw) => (
             <React.Fragment key={fw.weight}>
-              <span className="type-token">{fw.weight} — {fw.label}</span>
-              <span className="type-spec">{fw.usage}</span>
+              <span className="type-token">
+                {fw.token}
+                <span className="type-spec" style={{ display: "block", marginTop: 2 }}>
+                  var({fw.cssVar})
+                </span>
+              </span>
+              <span className="type-spec">
+                {fw.weight} · {fw.label}
+                <span style={{ display: "block", marginTop: 2, color: colors.gray[6] }}>
+                  {fw.usage}
+                </span>
+              </span>
               <span style={{ fontSize: 14, fontWeight: fw.weight, color: colors.gray[9] }}>
                 The quick brown fox
               </span>
             </React.Fragment>
           ))}
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <CodeBlock>{`// CSS
+font-weight: var(--font-weight-medium);
+
+// TypeScript (theme token)
+// token.fontWeightMedium → 500`}</CodeBlock>
         </div>
 
         <div style={{ marginTop: 16 }}>

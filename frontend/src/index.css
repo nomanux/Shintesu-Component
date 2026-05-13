@@ -29,6 +29,14 @@
   /* Semantic / app-specific surfaces */
   --color-bg-app: #f5f5f5;
   --st-gray: #edf3f7;
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* SplitTable */
+  --sbw: 8px;
 }
 
 *,
@@ -151,7 +159,7 @@ body {
 
 /* Half-width on desktop, full-width with horizontal scroll on mobile */
 .form-half-width {
-  width: 50%;
+  width: 70%;
 }
 
 @media (max-width: 768px) {
@@ -214,9 +222,35 @@ body {
 
 /* Ant Dropdown items don't expose a hover-color token — backgrounds come from
    global controlItemBg* tokens (set in theme.ts), text color needs CSS. */
+.ant-dropdown-menu-item {
+  color: var(--gray-9) !important;
+  font-weight: var(--font-weight-medium) !important;
+}
+
 .ant-dropdown-menu-item:hover,
 .ant-dropdown-menu-item.ant-dropdown-menu-item-selected {
-  color: var(--brand-6) !important;
+  color: var(--brand-7) !important;
+}
+
+/* ── Select ───────────────────────────────────────────────────────────────── */
+
+/* Prevent the selection value from fading when the dropdown opens.
+   Ant Design uses --ant-color-text-placeholder for the open state color. */
+.ant-select {
+  --ant-color-text-placeholder: var(--gray-9);
+}
+
+.ant-select-selection-item,
+.ant-select-open .ant-select-selection-item,
+.ant-select-open .ant-select-selector .ant-select-selection-item,
+.ant-select-single.ant-select-open
+  .ant-select-selector
+  .ant-select-selection-item,
+.ant-select-item-option-content,
+.ant-select-item-option-selected .ant-select-item-option-content,
+.ant-select-item-option-active .ant-select-item-option-content {
+  color: var(--gray-9) !important;
+  font-weight: var(--font-weight-medium) !important;
 }
 
 /* ── Divider ──────────────────────────────────────────────────────────────── */
@@ -247,6 +281,15 @@ div.ant-divider-horizontal {
   padding-bottom: 6px !important;
   text-align: center !important;
   line-height: 18px !important;
+}
+
+.ant-table-column-sorter {
+  margin-right: 8px;
+}
+
+/* Sorted column: full column background brand-1 */
+.ant-table-column-sort {
+  background: var(--brand-1) !important;
 }
 
 /* Selected row (custom class — not covered by rowSelectedBg token) */
@@ -288,8 +331,8 @@ div.ant-divider-horizontal {
 /* ── Scrollbar ────────────────────────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -298,19 +341,15 @@ div.ant-divider-horizontal {
 
 ::-webkit-scrollbar-thumb {
   background: var(--gray-5);
-  border-radius: 3px;
+  border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-4);
+  background: var(--gray-6);
 }
 
-.ant-modal-body::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gray-4);
-}
-
-.ant-table-body::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gray-4);
+::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* ── Code block (showcase reference) ──────────────────────────────────────── */
@@ -498,7 +537,7 @@ div.ant-divider-horizontal {
 }
 
 .frame-nav-item:hover::after,
-.frame-nav-item.active::after {
+.frame-nav-item.ant-dropdown-open::after {
   transform: translateY(0);
 }
 
@@ -531,16 +570,6 @@ div.ant-divider-horizontal {
   line-height: 18px;
 }
 
-.frame-user-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--gray-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gray-7);
-}
 
 .frame-page-title {
   padding: 8px 20px;
@@ -596,4 +625,127 @@ div.ant-divider-horizontal {
 
 .type-token {
   color: var(--gray-9);
+}
+
+/* ── SplitTable ──────────────────────────────────────────────────────────── */
+
+.split-table-container {
+  display: flex;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Left pane: clips native scrollbar outside visible area */
+.clip-vscroll {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Inner scroller: pushes scrollbar out of the clipped area */
+.clip-vscroll__scroller {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-right: calc(-1 * var(--sbw));
+  padding-right: 0;
+}
+
+/* Data wrapper: adds padding so content isn't hidden behind scrollbar */
+.clip-vscroll__dataScroller {
+  padding-right: var(--sbw);
+  margin-right: calc(-1 * var(--sbw));
+}
+
+
+/* Custom scrollbar — Firefox
+   .scroll-styled is a utility class for any scrollable container */
+.split-table-right,
+.clip-vscroll__scroller,
+.scroll-styled,
+.split-table-container .ant-table-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-4) transparent;
+}
+
+/* Custom scrollbar — Webkit (Chrome/Edge) */
+.split-table-right::-webkit-scrollbar,
+.clip-vscroll__scroller::-webkit-scrollbar,
+.scroll-styled::-webkit-scrollbar,
+.split-table-container .ant-table-body::-webkit-scrollbar {
+  width: var(--sbw);
+  height: var(--sbw);
+}
+
+.split-table-right::-webkit-scrollbar-track,
+.clip-vscroll__scroller::-webkit-scrollbar-track,
+.scroll-styled::-webkit-scrollbar-track,
+.split-table-container .ant-table-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.split-table-right::-webkit-scrollbar-thumb,
+.clip-vscroll__scroller::-webkit-scrollbar-thumb,
+.scroll-styled::-webkit-scrollbar-thumb,
+.split-table-container .ant-table-body::-webkit-scrollbar-thumb {
+  background-color: var(--gray-4);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.split-table-right::-webkit-scrollbar-thumb:hover,
+.clip-vscroll__scroller::-webkit-scrollbar-thumb:hover,
+.scroll-styled::-webkit-scrollbar-thumb:hover,
+.split-table-container .ant-table-body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-8);
+}
+
+.split-table-right::-webkit-scrollbar-corner,
+.clip-vscroll__scroller::-webkit-scrollbar-corner,
+.scroll-styled::-webkit-scrollbar-corner,
+.split-table-container .ant-table-body::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Resize handle */
+.resize-handler {
+  position: relative;
+  background: var(--gray-6) !important;
+}
+
+.resize-handler:hover {
+  background: var(--brand-6) !important;
+}
+
+.resize-handler::after {
+  content: "⋮";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* ── SplitTable: merge table borders with the outer wrapper ──────────────── */
+/* Removes the borders that would double up against the wrapper's own border */
+
+/* Top border of the table container (header top edge) */
+.split-table-container .ant-table-bordered > .ant-table-container {
+  border-top: none !important;
+  border-inline-start: none !important;
+}
+
+/* Left border of the first column (header + body) */
+.split-table-container .ant-table-cell:first-child {
+  border-inline-start: none !important;
+}
+
+/* Right border of the last column (header + body) */
+.split-table-container .ant-table-cell:last-child {
+  border-inline-end: none !important;
 }

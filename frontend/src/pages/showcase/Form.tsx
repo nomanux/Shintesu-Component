@@ -152,7 +152,7 @@ export default function FormSection() {
             </Form.Item>
           </Form>
         </div>
-        <div style={{ marginTop: 16 }}>
+        <div className="form-half-width" style={{ marginTop: 16 }}>
           <CodeBlock>{`<Form layout="horizontal" labelCol={{ flex: "100px" }}>
   <Form.Item label="LogonID">
     <Input />
@@ -173,7 +173,7 @@ export default function FormSection() {
         <div className="form-half-width">
           <ValidationDemo />
         </div>
-        <div style={{ marginTop: 16 }}>
+        <div className="form-half-width" style={{ marginTop: 16 }}>
           <CodeBlock>{`<Form.Item
   label="Email"
   name="email"

@@ -35,6 +35,7 @@ export default function ScrollSection() {
         <SectionLabel>Vertical Scroll</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <div
+          className="scroll-styled"
           style={{
             height: 200,
             overflowY: "auto",
@@ -68,6 +69,7 @@ export default function ScrollSection() {
         <SectionLabel>Horizontal Scroll</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <div
+          className="scroll-styled"
           style={{
             overflowX: "auto",
             border: `1px solid ${colors.gray[4]}`,
