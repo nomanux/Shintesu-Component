@@ -802,6 +802,13 @@ div.ant-divider-horizontal {
 
 /* ── Table scrollbar arrows (left/right buttons) ──────────────────────────── */
 
+/* Always reserve the horizontal scrollbar on the table — the thumb only
+   appears when content overflows, but the gutter is always present so
+   WebKit can't auto-hide it. */
+.split-table-container .ant-table-body {
+  overflow-x: scroll !important;
+}
+
 /* Make the table scrollbar a bit taller so arrows are clickable */
 .split-table-right::-webkit-scrollbar,
 .split-table-container .ant-table-body::-webkit-scrollbar {
