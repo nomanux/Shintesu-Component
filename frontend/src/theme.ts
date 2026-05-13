@@ -6,6 +6,15 @@ export const specialInputColors = {
   cyberbridge: "#A8B4DC",
 };
 
+/** Canonical modal widths — reference these instead of hardcoding pixel values. */
+export const modalWidth = {
+  sm: 400,
+  md: 520, // default
+  lg: 720,
+  xl: 900,
+  xxl: 1160,
+} as const;
+
 export const colors = {
   brand: {
     1: "#E0F2F2",

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Divider, Flex } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import AppModal from "../../components/AppModal";
-import { colors } from "../../theme";
+import { colors, modalWidth } from "../../theme";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
@@ -118,12 +118,15 @@ function ModalTrigger({
   );
 }
 
-/** Build a copy-paste-ready code snippet for a given component name + width. */
-function snippet(componentName: string, width: number) {
+type SizeKey = keyof typeof modalWidth;
+
+/** Build a copy-paste-ready code snippet for a given component name + size token. */
+function snippet(componentName: string, size: SizeKey) {
   return `import React from "react";
 import { Button, Flex } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import AppModal from "@/components/AppModal";
+import { modalWidth } from "@/theme";
 
 export function ${componentName}() {
   const [open, setOpen] = React.useState(false);
@@ -135,7 +138,7 @@ export function ${componentName}() {
       </Button>
       <AppModal
         title="Modal title"
-        width={${width}}
+        width={modalWidth.${size}}
         open={open}
         onCancel={() => setOpen(false)}
         footer={[
@@ -166,9 +169,10 @@ export default function ModalSection() {
         <CodeBlock>{`import React from "react";
 import { Button } from "antd";
 import AppModal from "@/components/AppModal";
+import { modalWidth } from "@/theme";
 
-// One AppModal — change the \`width\` for different sizes:
-// Small 400 · Default 520 · Large 720 · X-Large 900 · XX-Large 1160
+// One AppModal — always reference \`modalWidth\` instead of hardcoding pixels.
+// Available sizes: sm (400) · md (520) · lg (720) · xl (900) · xxl (1160)
 export function ModalDefault() {
   const [open, setOpen] = React.useState(false);
 
@@ -179,7 +183,7 @@ export function ModalDefault() {
       </Button>
       <AppModal
         title="Modal title"
-        width={520}
+        width={modalWidth.md}
         open={open}
         onCancel={() => setOpen(false)}
         footer={[
@@ -200,37 +204,50 @@ export function ModalDefault() {
 
       {/* Small */}
       <Variant
-        label="Small (400px)"
-        preview={<ModalTrigger label="Open Small Modal" width={400} />}
-        code={snippet("ModalSmall", 400)}
+        label={`Small (${modalWidth.sm}px)`}
+        preview={
+          <ModalTrigger label="Open Small Modal" width={modalWidth.sm} />
+        }
+        code={snippet("ModalSmall", "sm")}
       />
 
       {/* Default */}
       <Variant
-        label="Default (520px)"
-        preview={<ModalTrigger label="Open Default Modal" width={520} />}
-        code={snippet("ModalDefault", 520)}
+        label={`Default (${modalWidth.md}px)`}
+        preview={
+          <ModalTrigger label="Open Default Modal" width={modalWidth.md} />
+        }
+        code={snippet("ModalDefault", "md")}
       />
 
       {/* Large */}
       <Variant
-        label="Large (720px)"
-        preview={<ModalTrigger label="Open Large Modal" width={720} />}
-        code={snippet("ModalLarge", 720)}
+        label={`Large (${modalWidth.lg}px)`}
+        preview={
+          <ModalTrigger label="Open Large Modal" width={modalWidth.lg} />
+        }
+        code={snippet("ModalLarge", "lg")}
       />
 
       {/* X-Large */}
       <Variant
-        label="X-Large (900px)"
-        preview={<ModalTrigger label="Open X-Large Modal" width={900} />}
-        code={snippet("ModalXLarge", 900)}
+        label={`X-Large (${modalWidth.xl}px)`}
+        preview={
+          <ModalTrigger label="Open X-Large Modal" width={modalWidth.xl} />
+        }
+        code={snippet("ModalXLarge", "xl")}
       />
 
       {/* XX-Large */}
       <Variant
-        label="XX-Large (1160px)"
-        preview={<ModalTrigger label="Open XX-Large Modal" width={1160} />}
-        code={snippet("ModalXXLarge", 1160)}
+        label={`XX-Large (${modalWidth.xxl}px)`}
+        preview={
+          <ModalTrigger
+            label="Open XX-Large Modal"
+            width={modalWidth.xxl}
+          />
+        }
+        code={snippet("ModalXXLarge", "xxl")}
       />
     </Flex>
   );
