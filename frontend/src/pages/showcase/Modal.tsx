@@ -168,7 +168,7 @@ import { Button } from "antd";
 import AppModal from "@/components/AppModal";
 
 // One AppModal — change the \`width\` for different sizes:
-// Small 400 · Default 520 · Large 720 · X-Large 900
+// Small 400 · Default 520 · Large 720 · X-Large 900 · XX-Large 1160
 export function ModalDefault() {
   const [open, setOpen] = React.useState(false);
 
@@ -224,6 +224,13 @@ export function ModalDefault() {
         label="X-Large (900px)"
         preview={<ModalTrigger label="Open X-Large Modal" width={900} />}
         code={snippet("ModalXLarge", 900)}
+      />
+
+      {/* XX-Large */}
+      <Variant
+        label="XX-Large (1160px)"
+        preview={<ModalTrigger label="Open XX-Large Modal" width={1160} />}
+        code={snippet("ModalXXLarge", 1160)}
       />
     </Flex>
   );
