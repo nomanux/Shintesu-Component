@@ -773,24 +773,22 @@ div.ant-divider-horizontal {
 .clip-vscroll__scroller::-webkit-scrollbar-track,
 .scroll-styled::-webkit-scrollbar-track,
 .split-table-container .ant-table-body::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--gray-3);
 }
 
 .split-table-right::-webkit-scrollbar-thumb,
 .clip-vscroll__scroller::-webkit-scrollbar-thumb,
 .scroll-styled::-webkit-scrollbar-thumb,
 .split-table-container .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: var(--gray-4);
+  background-color: var(--gray-5);
   border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: content-box;
 }
 
 .split-table-right::-webkit-scrollbar-thumb:hover,
 .clip-vscroll__scroller::-webkit-scrollbar-thumb:hover,
 .scroll-styled::-webkit-scrollbar-thumb:hover,
 .split-table-container .ant-table-body::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gray-8);
+  background-color: var(--gray-7);
 }
 
 .split-table-right::-webkit-scrollbar-corner,
