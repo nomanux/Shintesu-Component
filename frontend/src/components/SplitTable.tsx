@@ -154,7 +154,7 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
       <div
         ref={rightRef}
         data-scroll-container-id="table-scroll-wrapper"
-        style={{ flex: 1, overflow: "auto" }}
+        style={{ flex: 1, overflow: "hidden", minWidth: 0 }}
       >
         {dataTable}
       </div>
