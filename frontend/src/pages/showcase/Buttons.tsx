@@ -6,7 +6,7 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { SectionLabel, GroupHeader, RowLabel, Cell } from "./helpers";
+import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
@@ -34,6 +34,25 @@ export function ButtonsGuidance() {
   );
 }
 
+/** Render a section label + divider + example block for each variant. */
+function Variant({
+  label,
+  preview,
+  code,
+}: {
+  label: string;
+  preview: React.ReactNode;
+  code: string;
+}) {
+  return (
+    <div>
+      <SectionLabel>{label}</SectionLabel>
+      <Divider style={{ margin: "8px 0 16px" }} />
+      <ExampleBlock preview={preview} code={code} />
+    </div>
+  );
+}
+
 export default function ButtonsSection() {
   const [loading, setLoading] = React.useState(false);
   const triggerLoading = () => {
@@ -43,133 +62,162 @@ export default function ButtonsSection() {
 
   return (
     <Flex vertical gap={32}>
-      {/* Usage — basic import + use */}
+      {/* Usage */}
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <CodeBlock>{`import { Button } from "antd";
 
-<Button type="primary">Save</Button>
-<Button>Cancel</Button>`}</CodeBlock>
+export function ButtonDefault() {
+  return <Button type="primary">Save</Button>;
+}`}</CodeBlock>
       </div>
 
-      {/* Size & state matrix */}
-      <div>
-        <SectionLabel>Sizes &amp; States</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <ExampleBlock
-          preview={
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                <thead>
-                  <tr>
-                    <th />
-                    <GroupHeader span={2}>Primary</GroupHeader>
-                    <th style={{ width: 24 }} />
-                    <GroupHeader span={2}>Default</GroupHeader>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(["small", "middle", "large"] as const).map((size) => (
-                    <tr key={size}>
-                      <RowLabel>
-                        {size.charAt(0).toUpperCase() + size.slice(1)}
-                      </RowLabel>
-                      <Cell>
-                        <Button
-                          type="primary"
-                          size={size === "middle" ? undefined : size}
-                        >
-                          Button
-                        </Button>
-                      </Cell>
-                      <Cell>
-                        <Button
-                          type="primary"
-                          size={size === "middle" ? undefined : size}
-                          disabled
-                        >
-                          Button
-                        </Button>
-                      </Cell>
-                      <td />
-                      <Cell>
-                        <Button size={size === "middle" ? undefined : size}>
-                          Button
-                        </Button>
-                      </Cell>
-                      <Cell>
-                        <Button
-                          size={size === "middle" ? undefined : size}
-                          disabled
-                        >
-                          Button
-                        </Button>
-                      </Cell>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          }
-          code={`<Button type="primary">Button</Button>
-<Button type="primary" disabled>Button</Button>
-<Button>Button</Button>
-<Button size="small">Button</Button>
-<Button size="large">Button</Button>`}
-        />
-      </div>
+      {/* Primary */}
+      <Variant
+        label="Primary"
+        preview={<Button type="primary">Button</Button>}
+        code={`import { Button } from "antd";
 
-      {/* Icon buttons */}
-      <div>
-        <SectionLabel>With Icons</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <ExampleBlock
-          preview={
-            <Flex wrap gap={8}>
-              <Button type="primary" icon={<DownloadOutlined />}>
-                Download
-              </Button>
-              <Button type="primary" icon={<UploadOutlined />}>
-                Upload
-              </Button>
-              <Button icon={<EditOutlined />}>Edit</Button>
-              <Button icon={<DeleteOutlined />}>Delete</Button>
-            </Flex>
-          }
-          code={`<Button type="primary" icon={<DownloadOutlined />}>Download</Button>
-<Button type="primary" icon={<UploadOutlined />}>Upload</Button>
-<Button icon={<EditOutlined />}>Edit</Button>
-<Button icon={<DeleteOutlined />}>Delete</Button>`}
-        />
-      </div>
+export function ButtonPrimary() {
+  return <Button type="primary">Button</Button>;
+}`}
+      />
 
-      {/* Loading state */}
-      <div>
-        <SectionLabel>Loading</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <ExampleBlock
-          preview={
-            <Flex gap={8}>
-              <Button type="primary" loading>
-                Loading
-              </Button>
-              <Button
-                type="primary"
-                loading={loading}
-                onClick={triggerLoading}
-              >
-                Click to Load
-              </Button>
-              <Button loading>Loading</Button>
-            </Flex>
-          }
-          code={`<Button type="primary" loading>Loading</Button>
-<Button type="primary" loading={loading} onClick={handleClick}>
-  Submit
-</Button>`}
-        />
-      </div>
+      {/* Default */}
+      <Variant
+        label="Default"
+        preview={<Button>Button</Button>}
+        code={`import { Button } from "antd";
+
+export function ButtonDefault() {
+  return <Button>Button</Button>;
+}`}
+      />
+
+      {/* Sizes */}
+      <Variant
+        label="Sizes"
+        preview={
+          <Flex gap={8} align="center">
+            <Button type="primary" size="small">
+              Small
+            </Button>
+            <Button type="primary">Middle</Button>
+            <Button type="primary" size="large">
+              Large
+            </Button>
+          </Flex>
+        }
+        code={`import { Button } from "antd";
+
+export function ButtonSizes() {
+  return (
+    <>
+      <Button type="primary" size="small">Small</Button>
+      <Button type="primary">Middle</Button>
+      <Button type="primary" size="large">Large</Button>
+    </>
+  );
+}`}
+      />
+
+      {/* Disabled */}
+      <Variant
+        label="Disabled"
+        preview={
+          <Flex gap={8}>
+            <Button type="primary" disabled>
+              Primary
+            </Button>
+            <Button disabled>Default</Button>
+          </Flex>
+        }
+        code={`import { Button } from "antd";
+
+export function ButtonDisabled() {
+  return (
+    <>
+      <Button type="primary" disabled>Primary</Button>
+      <Button disabled>Default</Button>
+    </>
+  );
+}`}
+      />
+
+      {/* With Icon */}
+      <Variant
+        label="With Icon"
+        preview={
+          <Flex wrap gap={8}>
+            <Button type="primary" icon={<DownloadOutlined />}>
+              Download
+            </Button>
+            <Button type="primary" icon={<UploadOutlined />}>
+              Upload
+            </Button>
+            <Button icon={<EditOutlined />}>Edit</Button>
+            <Button icon={<DeleteOutlined />}>Delete</Button>
+          </Flex>
+        }
+        code={`import { Button } from "antd";
+import {
+  DownloadOutlined,
+  UploadOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+
+export function ButtonWithIcon() {
+  return (
+    <>
+      <Button type="primary" icon={<DownloadOutlined />}>Download</Button>
+      <Button type="primary" icon={<UploadOutlined />}>Upload</Button>
+      <Button icon={<EditOutlined />}>Edit</Button>
+      <Button icon={<DeleteOutlined />}>Delete</Button>
+    </>
+  );
+}`}
+      />
+
+      {/* Loading */}
+      <Variant
+        label="Loading"
+        preview={
+          <Flex gap={8}>
+            <Button type="primary" loading>
+              Loading
+            </Button>
+            <Button
+              type="primary"
+              loading={loading}
+              onClick={triggerLoading}
+            >
+              Click to Load
+            </Button>
+            <Button loading>Loading</Button>
+          </Flex>
+        }
+        code={`import React from "react";
+import { Button } from "antd";
+
+export function ButtonLoading() {
+  const [loading, setLoading] = React.useState(false);
+
+  return (
+    <>
+      <Button type="primary" loading>Loading</Button>
+      <Button
+        type="primary"
+        loading={loading}
+        onClick={() => setLoading(true)}
+      >
+        Submit
+      </Button>
+    </>
+  );
+}`}
+      />
     </Flex>
   );
 }
