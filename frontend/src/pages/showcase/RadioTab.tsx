@@ -1,9 +1,11 @@
 import React from "react";
-import { Radio, Input, Button, Flex, theme } from "antd";
+import { Radio, Input, Button, Divider, Flex, theme } from "antd";
 import { colors } from "../../theme";
 import ShowcaseTable from "./Table";
+import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
+import ExampleBlock from "./ExampleBlock";
 
 export function RadioTabGuidance() {
   return (
@@ -26,70 +28,305 @@ export function RadioTabGuidance() {
   );
 }
 
-const tabContent: Record<string, React.ReactNode> = {
-  tab1: <ShowcaseTable />,
-  tab2: (
-    <Flex vertical gap={12}>
-      <Input placeholder="Field 1" />
-      <Input placeholder="Field 2" />
-    </Flex>
-  ),
-  tab3: (
-    <Flex gap={8}>
-      <Button type="primary">Action A</Button>
-      <Button>Action B</Button>
-    </Flex>
-  ),
-};
+/** Section label + divider + ExampleBlock — one variant per block. */
+function Variant({
+  label,
+  preview,
+  code,
+}: {
+  label: string;
+  preview: React.ReactNode;
+  code: string;
+}) {
+  return (
+    <div>
+      <SectionLabel>{label}</SectionLabel>
+      <Divider style={{ margin: "8px 0 16px" }} />
+      <ExampleBlock preview={preview} code={code} />
+    </div>
+  );
+}
+
+type Tab = { key: string; label: string; content: React.ReactNode };
+
+/** Tabbed Radio group with a panel that overlaps the active tab border. */
+function Tabs({
+  tabs,
+  initial,
+  size = "small",
+  disabledKeys = [],
+}: {
+  tabs: Tab[];
+  initial: string;
+  size?: "small" | "middle" | "large";
+  disabledKeys?: string[];
+}) {
+  const { token } = theme.useToken();
+  const [value, setValue] = React.useState(initial);
+  const active = tabs.find((t) => t.key === value) ?? tabs[0];
+
+  return (
+    <div>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+        <Radio.Group
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          buttonStyle="outline"
+          size={size}
+          style={{ display: "flex", gap: token.marginXXS }}
+        >
+          {tabs.map((t) => (
+            <Radio.Button
+              key={t.key}
+              value={t.key}
+              disabled={disabledKeys.includes(t.key)}
+            >
+              {t.label}
+            </Radio.Button>
+          ))}
+        </Radio.Group>
+      </div>
+
+      <div
+        style={{
+          border: `1px solid ${colors.brand[4]}`,
+          marginTop: -1,
+          position: "relative",
+          zIndex: 2,
+          background: colors.gray[1],
+          padding: token.paddingSM,
+        }}
+      >
+        {active.content}
+      </div>
+    </div>
+  );
+}
 
 export default function RadioTabSection() {
+  return (
+    <Flex vertical gap={32}>
+      {/* Usage */}
+      <div>
+        <SectionLabel>Usage</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <CodeBlock>{`import React from "react";
+import { Radio, theme } from "antd";
+import { colors } from "@/theme";
+
+export function RadioTabsDefault() {
   const { token } = theme.useToken();
   const [value, setValue] = React.useState("tab1");
 
   return (
-    <Flex vertical gap={24}>
-      <div>
-        <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
-          <Radio.Group
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            buttonStyle="outline"
-            size="small"
-            style={{ display: "flex", gap: token.marginXXS }}
-          >
-            <Radio.Button value="tab1">Tabs 1 - Active</Radio.Button>
-            <Radio.Button value="tab2">Tabs - 2</Radio.Button>
-            <Radio.Button value="tab3">Tabs - 3</Radio.Button>
-          </Radio.Group>
-        </div>
-
-        <div
-          style={{
-            border: `1px solid ${colors.brand[4]}`,
-            marginTop: -1,
-            position: "relative",
-            zIndex: 2,
-            background: colors.gray[1],
-            padding: token.paddingSM,
-          }}
+    <div>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+        <Radio.Group
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          buttonStyle="outline"
+          size="small"
+          style={{ display: "flex", gap: token.marginXXS }}
         >
-          {tabContent[value]}
-        </div>
+          <Radio.Button value="tab1">Tab 1</Radio.Button>
+          <Radio.Button value="tab2">Tab 2</Radio.Button>
+        </Radio.Group>
       </div>
 
-      <CodeBlock>{`<Radio.Group
-  value={value}
-  onChange={(e) => setValue(e.target.value)}
-  buttonStyle="outline"
->
-  <Radio.Button value="tab1">Tab 1</Radio.Button>
-  <Radio.Button value="tab2">Tab 2</Radio.Button>
-</Radio.Group>
+      {/* Panel overlaps tab bar by 1px to merge borders */}
+      <div
+        style={{
+          border: \`1px solid \${colors.brand[4]}\`,
+          marginTop: -1,
+          position: "relative",
+          zIndex: 2,
+          background: colors.gray[1],
+          padding: token.paddingSM,
+        }}
+      >
+        {/* panel content */}
+      </div>
+    </div>
+  );
+}`}</CodeBlock>
+      </div>
 
-{/* Panel — overlap by 1px to merge with active tab border */}
-<div style={{ border: \`1px solid \${colors.brand[4]}\`, marginTop: -1 }}>
-  {tabContent[value]}
-</div>`}</CodeBlock>
+      {/* Default — Table panel */}
+      <Variant
+        label="Default"
+        preview={
+          <Tabs
+            initial="tab1"
+            tabs={[
+              { key: "tab1", label: "Tabs 1 - Active", content: <ShowcaseTable /> },
+              {
+                key: "tab2",
+                label: "Tabs - 2",
+                content: (
+                  <Flex vertical gap={12}>
+                    <Input placeholder="Field 1" />
+                    <Input placeholder="Field 2" />
+                  </Flex>
+                ),
+              },
+              {
+                key: "tab3",
+                label: "Tabs - 3",
+                content: (
+                  <Flex gap={8}>
+                    <Button type="primary">Action A</Button>
+                    <Button>Action B</Button>
+                  </Flex>
+                ),
+              },
+            ]}
+          />
+        }
+        code={`import React from "react";
+import { Radio, Input, Button, Flex, theme } from "antd";
+import { colors } from "@/theme";
+
+export function RadioTabsDefault() {
+  const { token } = theme.useToken();
+  const [value, setValue] = React.useState("tab1");
+
+  const content = {
+    tab1: <YourTable />,
+    tab2: (
+      <Flex vertical gap={12}>
+        <Input placeholder="Field 1" />
+        <Input placeholder="Field 2" />
+      </Flex>
+    ),
+    tab3: (
+      <Flex gap={8}>
+        <Button type="primary">Action A</Button>
+        <Button>Action B</Button>
+      </Flex>
+    ),
+  };
+
+  return (
+    <div>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+        <Radio.Group
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          buttonStyle="outline"
+          size="small"
+          style={{ display: "flex", gap: token.marginXXS }}
+        >
+          <Radio.Button value="tab1">Tabs 1 - Active</Radio.Button>
+          <Radio.Button value="tab2">Tabs - 2</Radio.Button>
+          <Radio.Button value="tab3">Tabs - 3</Radio.Button>
+        </Radio.Group>
+      </div>
+      <div
+        style={{
+          border: \`1px solid \${colors.brand[4]}\`,
+          marginTop: -1,
+          position: "relative",
+          zIndex: 2,
+          background: colors.gray[1],
+          padding: token.paddingSM,
+        }}
+      >
+        {content[value]}
+      </div>
+    </div>
+  );
+}`}
+      />
+
+      {/* Sizes */}
+      <Variant
+        label="Small"
+        preview={
+          <Tabs
+            size="small"
+            initial="a"
+            tabs={[
+              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
+              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
+              { key: "c", label: "History", content: <Placeholder text="History content" /> },
+            ]}
+          />
+        }
+        code={`<Radio.Group buttonStyle="outline" size="small" value={value} onChange={...}>
+  <Radio.Button value="a">Overview</Radio.Button>
+  <Radio.Button value="b">Details</Radio.Button>
+  <Radio.Button value="c">History</Radio.Button>
+</Radio.Group>`}
+      />
+
+      <Variant
+        label="Middle"
+        preview={
+          <Tabs
+            size="middle"
+            initial="a"
+            tabs={[
+              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
+              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
+              { key: "c", label: "History", content: <Placeholder text="History content" /> },
+            ]}
+          />
+        }
+        code={`<Radio.Group buttonStyle="outline" size="middle" value={value} onChange={...}>
+  <Radio.Button value="a">Overview</Radio.Button>
+  <Radio.Button value="b">Details</Radio.Button>
+  <Radio.Button value="c">History</Radio.Button>
+</Radio.Group>`}
+      />
+
+      <Variant
+        label="Large"
+        preview={
+          <Tabs
+            size="large"
+            initial="a"
+            tabs={[
+              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
+              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
+              { key: "c", label: "History", content: <Placeholder text="History content" /> },
+            ]}
+          />
+        }
+        code={`<Radio.Group buttonStyle="outline" size="large" value={value} onChange={...}>
+  <Radio.Button value="a">Overview</Radio.Button>
+  <Radio.Button value="b">Details</Radio.Button>
+  <Radio.Button value="c">History</Radio.Button>
+</Radio.Group>`}
+      />
+
+      {/* Disabled tab */}
+      <Variant
+        label="Disabled Tab"
+        preview={
+          <Tabs
+            initial="a"
+            disabledKeys={["b"]}
+            tabs={[
+              { key: "a", label: "Available", content: <Placeholder text="Available content" /> },
+              { key: "b", label: "Disabled", content: <Placeholder text="(unreachable)" /> },
+              { key: "c", label: "Also Available", content: <Placeholder text="Other content" /> },
+            ]}
+          />
+        }
+        code={`<Radio.Group buttonStyle="outline" size="small" value={value} onChange={...}>
+  <Radio.Button value="a">Available</Radio.Button>
+  <Radio.Button value="b" disabled>Disabled</Radio.Button>
+  <Radio.Button value="c">Also Available</Radio.Button>
+</Radio.Group>`}
+      />
     </Flex>
+  );
+}
+
+function Placeholder({ text }: { text: string }) {
+  return (
+    <div style={{ color: colors.gray[7], fontSize: 14, padding: "12px 0" }}>
+      {text}
+    </div>
   );
 }
