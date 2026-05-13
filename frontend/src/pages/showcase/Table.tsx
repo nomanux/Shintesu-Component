@@ -22,7 +22,8 @@ export function TableGuidance() {
   return (
     <DeveloperGuidance
       bullets={[
-        "Click rows to toggle selection (selected rows highlight in brand-1)",
+        "Every table in this project is a SplitTable — never render a bare <Table>",
+        "Drag the handle at the bottom-left of the table to freeze left columns; both panels sync vertical scroll",
         "Drag column headers left/right to reorder columns",
         "Drag the right edge of a column header (visible divider) to resize",
         "Column order and widths persist to localStorage automatically",
@@ -404,8 +405,10 @@ const SPLIT_TOTAL_WIDTH = 1450;
 
 function ShowcaseTableForSplit({
   dataSource,
+  loading,
 }: {
   dataSource: typeof tableData;
+  loading?: boolean;
 }) {
   const [order, setOrder] = React.useState(() => SPLIT_COLS.map((c) => c.key));
   const [widths, setWidths] = React.useState<Record<string, number>>(() =>
@@ -463,6 +466,7 @@ function ShowcaseTableForSplit({
     <Table
       bordered
       size="small"
+      loading={loading}
       components={{ header: { cell: TableHeaderCell } }}
       columns={columns}
       dataSource={dataSource}
@@ -522,20 +526,59 @@ function Variant({
   );
 }
 
-const simpleColumns = [
-  {
-    title: "ID",
-    dataIndex: "key",
-    key: "key",
-    onCell: () => ({ className: "cell-text" }),
-  },
-  {
-    title: "Name",
-    key: "name",
-    onCell: () => ({ className: "cell-text" }),
-    render: (_: unknown, __: unknown, i: number) => `Row ${i + 1}`,
-  },
-];
+/** Standard project pattern: SplitTable + bottom pagination. */
+function SplitTableDemo({
+  data,
+  loading,
+  height = 400,
+}: {
+  data: typeof tableData;
+  loading?: boolean;
+  height?: number;
+}) {
+  return (
+    <div style={{ height, border: "1px solid var(--gray-4)" }}>
+      <SplitTable
+        data={data}
+        dataTable={<ShowcaseTableForSplit dataSource={data} loading={loading} />}
+      />
+    </div>
+  );
+}
+
+const SPLIT_USAGE_CODE = `import React from "react";
+import { Pagination } from "antd";
+import SplitTable from "@/components/SplitTable";
+import YourTable from "./YourTable";
+
+// Every table in this project is a SplitTable.
+// Drag the handle at the bottom-left of the table to freeze columns.
+// Both panels sync vertical scroll automatically.
+export function TableDefault({ data }: { data: Row[] }) {
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
+  const paged = data.slice((page - 1) * pageSize, page * pageSize);
+
+  return (
+    <>
+      <div style={{ height: 400 }}>
+        <SplitTable
+          data={paged}
+          dataTable={<YourTable data={paged} />}
+        />
+      </div>
+      <Pagination
+        size="small"
+        current={page}
+        pageSize={pageSize}
+        total={data.length}
+        showSizeChanger
+        showQuickJumper
+        onChange={(p, ps) => { setPage(p); setPageSize(ps); }}
+      />
+    </>
+  );
+}`;
 
 export function TableSection() {
   const [loading, setLoading] = React.useState(false);
@@ -553,91 +596,15 @@ export function TableSection() {
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <CodeBlock>{`import { Table } from "antd";
-
-const columns = [
-  { title: "ID", dataIndex: "key", key: "key" },
-  { title: "Name", dataIndex: "name", key: "name" },
-];
-
-const data = [
-  { key: 1, name: "Row 1" },
-  { key: 2, name: "Row 2" },
-];
-
-export function TableDefault() {
-  return <Table columns={columns} dataSource={data} />;
-}`}</CodeBlock>
+        <CodeBlock>{SPLIT_USAGE_CODE}</CodeBlock>
       </div>
 
-      {/* Basic */}
+      {/* Default — the standard SplitTable + pagination */}
       <Variant
-        label="Basic"
-        preview={
-          <Table
-            bordered
-            size="small"
-            columns={simpleColumns}
-            dataSource={tableData.slice(0, 5)}
-            pagination={false}
-          />
-        }
-        code={`import { Table } from "antd";
-
-const columns = [
-  { title: "ID", dataIndex: "key", key: "key" },
-  { title: "Name", key: "name" },
-];
-
-export function TableBasic() {
-  return (
-    <Table
-      bordered
-      size="small"
-      columns={columns}
-      dataSource={data}
-      pagination={false}
-    />
-  );
-}`}
-      />
-
-      {/* Interactive — reorder, resize, persistent state */}
-      <Variant
-        label="Interactive (Reorder & Resize)"
-        preview={<ShowcaseTable />}
-        code={`// Drag a column header left/right to reorder.
-// Drag the right edge of a header to resize.
-// Order + widths persist to localStorage automatically.
-import { Table } from "antd";
-
-export function InteractiveTable() {
-  return (
-    <Table
-      bordered
-      size="small"
-      components={{ header: { cell: TableHeaderCell } }}
-      columns={columns}
-      dataSource={data}
-      pagination={{ pageSize: 10, showSizeChanger: true }}
-    />
-  );
-}`}
-      />
-
-      {/* Split Table */}
-      <Variant
-        label="Split Table (Freeze Left Columns)"
+        label="Default"
         preview={
           <>
-            <div style={{ height: 400, border: "1px solid var(--gray-4)" }}>
-              <SplitTable
-                data={splitPagedData}
-                dataTable={
-                  <ShowcaseTableForSplit dataSource={splitPagedData} />
-                }
-              />
-            </div>
+            <SplitTableDemo data={splitPagedData} />
             <div
               style={{
                 display: "flex",
@@ -660,20 +627,7 @@ export function InteractiveTable() {
             </div>
           </>
         }
-        code={`import SplitTable from "@/components/SplitTable";
-
-// Drag the handle at the bottom-left to freeze columns on the left panel.
-// Both panels sync vertical scroll automatically.
-export function FrozenTable() {
-  return (
-    <div style={{ height: 400 }}>
-      <SplitTable
-        data={data}
-        dataTable={<YourTable data={data} />}
-      />
-    </div>
-  );
-}`}
+        code={SPLIT_USAGE_CODE}
       />
 
       {/* Loading State */}
@@ -686,25 +640,22 @@ export function FrozenTable() {
                 Toggle loading
               </Button>
             </Flex>
-            <Table
-              bordered
-              size="small"
+            <SplitTableDemo
+              data={tableData.slice(0, 5)}
               loading={loading}
-              columns={simpleColumns}
-              dataSource={tableData.slice(0, 5)}
-              pagination={false}
             />
           </>
         }
-        code={`import { Table } from "antd";
+        code={`import SplitTable from "@/components/SplitTable";
 
-export function LoadingTable({ isLoading }: { isLoading: boolean }) {
+export function LoadingTable({ isLoading, data }: { isLoading: boolean; data: Row[] }) {
   return (
-    <Table
-      loading={isLoading}
-      columns={columns}
-      dataSource={data}
-    />
+    <div style={{ height: 400 }}>
+      <SplitTable
+        data={data}
+        dataTable={<YourTable data={data} loading={isLoading} />}
+      />
+    </div>
   );
 }`}
       />
@@ -719,20 +670,18 @@ export function LoadingTable({ isLoading }: { isLoading: boolean }) {
                 Toggle empty
               </Button>
             </Flex>
-            <Table
-              bordered
-              size="small"
-              columns={simpleColumns}
-              dataSource={empty ? [] : tableData.slice(0, 5)}
-              pagination={false}
-            />
+            <SplitTableDemo data={empty ? [] : tableData.slice(0, 5)} />
           </>
         }
-        code={`import { Table } from "antd";
+        code={`import SplitTable from "@/components/SplitTable";
 
-// Empty state renders automatically when dataSource is [].
+// Empty state renders automatically when data is [].
 export function EmptyTable() {
-  return <Table columns={columns} dataSource={[]} />;
+  return (
+    <div style={{ height: 400 }}>
+      <SplitTable data={[]} dataTable={<YourTable data={[]} />} />
+    </div>
+  );
 }`}
       />
     </Flex>

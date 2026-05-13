@@ -1,7 +1,7 @@
 import React from "react";
 import { Radio, Input, Button, Divider, Flex, theme } from "antd";
 import { colors } from "../../theme";
-import ShowcaseTable from "./Table";
+import { GlobalTable } from "./Table";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
@@ -158,7 +158,7 @@ export function RadioTabsDefault() {
           <Tabs
             initial="tab1"
             tabs={[
-              { key: "tab1", label: "Tabs 1 - Active", content: <ShowcaseTable /> },
+              { key: "tab1", label: "Tabs 1 - Active", content: <GlobalTable /> },
               {
                 key: "tab2",
                 label: "Tabs - 2",
