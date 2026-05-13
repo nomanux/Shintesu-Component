@@ -275,6 +275,11 @@ div.ant-divider-horizontal {
   padding-right: 8px !important;
 }
 
+/* Checkbox cells: center horizontally */
+.ant-table-cell.cell-checkbox {
+  text-align: center;
+}
+
 /* Header padding */
 .ant-table-thead > tr > th {
   padding-top: 6px !important;

@@ -87,6 +87,7 @@ const BASE_COLUMNS = [
     title: "Table header",
     key: "checkbox",
     defaultWidth: 100,
+    onCell: () => ({ className: "cell-checkbox" }),
     render: () => <Checkbox />,
   },
 ];
