@@ -736,10 +736,12 @@ div.ant-divider-horizontal {
   flex-shrink: 0;
 }
 
-/* Inner scroller: pushes scrollbar out of the clipped area */
+/* Inner scroller: pushes scrollbar out of the clipped area.
+   overflow-y: auto so the track only appears when content actually overflows
+   (its scrollbar is clipped by the parent anyway, but this keeps layout clean). */
 .clip-vscroll__scroller {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   margin-right: calc(-1 * var(--sbw));
   padding-right: 0;
@@ -751,6 +753,13 @@ div.ant-divider-horizontal {
   margin-right: calc(-1 * var(--sbw));
 }
 
+
+/* Ant Design uses 'overflow: scroll' on the body when scroll.y is set, which
+   always reserves a scrollbar gutter even when the rows fit. Force 'auto' so
+   the scrollbar only appears when content actually overflows. */
+.split-table-container .ant-table-body {
+  overflow: auto !important;
+}
 
 /* Custom scrollbar — Firefox
    .scroll-styled is a utility class for any scrollable container */
