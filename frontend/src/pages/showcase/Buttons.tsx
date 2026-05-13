@@ -9,6 +9,7 @@ import {
 import { SectionLabel, GroupHeader, RowLabel, Cell } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
+import ExampleBlock from "./ExampleBlock";
 
 export function ButtonsGuidance() {
   return (
@@ -41,107 +42,133 @@ export default function ButtonsSection() {
   };
 
   return (
-    <Flex vertical gap={24}>
+    <Flex vertical gap={32}>
+      {/* Usage — basic import + use */}
+      <div>
+        <SectionLabel>Usage</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <CodeBlock>{`import { Button } from "antd";
+
+<Button type="primary">Save</Button>
+<Button>Cancel</Button>`}</CodeBlock>
+      </div>
+
       {/* Size & state matrix */}
       <div>
         <SectionLabel>Sizes &amp; States</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ borderCollapse: "collapse", width: "100%" }}>
-            <thead>
-              <tr>
-                <th />
-                <GroupHeader span={2}>Primary</GroupHeader>
-                <th style={{ width: 24 }} />
-                <GroupHeader span={2}>Default</GroupHeader>
-              </tr>
-            </thead>
-            <tbody>
-              {(["small", "middle", "large"] as const).map((size) => (
-                <tr key={size}>
-                  <RowLabel>
-                    {size.charAt(0).toUpperCase() + size.slice(1)}
-                  </RowLabel>
-                  <Cell>
-                    <Button
-                      type="primary"
-                      size={size === "middle" ? undefined : size}
-                    >
-                      Button
-                    </Button>
-                  </Cell>
-                  <Cell>
-                    <Button
-                      type="primary"
-                      size={size === "middle" ? undefined : size}
-                      disabled
-                    >
-                      Button
-                    </Button>
-                  </Cell>
-                  <td />
-                  <Cell>
-                    <Button size={size === "middle" ? undefined : size}>
-                      Button
-                    </Button>
-                  </Cell>
-                  <Cell>
-                    <Button
-                      size={size === "middle" ? undefined : size}
-                      disabled
-                    >
-                      Button
-                    </Button>
-                  </Cell>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <CodeBlock>{`<Button type="primary">Button</Button>
+        <ExampleBlock
+          preview={
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                <thead>
+                  <tr>
+                    <th />
+                    <GroupHeader span={2}>Primary</GroupHeader>
+                    <th style={{ width: 24 }} />
+                    <GroupHeader span={2}>Default</GroupHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(["small", "middle", "large"] as const).map((size) => (
+                    <tr key={size}>
+                      <RowLabel>
+                        {size.charAt(0).toUpperCase() + size.slice(1)}
+                      </RowLabel>
+                      <Cell>
+                        <Button
+                          type="primary"
+                          size={size === "middle" ? undefined : size}
+                        >
+                          Button
+                        </Button>
+                      </Cell>
+                      <Cell>
+                        <Button
+                          type="primary"
+                          size={size === "middle" ? undefined : size}
+                          disabled
+                        >
+                          Button
+                        </Button>
+                      </Cell>
+                      <td />
+                      <Cell>
+                        <Button size={size === "middle" ? undefined : size}>
+                          Button
+                        </Button>
+                      </Cell>
+                      <Cell>
+                        <Button
+                          size={size === "middle" ? undefined : size}
+                          disabled
+                        >
+                          Button
+                        </Button>
+                      </Cell>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          }
+          code={`<Button type="primary">Button</Button>
 <Button type="primary" disabled>Button</Button>
 <Button>Button</Button>
 <Button size="small">Button</Button>
-<Button size="large">Button</Button>`}</CodeBlock>
+<Button size="large">Button</Button>`}
+        />
       </div>
 
       {/* Icon buttons */}
       <div>
         <SectionLabel>With Icons</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex wrap gap={8}>
-          <Button type="primary" icon={<DownloadOutlined />}>
-            Download
-          </Button>
-          <Button type="primary" icon={<UploadOutlined />}>
-            Upload
-          </Button>
-          <Button icon={<EditOutlined />}>Edit</Button>
-          <Button icon={<DeleteOutlined />}>Delete</Button>
-        </Flex>
-        <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`<Button type="primary" icon={<DownloadOutlined />}>Download</Button>
-<Button icon={<EditOutlined />}>Edit</Button>`}</CodeBlock>
-        </div>
+        <ExampleBlock
+          preview={
+            <Flex wrap gap={8}>
+              <Button type="primary" icon={<DownloadOutlined />}>
+                Download
+              </Button>
+              <Button type="primary" icon={<UploadOutlined />}>
+                Upload
+              </Button>
+              <Button icon={<EditOutlined />}>Edit</Button>
+              <Button icon={<DeleteOutlined />}>Delete</Button>
+            </Flex>
+          }
+          code={`<Button type="primary" icon={<DownloadOutlined />}>Download</Button>
+<Button type="primary" icon={<UploadOutlined />}>Upload</Button>
+<Button icon={<EditOutlined />}>Edit</Button>
+<Button icon={<DeleteOutlined />}>Delete</Button>`}
+        />
       </div>
 
       {/* Loading state */}
       <div>
         <SectionLabel>Loading</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex gap={8}>
-          <Button type="primary" loading>
-            Loading
-          </Button>
-          <Button type="primary" loading={loading} onClick={triggerLoading}>
-            Click to Load
-          </Button>
-          <Button loading>Loading</Button>
-        </Flex>
-        <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`<Button type="primary" loading>Loading</Button>
-<Button type="primary" loading={loading} onClick={handleClick}>Submit</Button>`}</CodeBlock>
-        </div>
+        <ExampleBlock
+          preview={
+            <Flex gap={8}>
+              <Button type="primary" loading>
+                Loading
+              </Button>
+              <Button
+                type="primary"
+                loading={loading}
+                onClick={triggerLoading}
+              >
+                Click to Load
+              </Button>
+              <Button loading>Loading</Button>
+            </Flex>
+          }
+          code={`<Button type="primary" loading>Loading</Button>
+<Button type="primary" loading={loading} onClick={handleClick}>
+  Submit
+</Button>`}
+        />
       </div>
     </Flex>
   );

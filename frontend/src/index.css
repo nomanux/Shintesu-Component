@@ -352,6 +352,62 @@ div.ant-divider-horizontal {
   display: none;
 }
 
+/* ── Example block (shadcn-style Preview/Code tabs) ───────────────────────── */
+
+.example-block {
+  border: 1px solid var(--gray-4);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--gray-1);
+}
+
+.example-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-4);
+  background: var(--gray-2);
+  padding: 4px 12px 0;
+  gap: 4px;
+}
+
+.example-tab {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-7);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+  font-family: inherit;
+  margin-bottom: -1px;
+}
+
+.example-tab:hover {
+  color: var(--gray-9);
+}
+
+.example-tab.active {
+  color: var(--brand-6);
+  border-bottom-color: var(--brand-6);
+}
+
+.example-preview {
+  padding: 24px;
+  background: var(--gray-1);
+}
+
+.example-code {
+  padding: 0;
+}
+
+.example-code .code-block {
+  border: none;
+  border-radius: 0;
+}
+
 /* ── Code block (showcase reference) ──────────────────────────────────────── */
 
 .code-block {
