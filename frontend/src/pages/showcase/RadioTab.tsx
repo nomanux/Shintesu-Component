@@ -238,67 +238,6 @@ export function RadioTabsDefault() {
 }`}
       />
 
-      {/* Sizes */}
-      <Variant
-        label="Small"
-        preview={
-          <Tabs
-            size="small"
-            initial="a"
-            tabs={[
-              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
-              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
-              { key: "c", label: "History", content: <Placeholder text="History content" /> },
-            ]}
-          />
-        }
-        code={`<Radio.Group buttonStyle="outline" size="small" value={value} onChange={...}>
-  <Radio.Button value="a">Overview</Radio.Button>
-  <Radio.Button value="b">Details</Radio.Button>
-  <Radio.Button value="c">History</Radio.Button>
-</Radio.Group>`}
-      />
-
-      <Variant
-        label="Middle"
-        preview={
-          <Tabs
-            size="middle"
-            initial="a"
-            tabs={[
-              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
-              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
-              { key: "c", label: "History", content: <Placeholder text="History content" /> },
-            ]}
-          />
-        }
-        code={`<Radio.Group buttonStyle="outline" size="middle" value={value} onChange={...}>
-  <Radio.Button value="a">Overview</Radio.Button>
-  <Radio.Button value="b">Details</Radio.Button>
-  <Radio.Button value="c">History</Radio.Button>
-</Radio.Group>`}
-      />
-
-      <Variant
-        label="Large"
-        preview={
-          <Tabs
-            size="large"
-            initial="a"
-            tabs={[
-              { key: "a", label: "Overview", content: <Placeholder text="Overview content" /> },
-              { key: "b", label: "Details", content: <Placeholder text="Details content" /> },
-              { key: "c", label: "History", content: <Placeholder text="History content" /> },
-            ]}
-          />
-        }
-        code={`<Radio.Group buttonStyle="outline" size="large" value={value} onChange={...}>
-  <Radio.Button value="a">Overview</Radio.Button>
-  <Radio.Button value="b">Details</Radio.Button>
-  <Radio.Button value="c">History</Radio.Button>
-</Radio.Group>`}
-      />
-
       {/* Disabled tab */}
       <Variant
         label="Disabled Tab"
