@@ -773,7 +773,7 @@ div.ant-divider-horizontal {
 .clip-vscroll__scroller::-webkit-scrollbar-track,
 .scroll-styled::-webkit-scrollbar-track,
 .split-table-container .ant-table-body::-webkit-scrollbar-track {
-  background: var(--gray-3);
+  background: transparent;
 }
 
 .split-table-right::-webkit-scrollbar-thumb,
@@ -781,7 +781,9 @@ div.ant-divider-horizontal {
 .scroll-styled::-webkit-scrollbar-thumb,
 .split-table-container .ant-table-body::-webkit-scrollbar-thumb {
   background-color: var(--gray-5);
-  border-radius: 4px;
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 .split-table-right::-webkit-scrollbar-thumb:hover,
