@@ -85,6 +85,7 @@ export default function FrameSection() {
         <SectionLabel>Page frame template</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
 
+        <div className="frame-scroll-wrapper">
         <div className="frame-demo">
           {/* Header */}
           <div className="frame-header">
@@ -141,6 +142,7 @@ export default function FrameSection() {
               <Button size="small">Cancel</Button>
             </Flex>
           </div>
+        </div>
         </div>
 
         <div style={{ marginTop: 16 }}>

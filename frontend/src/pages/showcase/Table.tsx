@@ -538,7 +538,7 @@ function ShowcaseTableForSplit({
 
 // ── Public components ──────────────────────────────────────────────────────
 
-export function GlobalTable({ height = 400 }: { height?: number }) {
+export function GlobalTable() {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
   const [splitWidth, setSplitWidth] = React.useState(0);
@@ -551,7 +551,7 @@ export function GlobalTable({ height = 400 }: { height?: number }) {
   return (
     <SplitTableContext.Provider value={shared}>
       <div>
-        <div style={{ height, border: "1px solid var(--gray-4)" }}>
+        <div className="global-table-outer" style={{ border: "1px solid var(--gray-4)" }}>
           <SplitTable
             data={pagedData}
             dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}

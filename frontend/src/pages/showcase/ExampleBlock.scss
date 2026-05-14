@@ -27,6 +27,7 @@
     border-color 0.15s;
   font-family: inherit;
   margin-bottom: -1px;
+  white-space: nowrap;
 
   &:hover {
     color: var(--gray-9);
@@ -41,6 +42,8 @@
 .example-preview {
   padding: 24px;
   background: var(--gray-1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .example-code {
@@ -49,5 +52,22 @@
   .code-block {
     border: none;
     border-radius: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .example-preview {
+    padding: 16px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .example-preview {
+    padding: 12px;
+  }
+
+  .example-tab {
+    padding: 7px 10px;
+    font-size: 12px;
   }
 }

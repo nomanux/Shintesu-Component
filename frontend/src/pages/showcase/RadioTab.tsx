@@ -66,7 +66,7 @@ function Tabs({
 
   return (
     <div>
-      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <Radio.Group
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -118,7 +118,7 @@ export function RadioTabsDefault() {
 
   return (
     <div>
-      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <Radio.Group
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -206,7 +206,7 @@ export function RadioTabsDefault() {
 
   return (
     <div>
-      <div style={{ lineHeight: 0, position: "relative", zIndex: 1 }}>
+      <div style={{ lineHeight: 0, position: "relative", zIndex: 1, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <Radio.Group
           value={value}
           onChange={(e) => setValue(e.target.value)}
