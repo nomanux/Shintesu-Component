@@ -1,0 +1,21 @@
+/* Remove bottom border so tab merges with content panel */
+.ant-radio-button-wrapper {
+  border-bottom: none !important;
+
+  /* Hover background */
+  &:not(.ant-radio-button-wrapper-checked):hover {
+    background-color: var(--brand-1) !important;
+  }
+}
+
+/* Active: brand-4 border, brand-7 text */
+.ant-radio-button-wrapper-checked {
+  font-weight: 600 !important;
+  border-color: var(--brand-4) !important;
+  color: var(--brand-7) !important;
+
+  /* Active divider between adjacent buttons */
+  &::before {
+    background-color: var(--brand-4) !important;
+  }
+}

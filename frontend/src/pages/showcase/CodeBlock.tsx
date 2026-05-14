@@ -1,4 +1,5 @@
 import React from "react";
+import "./CodeBlock.scss";
 import { Highlight, themes } from "prism-react-renderer";
 
 /**

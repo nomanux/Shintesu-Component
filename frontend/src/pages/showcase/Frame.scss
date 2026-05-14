@@ -1,0 +1,149 @@
+.frame-demo {
+  border: 1px solid var(--gray-4);
+  background: var(--gray-1);
+  overflow: hidden;
+}
+
+.frame-header {
+  height: 46px;
+  border-bottom: 1px solid var(--gray-4);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 24px;
+  background: var(--gray-1);
+}
+
+.frame-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.frame-nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+}
+
+.frame-nav-item {
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--gray-9);
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.2s;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--brand-6);
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    color: var(--brand-6);
+  }
+
+  &:hover::after,
+  &.ant-dropdown-open::after {
+    transform: translateY(0);
+  }
+
+  &.active {
+    color: var(--brand-6);
+  }
+}
+
+.frame-tag {
+  background: var(--brand-1);
+  color: var(--brand-9);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.frame-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.frame-user-name {
+  color: var(--gray-10);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.frame-page-title {
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--gray-4);
+}
+
+.frame-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--gray-4);
+  background: var(--gray-1);
+}
+
+.frame-content {
+  padding: 12px;
+  background: var(--st-gray);
+  display: flex;
+  flex-direction: column;
+}
+
+.frame-dropzone {
+  background: var(--gray-1);
+  padding: var(--Space-Padding-paddingSM, 12px) var(--Space-Padding-paddingMD, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-7);
+  font-size: 14px;
+  min-height: 56px;
+}
+
+.frame-table-wrapper {
+  background: var(--gray-1);
+  padding: 12px 20px;
+}
+
+/* ── Typography spec grid ───────────────────────────────────────────────── */
+
+.type-grid {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  gap: 16px 24px;
+  align-items: baseline;
+}
+
+.type-token,
+.type-spec {
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--gray-7);
+  white-space: nowrap;
+}
+
+.type-token {
+  color: var(--gray-9);
+}

@@ -12,6 +12,7 @@
 
 import React from "react";
 import { Typography, Divider } from "antd";
+import "./ComponentShowcase.scss";
 
 import FoundationsSection, {
   FoundationsGuidance,
@@ -24,6 +25,7 @@ import { TableSection, TableGuidance } from "./showcase/Table";
 import ModalSection, { ModalGuidance } from "./showcase/Modal";
 import RadioTabSection, { RadioTabGuidance } from "./showcase/RadioTab";
 import ScrollSection, { ScrollGuidance } from "./showcase/Scroll";
+import SelectSection, { SelectGuidance } from "./showcase/SelectPage";
 
 const { Title, Text } = Typography;
 
@@ -32,10 +34,11 @@ const sections = [
   { key: "frame", label: "Frame", group: "TEMPLATES" },
   { key: "buttons", label: "Buttons", group: "COMPONENTS" },
   { key: "inputs", label: "Inputs", group: "COMPONENTS" },
+  { key: "select", label: "Select", group: "COMPONENTS" },
   { key: "form", label: "Form", group: "COMPONENTS" },
+  { key: "radio-tab", label: "Radio Button (Tab)", group: "COMPONENTS" },
   { key: "table", label: "Table", group: "COMPONENTS" },
   { key: "modal", label: "Modal", group: "COMPONENTS" },
-  { key: "radio-tab", label: "Radio Button (Tab)", group: "COMPONENTS" },
   { key: "scroll", label: "Scroll", group: "COMPONENTS" },
 ] as const;
 
@@ -60,6 +63,7 @@ const contentMap: Record<
     guidance: <RadioTabGuidance />,
   },
   scroll: { component: <ScrollSection />, guidance: <ScrollGuidance /> },
+  select: { component: <SelectSection />, guidance: <SelectGuidance /> },
 };
 
 export default function ComponentShowcase() {

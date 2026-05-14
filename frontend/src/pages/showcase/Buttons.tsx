@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Divider, Flex } from "antd";
+import "./Buttons.scss";
 import {
   DownloadOutlined,
   UploadOutlined,

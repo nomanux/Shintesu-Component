@@ -114,7 +114,7 @@ export const shintetsuTheme = {
       defaultBg: colors.gray[3],
       defaultHoverBg: colors.gray[4],
       defaultActiveBg: colors.gray[5],
-      defaultColor: colors.gray[9],
+      defaultColor: colors.gray[10],
       defaultHoverColor: colors.gray[9],
       defaultActiveColor: colors.gray[9],
       defaultBorderColor: "transparent",
@@ -135,6 +135,7 @@ export const shintetsuTheme = {
       buttonSolidCheckedHoverBg: colors.brand[1],
       buttonSolidCheckedColor: colors.brand[6],
       colorPrimary: colors.brand[6],
+      colorPrimaryActive: colors.brand[7],
       colorBorder: colors.gray[5],
     },
 
@@ -147,6 +148,10 @@ export const shintetsuTheme = {
 
     Select: {
       colorBorder: colors.gray[5],
+      colorBorderDisabled: colors.gray[5],
+      colorText: colors.gray[9],
+      colorTextDisabled: colors.gray[9],
+      colorBgContainerDisabled: colors.gray[3],
       optionSelectedBg: colors.brand[1],
       optionActiveBg: colors.brand[1],
       optionSelectedColor: colors.gray[9],

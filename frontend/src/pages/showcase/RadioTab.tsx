@@ -1,5 +1,6 @@
 import React from "react";
 import { Radio, Input, Button, Divider, Flex, theme } from "antd";
+import "./RadioTab.scss";
 import { colors } from "../../theme";
 import { GlobalTable } from "./Table";
 import { SectionLabel } from "./helpers";
@@ -54,12 +55,10 @@ function Tabs({
   tabs,
   initial,
   size = "small",
-  disabledKeys = [],
 }: {
   tabs: Tab[];
   initial: string;
   size?: "small" | "middle" | "large";
-  disabledKeys?: string[];
 }) {
   const { token } = theme.useToken();
   const [value, setValue] = React.useState(initial);
@@ -79,7 +78,6 @@ function Tabs({
             <Radio.Button
               key={t.key}
               value={t.key}
-              disabled={disabledKeys.includes(t.key)}
             >
               {t.label}
             </Radio.Button>
@@ -238,34 +236,7 @@ export function RadioTabsDefault() {
 }`}
       />
 
-      {/* Disabled tab */}
-      <Variant
-        label="Disabled Tab"
-        preview={
-          <Tabs
-            initial="a"
-            disabledKeys={["b"]}
-            tabs={[
-              { key: "a", label: "Available", content: <Placeholder text="Available content" /> },
-              { key: "b", label: "Disabled", content: <Placeholder text="(unreachable)" /> },
-              { key: "c", label: "Also Available", content: <Placeholder text="Other content" /> },
-            ]}
-          />
-        }
-        code={`<Radio.Group buttonStyle="outline" size="small" value={value} onChange={...}>
-  <Radio.Button value="a">Available</Radio.Button>
-  <Radio.Button value="b" disabled>Disabled</Radio.Button>
-  <Radio.Button value="c">Also Available</Radio.Button>
-</Radio.Group>`}
-      />
     </Flex>
   );
 }
 
-function Placeholder({ text }: { text: string }) {
-  return (
-    <div style={{ color: colors.gray[7], fontSize: 14, padding: "12px 0" }}>
-      {text}
-    </div>
-  );
-}

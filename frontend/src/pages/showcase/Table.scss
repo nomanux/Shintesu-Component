@@ -1,0 +1,75 @@
+/* ── Ant Design Table overrides ─────────────────────────────────────────── */
+
+.ant-table-cell {
+  padding: 2px !important;
+
+  &.cell-text {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  &.cell-checkbox {
+    text-align: center;
+  }
+}
+
+.ant-table-thead > tr > th {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  text-align: center !important;
+  line-height: 18px !important;
+}
+
+.ant-table-column-sorter {
+  margin-right: 8px;
+}
+
+/* Sorted column highlight */
+.ant-table-column-sort {
+  background: var(--brand-1) !important;
+}
+
+/* Selected row */
+.ant-table-tbody > tr.row-selected > td {
+  background-color: var(--brand-1) !important;
+}
+
+.ant-table-tbody > tr.row-selected:hover > td {
+  background-color: var(--brand-1) !important;
+}
+
+/* Pagination: keep top margin, drop bottom margin */
+.ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin-bottom: 0;
+}
+
+/* ── Dropdown overrides (nav + table dropdowns) ─────────────────────────── */
+
+.ant-dropdown-menu-item {
+  color: var(--gray-9) !important;
+  font-weight: var(--font-weight-medium) !important;
+
+  &:hover,
+  &.ant-dropdown-menu-item-selected {
+    color: var(--brand-7) !important;
+  }
+}
+
+/* ── Select overrides ───────────────────────────────────────────────────── */
+
+/* Prevent selection value fading when the dropdown opens */
+.ant-select {
+  --ant-color-text-placeholder: var(--gray-9);
+}
+
+.ant-select-selection-item,
+.ant-select-open .ant-select-selection-item,
+.ant-select-open .ant-select-selector .ant-select-selection-item,
+.ant-select-single.ant-select-open .ant-select-selector .ant-select-selection-item,
+.ant-select-disabled .ant-select-selector .ant-select-selection-item,
+.ant-select-item-option-content,
+.ant-select-item-option-selected .ant-select-item-option-content,
+.ant-select-item-option-active .ant-select-item-option-content {
+  color: var(--gray-9) !important;
+  font-weight: var(--font-weight-medium) !important;
+}

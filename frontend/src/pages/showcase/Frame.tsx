@@ -1,4 +1,5 @@
 import React from "react";
+import "./Frame.scss";
 import { Button, Divider, Dropdown, Flex, Typography } from "antd";
 import type { MenuProps } from "antd";
 

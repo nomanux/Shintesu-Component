@@ -1,0 +1,25 @@
+/* Exclude icon-only buttons from min-width */
+.ant-btn:not(.ant-btn-icon-only) {
+  min-width: 110px;
+}
+
+/* Primary hover: white bg + teal text/border */
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: var(--gray-1) !important;
+  color: var(--brand-6) !important;
+  border-color: var(--brand-6) !important;
+}
+
+/* Primary disabled: brand-4 bg + white text */
+.ant-btn-primary:disabled,
+.ant-btn-primary.ant-btn-disabled {
+  background-color: var(--brand-4) !important;
+  border-color: var(--brand-4) !important;
+  color: var(--gray-1) !important;
+}
+
+/* Default disabled: transparent border */
+.ant-btn-default:disabled,
+.ant-btn-default.ant-btn-disabled {
+  border-color: transparent !important;
+}

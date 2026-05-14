@@ -1,4 +1,5 @@
 import React from "react";
+import "./ExampleBlock.scss";
 import CodeBlock from "./CodeBlock";
 
 type Props = {

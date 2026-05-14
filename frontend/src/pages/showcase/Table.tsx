@@ -1,4 +1,5 @@
 import React from "react";
+import "./Table.scss";
 import {
   Table,
   Input,
@@ -15,6 +16,7 @@ import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
 import SplitTable from "../../components/SplitTable";
+import SpecialInput from "../../components/SpecialInput";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
@@ -310,111 +312,163 @@ export default function ShowcaseTable() {
   );
 }
 
-const SPLIT_COLS = [
+// ── Dummy data ────────────────────────────────────────────────────────────
+
+type SplitRow = { key: number };
+
+const splitTableData: SplitRow[] = Array.from({ length: 50 }, (_, i) => ({
+  key: i + 1,
+}));
+
+const SELECT_OPTIONS = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+];
+
+// ── Column definitions ─────────────────────────────────────────────────────
+
+const SPLIT_COLS_BASE = [
+  // No.
   {
-    title: "No.",
     key: "no",
-    width: 70,
+    label: "No.",
+    width: 60,
     onCell: () => ({ className: "cell-text" }),
-    render: (_: unknown, __: unknown, i: number) => `${i + 1}`,
+    render: (_: unknown, __: SplitRow, i: number) => i + 1,
+  },
+  // text cell
+  {
+    key: "select1",
+    label: "Table header",
+    width: 150,
+    onCell: () => ({ className: "cell-text" }),
+    render: (_: unknown, r: SplitRow) => `Text ${r.key}`,
+  },
+  // special input
+  {
+    key: "select2",
+    label: "Table header",
+    width: 150,
+    render: () => <SpecialInput size="small" style={{ width: "100%" }} />,
   },
   {
-    title: "Table header",
-    key: "s1",
-    width: 180,
-    sorter: true,
+    key: "select3",
+    label: "Table header",
+    width: 150,
     render: () => (
       <Select
         size="small"
         suffixIcon={<DownIcon />}
         style={{ width: "100%" }}
-        options={[
-          { value: "1", label: "Option 1" },
-          { value: "2", label: "Option 2" },
-          { value: "3", label: "Option 3" },
-        ]}
+        options={SELECT_OPTIONS}
       />
     ),
   },
+  // 2 disabled dropdowns
   {
-    title: "Table header",
-    key: "i1",
-    width: 180,
-    sorter: true,
-    render: () => <Input size="small" />,
-  },
-  {
-    title: "Table header",
-    key: "t1",
-    width: 180,
-    sorter: true,
-    onCell: () => ({ className: "cell-text" }),
-    render: () => <span>Table cell text</span>,
-  },
-  {
-    title: "Table header",
-    key: "t2",
-    width: 180,
-    sorter: true,
-    onCell: () => ({ className: "cell-text" }),
-    render: () => <span>Table cell text</span>,
-  },
-  {
-    title: "Table header",
-    key: "s2",
-    width: 180,
-    sorter: true,
+    key: "select4",
+    label: "Table header",
+    width: 150,
     render: () => (
       <Select
         size="small"
         suffixIcon={<DownIcon />}
         style={{ width: "100%" }}
-        options={[
-          { value: "1", label: "Option 1" },
-          { value: "2", label: "Option 2" },
-        ]}
+        disabled
+        value="option1"
+        options={SELECT_OPTIONS}
       />
     ),
   },
   {
-    title: "Table header",
-    key: "i2",
-    width: 180,
-    sorter: true,
+    key: "select5",
+    label: "Table header",
+    width: 150,
+    render: () => (
+      <Select
+        size="small"
+        suffixIcon={<DownIcon />}
+        style={{ width: "100%" }}
+        disabled
+        value="option1"
+        options={SELECT_OPTIONS}
+      />
+    ),
+  },
+  // 2 inputs
+  {
+    key: "input1",
+    label: "Table header",
+    width: 130,
     render: () => <Input size="small" />,
   },
   {
-    title: "Table header",
-    key: "t3",
-    width: 180,
-    sorter: true,
-    onCell: () => ({ className: "cell-text" }),
-    render: () => <span>Table cell text</span>,
+    key: "input2",
+    label: "Table header",
+    width: 130,
+    render: () => <Input size="small" />,
+  },
+  // 2 disabled inputs
+  {
+    key: "input3",
+    label: "Table header",
+    width: 130,
+    render: () => <Input size="small" disabled value="Sample text" />,
   },
   {
-    title: "Table header",
-    key: "c1",
-    width: 120,
+    key: "input4",
+    label: "Table header",
+    width: 130,
+    render: () => <Input size="small" disabled value="Sample text" />,
+  },
+  // 1 checkbox
+  {
+    key: "checkbox",
+    label: "Table header",
+    width: 80,
     onCell: () => ({ className: "cell-checkbox" }),
     render: () => <Checkbox />,
   },
 ];
 
-// Total column width: 70 + 180×7 + 120 = 1450px — wide enough to overflow and
-// demonstrate the split handle on any common viewport.
-const SPLIT_TOTAL_WIDTH = 1450;
+const SPLIT_TOTAL_WIDTH = SPLIT_COLS_BASE.reduce((s, c) => s + c.width, 0);
+
+// ── Shared context ─────────────────────────────────────────────────────────
+// Both the left frozen panel and the right scrollable panel are separate React
+// instances of ShowcaseTableForSplit. A context shares column order and widths
+// so a drag in either panel updates both. Cross-panel drag uses dataTransfer.
+
+type SplitTableCtx = {
+  order: string[];
+  setOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  widths: Record<string, number>;
+  setWidths: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+};
+
+const SplitTableContext = React.createContext<SplitTableCtx | null>(null);
+
+function useSplitTableState(): SplitTableCtx {
+  const [order, setOrder] = React.useState<string[]>(() =>
+    SPLIT_COLS_BASE.map((c) => c.key),
+  );
+  const [widths, setWidths] = React.useState<Record<string, number>>(() =>
+    Object.fromEntries(SPLIT_COLS_BASE.map((c) => [c.key, c.width])),
+  );
+  return { order, setOrder, widths, setWidths };
+}
+
+// ── Table component ────────────────────────────────────────────────────────
 
 function ShowcaseTableForSplit({
   dataSource,
   loading,
 }: {
-  dataSource: typeof tableData;
+  dataSource: SplitRow[];
   loading?: boolean;
 }) {
-  const [order, setOrder] = React.useState(() => SPLIT_COLS.map((c) => c.key));
-  const [widths, setWidths] = React.useState<Record<string, number>>(() =>
-    Object.fromEntries(SPLIT_COLS.map((c) => [c.key, c.width])),
-  );
+  const { order, setOrder, widths, setWidths } =
+    React.useContext(SplitTableContext)!;
   const dragKey = React.useRef<string | null>(null);
 
   const startResize = (key: string, startX: number) => {
@@ -433,10 +487,11 @@ function ShowcaseTableForSplit({
   };
 
   const columns = order.map((key) => {
-    const col = SPLIT_COLS.find((c) => c.key === key)!;
+    const col = SPLIT_COLS_BASE.find((c) => c.key === key)!;
     const w = widths[key];
     return {
       ...col,
+      title: col.label,
       width: w,
       onHeaderCell: () => ({
         colKey: key,
@@ -445,19 +500,23 @@ function ShowcaseTableForSplit({
         onDragStart: (e: React.DragEvent) => {
           dragKey.current = key;
           e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("splitColKey", key);
         },
         onDragOver: (e: React.DragEvent) => e.preventDefault(),
-        onDrop: () => {
-          if (!dragKey.current || dragKey.current === key) return;
+        onDrop: (e: React.DragEvent) => {
+          // Same-panel: dragKey.current is set. Cross-panel: read from dataTransfer.
+          const src = dragKey.current ?? e.dataTransfer.getData("splitColKey");
+          dragKey.current = null;
+          if (!src || src === key) return;
           setOrder((prev) => {
-            const from = prev.indexOf(dragKey.current!);
-            const to = prev.indexOf(key);
             const next = [...prev];
+            const from = next.indexOf(src);
+            const to = next.indexOf(key);
+            if (from === -1 || to === -1) return prev;
             next.splice(from, 1);
-            next.splice(to, 0, dragKey.current!);
+            next.splice(to, 0, src);
             return next;
           });
-          dragKey.current = null;
         },
       }),
     };
@@ -477,34 +536,47 @@ function ShowcaseTableForSplit({
   );
 }
 
+// ── Public components ──────────────────────────────────────────────────────
+
 export function GlobalTable({ height = 400 }: { height?: number }) {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
-  const pagedData = tableData.slice((page - 1) * pageSize, page * pageSize);
+  const [splitWidth, setSplitWidth] = React.useState(0);
+  const shared = useSplitTableState();
+  const pagedData = splitTableData.slice(
+    (page - 1) * pageSize,
+    page * pageSize,
+  );
 
   return (
-    <div>
-      <div style={{ height, border: "1px solid var(--gray-4)" }}>
-        <SplitTable
-          data={pagedData}
-          dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}
-        />
+    <SplitTableContext.Provider value={shared}>
+      <div>
+        <div style={{ height, border: "1px solid var(--gray-4)" }}>
+          <SplitTable
+            data={pagedData}
+            dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}
+            splitWidth={splitWidth}
+            onSplitWidthChange={setSplitWidth}
+          />
+        </div>
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
+        >
+          <Pagination
+            size="small"
+            current={page}
+            pageSize={pageSize}
+            total={splitTableData.length}
+            showSizeChanger
+            showQuickJumper
+            onChange={(p, ps) => {
+              setPage(p);
+              setPageSize(ps);
+            }}
+          />
+        </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
-        <Pagination
-          size="small"
-          current={page}
-          pageSize={pageSize}
-          total={tableData.length}
-          showSizeChanger
-          showQuickJumper
-          onChange={(p, ps) => {
-            setPage(p);
-            setPageSize(ps);
-          }}
-        />
-      </div>
-    </div>
+    </SplitTableContext.Provider>
   );
 }
 
@@ -533,17 +605,25 @@ function SplitTableDemo({
   loading,
   height = 400,
 }: {
-  data: typeof tableData;
+  data: SplitRow[];
   loading?: boolean;
   height?: number;
 }) {
+  const [splitWidth, setSplitWidth] = React.useState(0);
+  const shared = useSplitTableState();
   return (
-    <div style={{ height, border: "1px solid var(--gray-4)" }}>
-      <SplitTable
-        data={data}
-        dataTable={<ShowcaseTableForSplit dataSource={data} loading={loading} />}
-      />
-    </div>
+    <SplitTableContext.Provider value={shared}>
+      <div style={{ height, border: "1px solid var(--gray-4)" }}>
+        <SplitTable
+          data={data}
+          dataTable={
+            <ShowcaseTableForSplit dataSource={data} loading={loading} />
+          }
+          splitWidth={splitWidth}
+          onSplitWidthChange={setSplitWidth}
+        />
+      </div>
+    </SplitTableContext.Provider>
   );
 }
 
@@ -586,7 +666,7 @@ export function TableSection() {
   const [empty, setEmpty] = React.useState(false);
   const [splitPage, setSplitPage] = React.useState(1);
   const [splitPageSize, setSplitPageSize] = React.useState(10);
-  const splitPagedData = tableData.slice(
+  const splitPagedData = splitTableData.slice(
     (splitPage - 1) * splitPageSize,
     splitPage * splitPageSize,
   );
@@ -617,7 +697,7 @@ export function TableSection() {
                 size="small"
                 current={splitPage}
                 pageSize={splitPageSize}
-                total={tableData.length}
+                total={splitTableData.length}
                 showSizeChanger
                 showQuickJumper
                 onChange={(page, pageSize) => {
@@ -642,7 +722,7 @@ export function TableSection() {
               </Button>
             </Flex>
             <SplitTableDemo
-              data={tableData.slice(0, 5)}
+              data={splitTableData.slice(0, 5)}
               loading={loading}
             />
           </>
@@ -667,11 +747,9 @@ export function LoadingTable({ isLoading, data }: { isLoading: boolean; data: Ro
         preview={
           <>
             <Flex gap={8} style={{ marginBottom: 12 }}>
-              <Button onClick={() => setEmpty((v) => !v)}>
-                Toggle empty
-              </Button>
+              <Button onClick={() => setEmpty((v) => !v)}>Toggle empty</Button>
             </Flex>
-            <SplitTableDemo data={empty ? [] : tableData.slice(0, 5)} />
+            <SplitTableDemo data={empty ? [] : splitTableData.slice(0, 5)} />
           </>
         }
         code={`import SplitTable from "@/components/SplitTable";

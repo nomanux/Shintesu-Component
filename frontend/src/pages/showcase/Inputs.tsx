@@ -1,5 +1,6 @@
 import React from "react";
 import { Input, Space, Divider, Flex } from "antd";
+import "./Inputs.scss";
 import {
   UserOutlined,
   LockOutlined,

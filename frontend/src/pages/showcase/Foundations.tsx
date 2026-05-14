@@ -1,4 +1,5 @@
 import React from "react";
+import "./Foundations.scss";
 import { App, Divider, Flex, Typography } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { colors } from "../../theme";

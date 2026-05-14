@@ -1,20 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import "./SplitTable.scss";
 
 type SplitTableProps = {
   dataTable: React.ReactNode;
   data: unknown[];
+  splitWidth?: number;
+  onSplitWidthChange?: (w: number) => void;
 };
 
-const SplitTable = ({ dataTable, data }: SplitTableProps) => {
-  const [splitWidth, setSplitWidth] = useState(0);
+const SplitTable = ({
+  dataTable,
+  data: _data,
+  splitWidth: externalWidth,
+  onSplitWidthChange,
+}: SplitTableProps) => {
+  const [localWidth, setLocalWidth] = useState(0);
+  const splitWidth = externalWidth !== undefined ? externalWidth : localWidth;
+  const setSplitWidth = (w: number) => {
+    setLocalWidth(w);
+    onSplitWidthChange?.(w);
+  };
   const [dragging, setDragging] = useState(false);
   const tableWrapperRef = useRef<HTMLDivElement>(null);
+  const leftPanelRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
-  const divRef = useRef<HTMLDivElement>(null);
   const isSyncingLeft = useRef(false);
   const isSyncingRight = useRef(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
+
 
   const getScrollable = (root: HTMLElement | null): HTMLElement | null => {
     if (!root) return null;
@@ -39,15 +52,6 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
     return null;
   };
 
-  // Finds the element that actually scrolls horizontally — handles Ant Design's
-  // internal .ant-table-body which owns the scroll container when scroll.x is set.
-  const getHScrollable = (root: HTMLElement | null): HTMLElement | null => {
-    if (!root) return null;
-    const inner = root.querySelector<HTMLElement>(".ant-table-body");
-    if (inner) return inner;
-    return root;
-  };
-
   const handleMouseMove = (e: MouseEvent) => {
     if (!dragging || !tableWrapperRef.current) return;
     const rect = tableWrapperRef.current.getBoundingClientRect();
@@ -55,10 +59,6 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
     const maximumWidth = tableWrapperRef.current.offsetWidth - 20;
     newWidth = Math.max(0, Math.min(newWidth, maximumWidth));
     if (newWidth < maximumWidth) setSplitWidth(newWidth);
-    if (rightRef.current) {
-      const scrollTarget = getHScrollable(rightRef.current);
-      if (scrollTarget) scrollTarget.scrollLeft = newWidth;
-    }
   };
 
   const handleMouseDown = () => {
@@ -71,6 +71,7 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
     setDragging(false);
   };
 
+  // Sync vertical scroll between left frozen panel and right scrollable panel.
   useEffect(() => {
     if (splitWidth <= 0) return;
     const attachScrollSync = () => {
@@ -80,31 +81,21 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
       leftScroller.scrollTop = rightScroller.scrollTop;
 
       const handleLeftScroll = () => {
-        if (isSyncingLeft.current) {
-          isSyncingLeft.current = false;
-          return;
-        }
+        if (isSyncingLeft.current) { isSyncingLeft.current = false; return; }
         isSyncingRight.current = true;
         if (rightScroller.scrollTop !== leftScroller.scrollTop)
           rightScroller.scrollTop = leftScroller.scrollTop;
       };
 
       const handleRightScroll = () => {
-        if (isSyncingRight.current) {
-          isSyncingRight.current = false;
-          return;
-        }
+        if (isSyncingRight.current) { isSyncingRight.current = false; return; }
         isSyncingLeft.current = true;
         if (leftScroller.scrollTop !== rightScroller.scrollTop)
           leftScroller.scrollTop = rightScroller.scrollTop;
       };
 
-      leftScroller.addEventListener("scroll", handleLeftScroll, {
-        passive: true,
-      });
-      rightScroller.addEventListener("scroll", handleRightScroll, {
-        passive: true,
-      });
+      leftScroller.addEventListener("scroll", handleLeftScroll, { passive: true });
+      rightScroller.addEventListener("scroll", handleRightScroll, { passive: true });
       return () => {
         leftScroller.removeEventListener("scroll", handleLeftScroll);
         rightScroller.removeEventListener("scroll", handleRightScroll);
@@ -128,43 +119,97 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
     };
   }, [dragging]);
 
+  // Forward wheel events from the left panel to the right panel's scroll
+  // container so the user can scroll from either side.
   useEffect(() => {
-    const el = divRef.current;
+    const el = leftPanelRef.current;
     if (!el) return;
-    setIsOverflowing(el.scrollHeight > el.clientHeight);
-  }, [splitWidth, data]);
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      const body = rightRef.current?.querySelector<HTMLElement>(".ant-table-body");
+      if (body) body.scrollTop += e.deltaY;
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, [splitWidth]);
+
+  // Pin the table body height to the container so the horizontal scrollbar
+  // always sits at the bottom regardless of how few rows are rendered.
+  useLayoutEffect(() => {
+    const container = tableWrapperRef.current;
+    if (!container) return;
+
+    const applyBodyHeight = () => {
+      const containerH = container.clientHeight;
+      if (!containerH) return;
+      container
+        .querySelectorAll<HTMLElement>(".ant-table-body, .ant-table-content")
+        .forEach((body) => {
+          const headerEl = body
+            .closest<HTMLElement>(".ant-table-container")
+            ?.querySelector<HTMLElement>(".ant-table-header");
+          const headerH = headerEl?.offsetHeight ?? 0;
+          const targetH = containerH - headerH;
+          if (targetH > 0) {
+            body.style.maxHeight = "none";
+            body.style.height = `${targetH}px`;
+          }
+        });
+    };
+
+    applyBodyHeight();
+    const ro = new ResizeObserver(applyBodyHeight);
+    ro.observe(container);
+    return () => ro.disconnect();
+  }, [dataTable, splitWidth]);
+
+  const isSplit = splitWidth > 0;
 
   return (
     <div ref={tableWrapperRef} className="split-table-container">
-      {splitWidth > 0 && (
-        <div
-          ref={leftRef}
-          className="clip-vscroll"
-          style={{ width: splitWidth, maxWidth: splitWidth }}
-        >
-          <div
-            ref={divRef}
-            className={`clip-vscroll__scroller${isOverflowing ? " clip-vscroll__dataScroller" : ""}`}
-          >
-            {dataTable}
-          </div>
-        </div>
-      )}
 
+      {/* Right panel ─────────────────────────────────────────────────────────
+          Same full table, positioned so its left edge starts at splitWidth.
+          Both panels show from column 0 — right panel scrolls independently. */}
       <div
         ref={rightRef}
-        className="split-table-right"
-        data-scroll-container-id="table-scroll-wrapper"
         style={{
-          flex: 1,
-          overflowX: "scroll",
-          overflowY: "auto",
-          minWidth: 0,
+          position: "absolute",
+          top: 0,
+          left: splitWidth,
+          right: 0,
+          bottom: 0,
         }}
       >
         {dataTable}
       </div>
 
+      {/* Left frozen panel ───────────────────────────────────────────────────
+          Same table rendered at full containerWidth, clipped to splitWidth.
+          Vertical scroll is synced with the right panel. */}
+      {isSplit && (
+        <div
+          ref={leftPanelRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100%",
+            width: splitWidth,
+            overflow: "hidden",
+            zIndex: 2,
+            boxShadow: "2px 0 4px rgba(0,0,0,0.08)",
+          }}
+        >
+          <div ref={leftRef} style={{ height: "100%" }}>
+            {dataTable}
+          </div>
+        </div>
+      )}
+
+      {/* Handle ──────────────────────────────────────────────────────────────
+          Small square at bottom-left when collapsed;
+          full-height divider on the split boundary when active. */}
       <div
         role="separator"
         tabIndex={0}
@@ -180,14 +225,14 @@ const SplitTable = ({ dataTable, data }: SplitTableProps) => {
           }
         }}
         style={{
-          width: "6px",
-          cursor: "col-resize",
-          background: "var(--gray-5)",
           position: "absolute",
-          top: splitWidth > 0 ? 0 : "auto",
+          top: isSplit ? 0 : "auto",
           bottom: 0,
           left: splitWidth,
-          height: splitWidth > 0 ? "100%" : "16px",
+          width: "6px",
+          height: isSplit ? "100%" : "16px",
+          cursor: "col-resize",
+          background: "var(--gray-5)",
           zIndex: 10,
         }}
       />

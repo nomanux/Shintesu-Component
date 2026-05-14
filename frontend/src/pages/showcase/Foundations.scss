@@ -1,0 +1,77 @@
+/* Color palette strip — 10 connected swatches flexing equally */
+.swatch-strip {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.swatch-card {
+  flex: 1 1 0;
+  min-width: 0;
+  cursor: pointer;
+
+  &:hover .swatch-color {
+    filter: brightness(0.92);
+  }
+
+  &:hover .swatch-copy-icon {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-6);
+    outline-offset: 2px;
+  }
+}
+
+.swatch-color {
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px 8px;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  user-select: none;
+  transition: filter 0.15s;
+}
+
+.swatch-copy-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.swatch-meta {
+  padding: 6px 4px 0;
+  font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swatch-meta-hex {
+  color: var(--gray-9);
+  font-weight: 500;
+}
+
+.swatch-meta-var {
+  color: var(--gray-6);
+}
+
+@media (max-width: 768px) {
+  .swatch-strip {
+    flex-wrap: wrap;
+  }
+
+  .swatch-card {
+    flex: 1 1 18%;
+    min-width: 60px;
+  }
+}
