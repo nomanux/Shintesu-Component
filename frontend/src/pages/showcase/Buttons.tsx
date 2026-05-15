@@ -170,7 +170,7 @@ function TokenRow({
   );
 }
 
-function ButtonTokenCustomizer() {
+export function ButtonTokenCustomizer() {
   const [tokens, setTokens] = React.useState<BtnTokens>({ ...DEFAULTS });
   const set = <K extends keyof BtnTokens>(key: K, val: BtnTokens[K]) =>
     setTokens((prev) => ({ ...prev, [key]: val }));
@@ -458,13 +458,6 @@ export function ButtonWithIcon() {
   );
 }`}
       />
-
-      {/* Token Customizer */}
-      <div>
-        <SectionLabel>Token Customizer</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <ButtonTokenCustomizer />
-      </div>
 
       {/* Loading */}
       <Variant

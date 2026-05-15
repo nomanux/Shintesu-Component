@@ -34,7 +34,7 @@ import FoundationsSection, {
   FoundationsGuidance,
 } from "./showcase/Foundations";
 import FrameSection, { FrameGuidance } from "./showcase/Frame";
-import ButtonsSection, { ButtonsGuidance } from "./showcase/Buttons";
+import ButtonsSection, { ButtonsGuidance, ButtonTokenCustomizer } from "./showcase/Buttons";
 import InputsSection, { InputsGuidance } from "./showcase/Inputs";
 import FormSection, { FormGuidance } from "./showcase/Form";
 import { TableSection, TableGuidance } from "./showcase/Table";
@@ -113,7 +113,7 @@ type Lang = "en" | "ja";
 
 const contentMap: Record<
   SectionKey,
-  { component: React.ReactNode; guidance: React.ReactNode }
+  { component: React.ReactNode; guidance: React.ReactNode; rightPanel?: React.ReactNode }
 > = {
   introduction: { component: <IntroductionSection />, guidance: null },
   installation: { component: <InstallationSection />, guidance: null },
@@ -122,7 +122,11 @@ const contentMap: Record<
     guidance: <FoundationsGuidance />,
   },
   frame: { component: <FrameSection />, guidance: <FrameGuidance /> },
-  buttons: { component: <ButtonsSection />, guidance: <ButtonsGuidance /> },
+  buttons: {
+    component: <ButtonsSection />,
+    guidance: <ButtonsGuidance />,
+    rightPanel: <ButtonTokenCustomizer />,
+  },
   inputs: { component: <InputsSection />, guidance: <InputsGuidance /> },
   select: { component: <SelectSection />, guidance: <SelectGuidance /> },
   datepicker: {
@@ -295,6 +299,13 @@ export default function ComponentShowcase({
               {contentMap[active].component}
             </div>
           </main>
+
+          {/* Sticky right panel — rendered when a section provides one */}
+          {contentMap[active].rightPanel && (
+            <aside className="showcase-right-panel">
+              {contentMap[active].rightPanel}
+            </aside>
+          )}
         </div>
       </div>
     </LangContext.Provider>
