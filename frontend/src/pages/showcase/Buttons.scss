@@ -1,6 +1,10 @@
 /* Exclude icon-only buttons from min-width */
 .ant-btn:not(.ant-btn-icon-only) {
   min-width: 110px;
+
+  @media (max-width: 480px) {
+    min-width: 80px;
+  }
 }
 
 /* Primary hover: white bg + teal text/border */

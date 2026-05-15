@@ -1,17 +1,26 @@
 import React from "react";
 import { Typography } from "antd";
 import { colors } from "../../theme";
+import { useLang, SECTION_JA } from "../../contexts/lang";
 
 const { Text } = Typography;
 
-/** Small uppercase label used above every sub-section. */
+/** Small uppercase label used above every sub-section. Auto-translates when lang = ja. */
 export function SectionLabel({ children }: { children: string }) {
+  const lang = useLang();
+  const label = lang === "ja" ? (SECTION_JA[children] ?? children) : children;
+
   return (
     <Text
-      type="secondary"
-      style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}
+      style={{
+        fontSize: 11,
+        fontWeight: 700,
+        textTransform: "uppercase",
+        letterSpacing: 1.2,
+        color: colors.gray[7],
+      }}
     >
-      {children}
+      {label}
     </Text>
   );
 }

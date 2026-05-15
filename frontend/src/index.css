@@ -39,6 +39,24 @@
   --sbw: 8px;
 }
 
+/* ── Global dark theme overrides (applies when `data-theme="dark"` on <html>) */
+:root[data-theme="dark"] {
+  --gray-1: #0d1117;
+  --gray-2: #161b22;
+  --gray-3: #21262d;
+  --gray-4: #30363d;
+  --gray-5: #484f58;
+  --gray-6: #8b949e;
+  --gray-7: #b1bac4;
+  --gray-8: #c9d1d9;
+  --gray-9: #e6edf3;
+  --gray-10: #f0f6fc;
+
+  --brand-1: #0f2f2d;
+  --brand-3: #2d7a75;
+  --color-bg-app: var(--gray-1);
+}
+
 *,
 *::before,
 *::after {

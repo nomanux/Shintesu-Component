@@ -11,10 +11,11 @@
 
 .code-block-pre {
   margin: 0;
-  padding: 16px 16px 16px 0;
+  padding: 12px 12px 12px 0;
   overflow-x: auto;
   background: transparent !important;
   color: var(--gray-9);
+  max-width: 100%;
 }
 
 .code-block-line {
@@ -66,5 +67,36 @@
     background: var(--brand-1);
     color: var(--brand-7);
     border-color: var(--brand-3);
+  }
+}
+
+/* Accessibility helpers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .code-block-pre {
+    padding-right: 8px;
+  }
+  .code-block-lineno {
+    width: 36px;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+  .code-block-copy {
+    width: 34px;
+    height: 34px;
+    top: 6px;
+    right: 6px;
   }
 }

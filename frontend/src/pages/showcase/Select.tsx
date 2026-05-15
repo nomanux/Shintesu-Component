@@ -1,8 +1,6 @@
 import React from "react";
-import "./SelectPage.scss";
 import { Select, Divider, Flex } from "antd";
-import { DownIcon } from "./helpers";
-import { SectionLabel } from "./helpers";
+import { DownIcon, SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
@@ -88,12 +86,7 @@ export function SelectDefault() {
             placeholder="Select an option"
           />
         }
-        code={`<Select
-  suffixIcon={<DownIcon />}
-  style={{ width: 200 }}
-  options={options}
-  placeholder="Select an option"
-/>`}
+        code={`<Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={options} />`}
       />
 
       {/* With default value */}
@@ -107,12 +100,7 @@ export function SelectDefault() {
             defaultValue="option1"
           />
         }
-        code={`<Select
-  suffixIcon={<DownIcon />}
-  style={{ width: 200 }}
-  options={options}
-  defaultValue="option1"
-/>`}
+        code={`<Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={options} defaultValue="option1" />`}
       />
 
       {/* Disabled */}
@@ -120,20 +108,8 @@ export function SelectDefault() {
         label="Disabled"
         preview={
           <Flex gap={12}>
-            <Select
-              suffixIcon={<DownIcon />}
-              style={{ width: 200 }}
-              options={OPTIONS}
-              disabled
-              placeholder="Disabled"
-            />
-            <Select
-              suffixIcon={<DownIcon />}
-              style={{ width: 200 }}
-              options={OPTIONS}
-              disabled
-              value="option1"
-            />
+            <Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={OPTIONS} disabled placeholder="Disabled" />
+            <Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={OPTIONS} disabled value="option1" />
           </Flex>
         }
         code={`<Select disabled placeholder="Disabled" options={options} />
@@ -145,52 +121,25 @@ export function SelectDefault() {
         label="Sizes"
         preview={
           <Flex gap={12} align="center">
-            <Select
-              size="small"
-              suffixIcon={<DownIcon />}
-              style={{ width: 160 }}
-              options={OPTIONS}
-              placeholder="Small"
-            />
-            <Select
-              suffixIcon={<DownIcon />}
-              style={{ width: 160 }}
-              options={OPTIONS}
-              placeholder="Middle"
-            />
-            <Select
-              size="large"
-              suffixIcon={<DownIcon />}
-              style={{ width: 160 }}
-              options={OPTIONS}
-              placeholder="Large"
-            />
+            <Select size="small"  suffixIcon={<DownIcon />} style={{ width: 160 }} options={OPTIONS} />
+            <Select               suffixIcon={<DownIcon />} style={{ width: 160 }} options={OPTIONS} />
+            <Select size="large"  suffixIcon={<DownIcon />} style={{ width: 160 }} options={OPTIONS} />
           </Flex>
         }
-        code={`<Select size="small"  suffixIcon={<DownIcon />} placeholder="Small"  options={options} />
-<Select               suffixIcon={<DownIcon />} placeholder="Middle" options={options} />
-<Select size="large"  suffixIcon={<DownIcon />} placeholder="Large"  options={options} />`}
+        code={`<Select size="small"  suffixIcon={<DownIcon />} options={options} />
+<Select               suffixIcon={<DownIcon />} options={options} />
+<Select size="large"  suffixIcon={<DownIcon />} options={options} />`}
       />
 
-      {/* Full width (inside a container) */}
+      {/* Full width */}
       <Variant
         label="Full Width"
         preview={
           <div style={{ width: 300 }}>
-            <Select
-              suffixIcon={<DownIcon />}
-              style={{ width: "100%" }}
-              options={OPTIONS}
-              placeholder="Fills container width"
-            />
+            <Select suffixIcon={<DownIcon />} style={{ width: "100%" }} options={OPTIONS} />
           </div>
         }
-        code={`<Select
-  suffixIcon={<DownIcon />}
-  style={{ width: "100%" }}
-  options={options}
-  placeholder="Fills container width"
-/>`}
+        code={`<Select suffixIcon={<DownIcon />} style={{ width: "100%" }} options={options} />`}
       />
     </Flex>
   );

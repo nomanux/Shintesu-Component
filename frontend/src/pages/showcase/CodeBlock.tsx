@@ -14,6 +14,7 @@ export default function CodeBlock({
   language?: string;
 }) {
   const [copied, setCopied] = React.useState(false);
+  const [isDark, setIsDark] = React.useState(false);
   const code = children.trim();
 
   const handleCopy = async () => {
@@ -26,18 +27,39 @@ export default function CodeBlock({
     }
   };
 
+  // Detect current theme from document root and update if it changes
+  React.useEffect(() => {
+    const root =
+      typeof document !== "undefined" ? document.documentElement : null;
+    if (!root) return;
+    const getDark = () => root.getAttribute("data-theme") === "dark";
+    setIsDark(getDark());
+
+    const obs = new MutationObserver(() => setIsDark(getDark()));
+    obs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div className="code-block">
       <button
         type="button"
         className={`code-block-copy${copied ? " copied" : ""}`}
         onClick={handleCopy}
-        aria-label="Copy code"
+        aria-label={copied ? "Copied" : "Copy code"}
+        aria-pressed={copied}
       >
+        <span className="sr-only" aria-live="polite">
+          {copied ? "Copied" : "Copy code"}
+        </span>
         {copied ? <CheckIcon /> : <CopyIcon />}
       </button>
 
-      <Highlight code={code} language={language} theme={themes.github}>
+      <Highlight
+        code={code}
+        language={language}
+        theme={isDark ? themes.vsDark : themes.github}
+      >
         {({ tokens, getLineProps, getTokenProps }) => (
           <pre className="code-block-pre">
             {tokens.map((line, i) => (

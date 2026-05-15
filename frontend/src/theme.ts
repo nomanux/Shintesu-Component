@@ -216,3 +216,66 @@ export const shintetsuTheme = {
     },
   },
 };
+
+export function getShintetsuTheme(dark = false) {
+  if (!dark) return shintetsuTheme;
+
+  // Dark-mode token overrides
+  const darkTokens = {
+    ...tokens,
+    // TEXT
+    colorText: colors.gray[1],
+    colorTextSecondary: colors.gray[6],
+    colorTextTertiary: colors.gray[5],
+    colorTextDisabled: colors.gray[5],
+
+    // BACKGROUND
+    colorBgContainer: colors.gray[10],
+    colorBgLayout: colors.gray[10],
+    colorBgElevated: colors.gray[9],
+
+    // BORDER
+    colorBorder: colors.gray[5],
+
+    // CONTROL
+    controlItemBgHover: colors.brand[3],
+    controlItemBgActive: colors.brand[3],
+  };
+
+  // Keep component overrides but adjust some sensible dark values
+  const darkComponents = {
+    ...shintetsuTheme.components,
+    Button: {
+      ...shintetsuTheme.components.Button,
+      defaultBg: colors.gray[3],
+      defaultHoverBg: colors.gray[4],
+      defaultActiveBg: colors.gray[5],
+      defaultColor: colors.gray[1],
+      defaultHoverColor: colors.gray[1],
+    },
+    Input: {
+      ...shintetsuTheme.components.Input,
+      colorBorder: colors.gray[5],
+      colorBgContainer: colors.gray[9],
+      colorText: colors.gray[1],
+      colorTextPlaceholder: colors.gray[6],
+    },
+    Select: {
+      ...shintetsuTheme.components.Select,
+      colorText: colors.gray[1],
+      colorBgContainerDisabled: colors.gray[8],
+    },
+    Table: {
+      ...shintetsuTheme.components.Table,
+      colorBgContainer: colors.gray[9],
+      headerBg: colors.gray[9],
+      headerColor: colors.gray[1],
+      colorText: colors.gray[1],
+    },
+  };
+
+  return {
+    token: darkTokens,
+    components: darkComponents,
+  } as const;
+}

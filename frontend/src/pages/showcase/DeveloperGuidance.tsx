@@ -1,12 +1,10 @@
 import React from "react";
 import { colors } from "../../theme";
+import { useLang, GUIDANCE_JA } from "../../contexts/lang";
 
 type GuidanceProps = {
-  /** Bullet list of usage rules / behaviors. */
   bullets: React.ReactNode[];
-  /** When this component is the right choice. */
   whenToUse?: string[];
-  /** When to reach for something else instead. */
   whenNotToUse?: string[];
 };
 
@@ -26,11 +24,14 @@ const listStyle: React.CSSProperties = {
   lineHeight: 1.6,
 };
 
-export default function DeveloperGuidance({
-  bullets,
-  whenToUse,
-  whenNotToUse,
-}: GuidanceProps) {
+export default function DeveloperGuidance({ bullets, whenToUse, whenNotToUse }: GuidanceProps) {
+  const lang = useLang();
+  const g = lang === "ja" ? GUIDANCE_JA : {
+    forDevelopers: "For Developers",
+    whenToUse:     "When to use",
+    whenNotToUse:  "When not to use",
+  };
+
   return (
     <div
       style={{
@@ -42,31 +43,20 @@ export default function DeveloperGuidance({
         color: colors.gray[8],
       }}
     >
-      <div
-        style={{
-          fontSize: 13,
-          fontWeight: 600,
-          color: colors.brand[6],
-          marginBottom: 6,
-        }}
-      >
-        For Developers
+      <div style={{ fontSize: 13, fontWeight: 600, color: colors.brand[6], marginBottom: 6 }}>
+        {g.forDevelopers}
       </div>
       <ul style={listStyle}>
-        {bullets.map((b, i) => (
-          <li key={i}>{b}</li>
-        ))}
+        {bullets.map((b, i) => <li key={i}>{b}</li>)}
       </ul>
 
       {whenToUse && whenToUse.length > 0 && (
         <>
           <div style={{ ...sectionTitleStyle, color: colors.brand[7] }}>
-            ✓ When to use
+            ✓ {g.whenToUse}
           </div>
           <ul style={listStyle}>
-            {whenToUse.map((b, i) => (
-              <li key={i}>{b}</li>
-            ))}
+            {whenToUse.map((b, i) => <li key={i}>{b}</li>)}
           </ul>
         </>
       )}
@@ -74,12 +64,10 @@ export default function DeveloperGuidance({
       {whenNotToUse && whenNotToUse.length > 0 && (
         <>
           <div style={{ ...sectionTitleStyle, color: colors.gray[7] }}>
-            ✗ When not to use
+            ✗ {g.whenNotToUse}
           </div>
           <ul style={listStyle}>
-            {whenNotToUse.map((b, i) => (
-              <li key={i}>{b}</li>
-            ))}
+            {whenNotToUse.map((b, i) => <li key={i}>{b}</li>)}
           </ul>
         </>
       )}
