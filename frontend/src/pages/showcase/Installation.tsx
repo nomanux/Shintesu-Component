@@ -1,6 +1,7 @@
 import { Divider, Flex } from "antd";
 import { SectionLabel } from "./helpers";
 import CodeBlock from "./CodeBlock";
+import themeSource from "../../theme.ts?raw";
 
 function Step({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
   return (
@@ -157,6 +158,19 @@ cd shinetsu-component`}</CodeBlock>
 │   ├── theme.ts              # Ant Design token overrides
 │   └── index.css             # CSS variables + global styles
 └── package.json`}</CodeBlock>
+      </div>
+
+      {/* theme.ts source */}
+      <div>
+        <SectionLabel>theme.ts</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <p style={{ fontSize: 13, color: "var(--gray-6)", marginBottom: 12, lineHeight: 1.65 }}>
+          Copy this file into your project and wrap your app with{" "}
+          <code style={{ fontFamily: "monospace", fontSize: 12, background: "var(--gray-3)", padding: "1px 6px", borderRadius: 4, border: "1px solid var(--gray-4)", color: "var(--brand-7)" }}>
+            ConfigProvider
+          </code>. All token overrides live here.
+        </p>
+        <CodeBlock language="ts">{themeSource}</CodeBlock>
       </div>
 
       {/* Key files */}
