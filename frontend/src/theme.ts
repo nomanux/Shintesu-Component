@@ -92,7 +92,7 @@ const tokens = {
   controlHeightLG: 40,
 };
 
-export const shintetsuTheme = {
+export const synetsuTheme = {
   token: {
     ...tokens,
   },
@@ -217,8 +217,8 @@ export const shintetsuTheme = {
   },
 };
 
-export function getShintetsuTheme(dark = false) {
-  if (!dark) return shintetsuTheme;
+export function getSynetsuTheme(dark = false) {
+  if (!dark) return synetsuTheme;
 
   // Dark-mode token overrides
   const darkTokens = {
@@ -244,9 +244,9 @@ export function getShintetsuTheme(dark = false) {
 
   // Keep component overrides but adjust some sensible dark values
   const darkComponents = {
-    ...shintetsuTheme.components,
+    ...synetsuTheme.components,
     Button: {
-      ...shintetsuTheme.components.Button,
+      ...synetsuTheme.components.Button,
       defaultBg: colors.gray[3],
       defaultHoverBg: colors.gray[4],
       defaultActiveBg: colors.gray[5],
@@ -254,19 +254,19 @@ export function getShintetsuTheme(dark = false) {
       defaultHoverColor: colors.gray[1],
     },
     Input: {
-      ...shintetsuTheme.components.Input,
+      ...synetsuTheme.components.Input,
       colorBorder: colors.gray[5],
       colorBgContainer: colors.gray[9],
       colorText: colors.gray[1],
       colorTextPlaceholder: colors.gray[6],
     },
     Select: {
-      ...shintetsuTheme.components.Select,
+      ...synetsuTheme.components.Select,
       colorText: colors.gray[1],
       colorBgContainerDisabled: colors.gray[8],
     },
     Table: {
-      ...shintetsuTheme.components.Table,
+      ...synetsuTheme.components.Table,
       colorBgContainer: colors.gray[9],
       headerBg: colors.gray[9],
       headerColor: colors.gray[1],

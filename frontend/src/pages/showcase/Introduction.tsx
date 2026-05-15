@@ -6,12 +6,12 @@ export default function IntroductionSection() {
   return (
     <Flex vertical gap={40}>
 
-      {/* What is Shintesu */}
+      {/* What is Synetsu */}
       <div>
-        <SectionLabel>What is Shintesu?</SectionLabel>
+        <SectionLabel>What is Synetsu?</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.75, margin: 0 }}>
-          Shintesu is a production-ready UI component collection built on{" "}
+          Synetsu is a production-ready UI component collection built on{" "}
           <strong style={{ color: "var(--gray-9)" }}>Ant Design v6</strong>. It provides
           a unified set of components backed by a single token file so your team ships
           consistent, on-brand UI across every project without re-declaring the same
@@ -56,15 +56,15 @@ export default function IntroductionSection() {
         <SectionLabel>Quick Start</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.7, margin: "0 0 16px" }}>
-          Wrap your app with the Shintesu theme and you're ready to use any component.
+          Wrap your app with the Synetsu theme and you're ready to use any component.
         </p>
         <CodeBlock>{`import { ConfigProvider } from "antd";
-import { shintetsuTheme } from "./theme";
+import { synetsuTheme } from "./theme";
 import "./index.css";
 
 export default function App() {
   return (
-    <ConfigProvider theme={shintetsuTheme}>
+    <ConfigProvider theme={synetsuTheme}>
       {/* your app here */}
     </ConfigProvider>
   );

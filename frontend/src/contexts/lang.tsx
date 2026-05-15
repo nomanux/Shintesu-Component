@@ -51,7 +51,7 @@ export const SECTION_JA: Record<string, string> = {
   "Page frame template":             "ページフレームテンプレート",
 
   // Introduction
-  "What is Shintesu?":               "シンエツとは？",
+  "What is Synetsu?":               "シンエツとは？",
   "Design Principles":               "デザイン原則",
   "Quick Start":                     "クイックスタート",
   "What's Included":                 "含まれる機能",

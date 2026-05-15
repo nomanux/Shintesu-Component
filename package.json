@@ -1,9 +1,12 @@
 {
-  "name": "shintesu-component",
+  "name": "synetsu-component",
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run dev --prefix frontend",
     "build": "npm run build --prefix frontend",
     "preview": "npm run preview --prefix frontend"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.99.0"
   }
 }
