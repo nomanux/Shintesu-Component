@@ -175,7 +175,10 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
       <nav className="hp-nav">
         <div className="hp-container hp-nav-inner">
           <div className="hp-logo" onClick={() => onBrowse()}>
-            Shinetsu
+            <span className="hp-logo-mark">S</span>
+            <span className="hp-logo-text">
+              Shin<em>etsu</em>
+            </span>
           </div>
           <ul className="hp-nav-links">
             <li onClick={() => onBrowse()}>Components</li>
