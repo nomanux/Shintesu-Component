@@ -3,7 +3,9 @@ export const groupBorderColor = "#4DACA5"; // colors.brand[5] — used for group
 export const specialInputColors = {
   rims: "#C8FFFF",
   rimsBorder: "#A3EAEA",
-  cyberbridge: "#A8B4DC",
+  lblue: "#A7CEF6",
+  lblueBorder: "#81B0E0",
+  lblueBorderHover: "#227AD3",
 };
 
 /** Canonical modal widths — reference these instead of hardcoding pixel values. */
@@ -155,6 +157,20 @@ export const shintetsuTheme = {
       optionSelectedBg: colors.brand[1],
       optionActiveBg: colors.brand[1],
       optionSelectedColor: colors.gray[9],
+    },
+
+    DatePicker: {
+      colorBorder: colors.gray[5],
+      colorBorderDisabled: colors.gray[5],
+      colorText: colors.gray[9],
+      colorTextDisabled: colors.gray[9],
+      colorBgContainer: colors.gray[1],
+      colorBgContainerDisabled: colors.gray[3],
+      colorPrimary: colors.brand[6],
+      colorPrimaryHover: colors.brand[5],
+      cellHoverBg: colors.brand[1],
+      cellActiveWithRangeBg: colors.brand[1],
+      cellRangeBorderColor: colors.brand[4],
     },
 
     Table: {

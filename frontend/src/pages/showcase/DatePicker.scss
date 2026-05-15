@@ -1,0 +1,26 @@
+/* Input text: colorText (gray-9) */
+.ant-picker-input > input {
+  color: var(--gray-9) !important;
+}
+
+/* Calendar icon: always gray-6 */
+.ant-picker-suffix .anticon {
+  color: var(--gray-6) !important;
+}
+
+/* Disabled state */
+.ant-picker-disabled {
+  cursor: default !important;
+
+  input {
+    cursor: default !important;
+
+    /* Filled but disabled: gray-9 (#192A42) */
+    color: var(--gray-9) !important;
+
+    /* Empty (placeholder) while disabled: gray-5 (#CBD5E1) */
+    &::placeholder {
+      color: var(--gray-5) !important;
+    }
+  }
+}

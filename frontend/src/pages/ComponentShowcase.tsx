@@ -13,6 +13,7 @@
 import React from "react";
 import { Typography, Divider } from "antd";
 import "./ComponentShowcase.scss";
+import shinetsuLogo from "../assets/shinetsu.svg";
 
 import FoundationsSection, {
   FoundationsGuidance,
@@ -26,6 +27,7 @@ import ModalSection, { ModalGuidance } from "./showcase/Modal";
 import RadioTabSection, { RadioTabGuidance } from "./showcase/RadioTab";
 import ScrollSection, { ScrollGuidance } from "./showcase/Scroll";
 import SelectSection, { SelectGuidance } from "./showcase/SelectPage";
+import DatePickerSection, { DatePickerGuidance } from "./showcase/DatePicker";
 
 const { Title, Text } = Typography;
 
@@ -35,6 +37,7 @@ const sections = [
   { key: "buttons", label: "Buttons", group: "COMPONENTS" },
   { key: "inputs", label: "Inputs", group: "COMPONENTS" },
   { key: "select", label: "Select", group: "COMPONENTS" },
+  { key: "datepicker", label: "Date Picker", group: "COMPONENTS" },
   { key: "form", label: "Form", group: "COMPONENTS" },
   { key: "radio-tab", label: "Radio Button (Tab)", group: "COMPONENTS" },
   { key: "table", label: "Table", group: "COMPONENTS" },
@@ -64,10 +67,16 @@ const contentMap: Record<
   },
   scroll: { component: <ScrollSection />, guidance: <ScrollGuidance /> },
   select: { component: <SelectSection />, guidance: <SelectGuidance /> },
+  datepicker: { component: <DatePickerSection />, guidance: <DatePickerGuidance /> },
 };
 
-export default function ComponentShowcase() {
-  const [active, setActive] = React.useState<SectionKey>("foundations");
+type Props = {
+  initialSection?: string;
+  onHome?: () => void;
+};
+
+export default function ComponentShowcase({ initialSection = "foundations", onHome }: Props) {
+  const [active, setActive] = React.useState<SectionKey>(initialSection as SectionKey);
 
   // Group sidebar entries by their `group` field
   const groups = sections.reduce<Record<string, typeof sections[number][]>>(
@@ -83,6 +92,12 @@ export default function ComponentShowcase() {
   return (
     <div className="showcase-layout">
       <div className="showcase-sidebar">
+        {onHome && (
+          <div className="showcase-home-logo" onClick={onHome}>
+            <img src={shinetsuLogo} alt="Shintesu" />
+            <span>Shintesu</span>
+          </div>
+        )}
         {Object.entries(groups).map(([groupName, items]) => (
           <React.Fragment key={groupName}>
             <Text className="showcase-sidebar-label">{groupName}</Text>

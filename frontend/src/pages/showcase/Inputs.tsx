@@ -8,6 +8,7 @@ import {
   EyeTwoTone,
 } from "@ant-design/icons";
 import SpecialInput from "../../components/SpecialInput";
+import SpecialInput2 from "../../components/SpecialInput2";
 import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
@@ -69,18 +70,18 @@ export default function InputsSection() {
         <CodeBlock>{`import { Input } from "antd";
 
 export function InputDefault() {
-  return <Input placeholder="Enter text" />;
+  return <Input />;
 }`}</CodeBlock>
       </div>
 
       {/* Default */}
       <Variant
         label="Default"
-        preview={<Input placeholder="Enter text" />}
+        preview={<Input />}
         code={`import { Input } from "antd";
 
 export function InputDefault() {
-  return <Input placeholder="Enter text" />;
+  return <Input />;
 }`}
       />
 
@@ -98,14 +99,12 @@ export function InputDisabled() {
       {/* With Prefix Icon */}
       <Variant
         label="With Prefix Icon"
-        preview={
-          <Input prefix={<UserOutlined />} placeholder="Username" />
-        }
+        preview={<Input prefix={<UserOutlined />} />}
         code={`import { Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 export function InputWithPrefix() {
-  return <Input prefix={<UserOutlined />} placeholder="Username" />;
+  return <Input prefix={<UserOutlined />} />;
 }`}
       />
 
@@ -114,9 +113,9 @@ export function InputWithPrefix() {
         label="Sizes"
         preview={
           <Flex vertical gap={12}>
-            <Input size="large" prefix={<UserOutlined />} placeholder="Large" />
-            <Input prefix={<UserOutlined />} placeholder="Middle (default)" />
-            <Input size="small" prefix={<UserOutlined />} placeholder="Small" />
+            <Input size="large" prefix={<UserOutlined />} />
+            <Input prefix={<UserOutlined />} />
+            <Input size="small" prefix={<UserOutlined />} />
           </Flex>
         }
         code={`import { Input } from "antd";
@@ -125,9 +124,9 @@ import { UserOutlined } from "@ant-design/icons";
 export function InputSizes() {
   return (
     <>
-      <Input size="large" prefix={<UserOutlined />} placeholder="Large" />
-      <Input prefix={<UserOutlined />} placeholder="Middle (default)" />
-      <Input size="small" prefix={<UserOutlined />} placeholder="Small" />
+      <Input size="large" prefix={<UserOutlined />} />
+      <Input prefix={<UserOutlined />} />
+      <Input size="small" prefix={<UserOutlined />} />
     </>
   );
 }`}
@@ -136,16 +135,12 @@ export function InputSizes() {
       {/* Password */}
       <Variant
         label="Password"
-        preview={
-          <Password prefix={<LockOutlined />} placeholder="Password" />
-        }
+        preview={<Password prefix={<LockOutlined />} />}
         code={`import { Input } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 
 export function InputPassword() {
-  return (
-    <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-  );
+  return <Input.Password prefix={<LockOutlined />} />;
 }`}
       />
 
@@ -157,7 +152,6 @@ export function InputPassword() {
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
-            placeholder="Toggle visibility"
           />
         }
         code={`import { Input } from "antd";
@@ -169,7 +163,6 @@ export function InputPasswordCustom() {
       iconRender={(visible) =>
         visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
       }
-      placeholder="Toggle visibility"
     />
   );
 }`}
@@ -184,6 +177,18 @@ export function InputPasswordCustom() {
 export function SpecialInputDemo() {
   // Click to edit; double-click to open the full-edit modal.
   return <SpecialInput />;
+}`}
+      />
+
+      {/* SpecialInput2 */}
+      <Variant
+        label="SpecialInput2"
+        preview={<SpecialInput2 />}
+        code={`import SpecialInput2 from "@/components/SpecialInput2";
+
+export function SpecialInput2Demo() {
+  // Click to edit; double-click to open the full-edit modal.
+  return <SpecialInput2 />;
 }`}
       />
 
