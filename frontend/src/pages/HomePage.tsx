@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./HomePage.scss";
-import synetsuLogo from "../assets/synetsu.svg";
+import shinetsuLogo from "../assets/shinetsu.svg";
 
 /* ── Data ─────────────────────────────────────────────────────────────────── */
 
@@ -126,7 +126,7 @@ const FEATURES = [
   {
     icon: "◎",
     title: "Cross-project theme",
-    body: "All your projects share the same Synetsu theme. Onboard a new project in minutes. Consistency becomes automatic, not aspirational.",
+    body: "All your projects share the same Shinetsu theme. Onboard a new project in minutes. Consistency becomes automatic, not aspirational.",
   },
   {
     icon: "◉",
@@ -139,7 +139,7 @@ const FEATURES = [
 const WHY_LIST = [
   {
     title: "One codebase, every project",
-    body: "All your company's projects use the same Synetsu theme. Brand consistency across your entire product suite, automatically.",
+    body: "All your company's projects use the same Shinetsu theme. Brand consistency across your entire product suite, automatically.",
   },
   {
     title: "Docs that actually help",
@@ -176,7 +176,7 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
       <nav className="hp-nav">
         <div className="hp-container hp-nav-inner">
           <div className="hp-logo" onClick={() => onBrowse()}>
-            <img src={synetsuLogo} alt="Synetsu" />
+            <img src={shinetsuLogo} alt="Shinetsu" />
           </div>
           <ul className="hp-nav-links">
             <li onClick={() => onBrowse()}>Components</li>
@@ -213,7 +213,7 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
             <p className="hp-hero-desc">
               Your <code className="hp-inline-code">--color-brand</code> is
               already set. Stop re-declaring it across 6 different repos.
-              Synetsu reads your token file directly — every component, every
+              Shinetsu reads your token file directly — every component, every
               project, always in sync.
             </p>
             <div className="hp-hero-actions">
@@ -237,7 +237,7 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
                 <pre>{`// One import. Full design system.
 
 import { SplitTable, useTheme }
-  from '@synetsu/core'
+  from '@shinetsu/core'
 
 export function DataView() {
   const theme = useTheme()
@@ -277,7 +277,7 @@ export function DataView() {
       {/* ── Why ──────────────────────────────────────────────────────────── */}
       <section className="hp-section">
         <div className="hp-container">
-          <p className="hp-eyebrow">Why Synetsu</p>
+          <p className="hp-eyebrow">Why Shinetsu</p>
           <h2 className="hp-h2">Built for real product teams.</h2>
           <p className="hp-section-desc">
             Not a generic kit. A focused, opinionated system where every
@@ -395,7 +395,7 @@ export function DataView() {
           <div className="hp-quote">
             <blockquote>
               "We used to spend the first two sprints of every new project
-              setting up the same components. With Synetsu, we{" "}
+              setting up the same components. With Shinetsu, we{" "}
               <strong>start shipping features on day one.</strong> The token
               system means we've not had a brand consistency issue since."
             </blockquote>
@@ -417,7 +417,7 @@ export function DataView() {
         <div className="hp-container hp-cta-body">
           <h2>Ready to ship faster?</h2>
           <p>
-            Add Synetsu to your project, set your theme once and build with
+            Add Shinetsu to your project, set your theme once and build with
             components that are already production-ready, accessible and
             documented.
           </p>

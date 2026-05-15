@@ -1,7 +1,7 @@
 /**
  * ComponentShowcase
  *
- * Developer reference page for the Synetsu design system.
+ * Developer reference page for the Shinetsu design system.
  * Each section lives in its own file under ./showcase/.
  */
 
@@ -28,7 +28,7 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import "./ComponentShowcase.scss";
-import synetsuLogo from "../assets/synetsu.svg";
+import shinetsuLogo from "../assets/shinetsu.svg";
 import { LangContext } from "../contexts/lang";
 
 import FoundationsSection, {
@@ -204,7 +204,7 @@ export default function ComponentShowcase({
         <header className="showcase-header">
           {/* Logo — left side */}
           <div className="showcase-header-logo" onClick={onHome}>
-            <img src={synetsuLogo} alt="Synetsu" />
+            <img src={shinetsuLogo} alt="Shinetsu" />
           </div>
 
           {/* Mobile hamburger */}

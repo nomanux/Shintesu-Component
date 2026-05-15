@@ -66,8 +66,8 @@ export default function InstallationSection() {
         <Flex vertical gap={28}>
 
           <Step num={1} title="Clone the repository">
-            <CodeBlock>{`git clone https://github.com/your-org/synetsu-component.git
-cd synetsu-component`}</CodeBlock>
+            <CodeBlock>{`git clone https://github.com/your-org/shinetsu-component.git
+cd shinetsu-component`}</CodeBlock>
           </Step>
 
           <Step num={2} title="Move into the frontend directory">

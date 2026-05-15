@@ -1,6 +1,6 @@
 import React from "react";
 import { App as AntApp, ConfigProvider } from "antd";
-import { getSynetsuTheme } from "./theme";
+import { getShinetsuTheme } from "./theme";
 import ComponentShowcase from "./pages/ComponentShowcase";
 import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
@@ -10,7 +10,7 @@ type Page = "home" | "showcase" | "docs";
 export default function App() {
   const [dark, setDark] = React.useState<boolean>(() => {
     try {
-      const v = localStorage.getItem("synetsu:dark");
+      const v = localStorage.getItem("shinetsu:dark");
       return v === "1";
     } catch {
       return false;
@@ -20,10 +20,10 @@ export default function App() {
   React.useEffect(() => {
     try {
       if (dark) {
-        localStorage.setItem("synetsu:dark", "1");
+        localStorage.setItem("shinetsu:dark", "1");
         document.documentElement.setAttribute("data-theme", "dark");
       } else {
-        localStorage.removeItem("synetsu:dark");
+        localStorage.removeItem("shinetsu:dark");
         document.documentElement.setAttribute("data-theme", "light");
       }
     } catch {
@@ -46,7 +46,7 @@ export default function App() {
   };
 
   return (
-    <ConfigProvider theme={getSynetsuTheme(dark)}>
+    <ConfigProvider theme={getShinetsuTheme(dark)}>
       <AntApp>
         {page === "home" && (
           <HomePage onBrowse={handleBrowse} onDocs={handleDocs} />

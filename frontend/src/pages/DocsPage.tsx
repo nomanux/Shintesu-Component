@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./DocsPage.scss";
-import synetsuLogo from "../assets/synetsu.svg";
+import shinetsuLogo from "../assets/shinetsu.svg";
 
 /* ── Nav structure ────────────────────────────────────────────────────────── */
 
@@ -59,7 +59,7 @@ export default function DocsPage({
       {/* ── Top nav ──────────────────────────────────────────────────────── */}
       <header className="docs-topnav">
         <div className="docs-topnav-logo" onClick={onHome}>
-          <img src={synetsuLogo} alt="Synetsu" />
+          <img src={shinetsuLogo} alt="Shinetsu" />
           <span>
             Shin<em>Etsu</em>
           </span>
@@ -136,14 +136,14 @@ function IntroductionPage({
     <>
       <h1 className="docs-h1">Introduction</h1>
       <p className="docs-lead">
-        Synetsu is a production-ready UI component collection built on Ant
+        Shinetsu is a production-ready UI component collection built on Ant
         Design v6. One token file, eleven components, zero drift across
         projects.
       </p>
 
-      <h2 className="docs-h2">What is Synetsu?</h2>
+      <h2 className="docs-h2">What is Shinetsu?</h2>
       <p className="docs-p">
-        Synetsu gives your team a shared design language — a single{" "}
+        Shinetsu gives your team a shared design language — a single{" "}
         <code className="docs-inline-code">theme.ts</code> and a global{" "}
         <code className="docs-inline-code">index.css</code> that every component
         reads from. Change <code className="docs-inline-code">--brand-6</code>{" "}
@@ -247,7 +247,7 @@ function InstallationPage({ onShowcase }: { onShowcase: (s: string) => void }) {
     <>
       <h1 className="docs-h1">Installation</h1>
       <p className="docs-lead">
-        Get Synetsu running locally in under two minutes.
+        Get Shinetsu running locally in under two minutes.
       </p>
 
       <div className="docs-callout">
@@ -262,8 +262,8 @@ function InstallationPage({ onShowcase }: { onShowcase: (s: string) => void }) {
           <div className="docs-step-title">
             <span className="docs-step-num">1</span> Clone the repository
           </div>
-          <CodeBlock lang="bash">{`git clone https://github.com/your-org/synetsu-component.git
-cd synetsu-component`}</CodeBlock>
+          <CodeBlock lang="bash">{`git clone https://github.com/your-org/shinetsu-component.git
+cd shinetsu-component`}</CodeBlock>
         </div>
 
         <div>
@@ -298,7 +298,7 @@ cd synetsu-component`}</CodeBlock>
 
       <h2 className="docs-h2">Using components in your project</h2>
       <p className="docs-p">
-        Synetsu is a showcase — components are meant to be understood and
+        Shinetsu is a showcase — components are meant to be understood and
         copied into your own project. For each component you want to use:
       </p>
       <ul className="docs-ul">
@@ -309,13 +309,13 @@ cd synetsu-component`}</CodeBlock>
         <li>Copy the snippet into your project.</li>
         <li>
           Copy <code className="docs-inline-code">src/theme.ts</code> and its{" "}
-          <code className="docs-inline-code">synetsuTheme</code> export into
+          <code className="docs-inline-code">shinetsuTheme</code> export into
           your app.
         </li>
         <li>
           Wrap your app root with{" "}
           <code className="docs-inline-code">
-            {"<ConfigProvider theme={synetsuTheme}>"}
+            {"<ConfigProvider theme={shinetsuTheme}>"}
           </code>
           .
         </li>
