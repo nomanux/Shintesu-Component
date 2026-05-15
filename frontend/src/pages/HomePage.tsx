@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./HomePage.scss";
-import shinetsuLogo from "../assets/shinetsu.svg";
 
 /* ── Data ─────────────────────────────────────────────────────────────────── */
 
@@ -176,7 +175,7 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
       <nav className="hp-nav">
         <div className="hp-container hp-nav-inner">
           <div className="hp-logo" onClick={() => onBrowse()}>
-            <img src={shinetsuLogo} alt="Shinetsu" />
+            Shinetsu
           </div>
           <ul className="hp-nav-links">
             <li onClick={() => onBrowse()}>Components</li>

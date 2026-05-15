@@ -41,6 +41,7 @@ export default function DocsPage({
   initialSection = "introduction",
   onHome,
   onShowcase,
+  dark,
 }: Props) {
   const [section, setSection] = useState<DocSection>(initialSection);
 
