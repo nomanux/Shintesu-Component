@@ -28,7 +28,6 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import "./ComponentShowcase.scss";
-import shinetsuLogo from "../assets/shinetsu.svg";
 import { LangContext } from "../contexts/lang";
 
 import FoundationsSection, {
@@ -204,7 +203,10 @@ export default function ComponentShowcase({
         <header className="showcase-header">
           {/* Logo — left side */}
           <div className="showcase-header-logo" onClick={onHome}>
-            <img src={shinetsuLogo} alt="Shinetsu" />
+            <span className="showcase-logo-mark">S</span>
+            <span className="showcase-logo-text">
+              Shin<em>etsu</em>
+            </span>
           </div>
 
           {/* Mobile hamburger */}
