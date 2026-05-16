@@ -57,24 +57,6 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-/* ── Dropzone placeholder ────────────────────────────────────────────────── */
-
-function Dropzone({ children }: { children: string }) {
-  return (
-    <div
-      style={{
-        border: "1px dashed var(--gray-5)",
-        background: "var(--gray-1)",
-        padding: "14px 16px",
-        fontSize: 13,
-        color: "var(--gray-6)",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
 /* ── DemoScreen ──────────────────────────────────────────────────────────── */
 
 type Props = { onBack?: () => void };
