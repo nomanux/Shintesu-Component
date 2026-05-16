@@ -312,6 +312,37 @@ npm install`}</CodeBlock>
         </Flex>
       </div>
 
+      {/* ── Run FrameTemplate ── */}
+      <div>
+        <SectionLabel>Try It Live</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Note>
+          🚀 See the <strong>FrameTemplate</strong> running as a full page — no setup needed.
+        </Note>
+        <button
+          onClick={() => {
+            history.pushState(null, "", "/kit/frametemplate");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "9px 20px",
+            background: "var(--brand-6)",
+            color: "#fff",
+            border: "none",
+            borderRadius: 6,
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: "pointer",
+            fontFamily: "inherit",
+          }}
+        >
+          ▶ Run FrameTemplate
+        </button>
+      </div>
+
       {/* ── Kit structure ── */}
       <div>
         <SectionLabel>Kit Structure</SectionLabel>

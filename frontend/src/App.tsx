@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
 import DemoScreen from "./pages/DemoScreen";
 
-type Page = "home" | "showcase" | "docs" | "demo";
+type Page = "home" | "showcase" | "docs" | "demo" | "kit";
 
 /* ── URL helpers ─────────────────────────────────────────────────────────── */
 
@@ -36,6 +36,9 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
   if (segment === "demo") {
     return { page: "demo", section: "frame", docsSection: "introduction" };
   }
+  if (segment === "kit") {
+    return { page: "kit", section: "frame", docsSection: "introduction" };
+  }
   if (SHOWCASE_SECTIONS.has(segment)) {
     return { page: "showcase", section: segment, docsSection: "introduction" };
   }
@@ -47,6 +50,7 @@ function pushPath(page: Page, section: string, docsSection = "introduction") {
   let path: string;
   if (page === "home") path = "/";
   else if (page === "demo") path = "/demo";
+  else if (page === "kit") path = "/kit/frametemplate";
   else if (page === "docs") path = docsSection === "introduction" ? "/docs" : `/docs/${docsSection}`;
   else path = `/${section}`;
 
@@ -142,6 +146,11 @@ export default function App() {
           />
         )}
         {page === "demo" && (
+          <DemoScreen
+            onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
+          />
+        )}
+        {page === "kit" && (
           <DemoScreen
             onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
           />
