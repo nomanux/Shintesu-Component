@@ -67,7 +67,22 @@ export default function InstallationSection() {
         <Flex vertical gap={28}>
 
           <Step num={1} title="Clone the repository">
-            <CodeBlock>{`git clone https://github.com/your-org/shinetsu-component.git
+            <div
+              style={{
+                padding: "10px 14px",
+                marginBottom: 10,
+                background: "var(--gray-3)",
+                border: "1px solid var(--gray-4)",
+                borderRadius: 6,
+                fontSize: 13,
+                color: "var(--gray-7)",
+                lineHeight: 1.6,
+              }}
+            >
+              Replace <code style={{ fontFamily: "monospace", fontSize: 12, color: "var(--brand-7)" }}>YOUR_REPO_URL</code> below with your actual GitHub repository URL.
+              You can find it on GitHub under <strong>Code → Clone → HTTPS</strong>.
+            </div>
+            <CodeBlock>{`git clone YOUR_REPO_URL
 cd shinetsu-component`}</CodeBlock>
           </Step>
 
