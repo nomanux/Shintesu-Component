@@ -82,8 +82,8 @@ export default function InstallationSection() {
               Replace <code style={{ fontFamily: "monospace", fontSize: 12, color: "var(--brand-7)" }}>YOUR_REPO_URL</code> below with your actual GitHub repository URL.
               You can find it on GitHub under <strong>Code → Clone → HTTPS</strong>.
             </div>
-            <CodeBlock>{`git clone YOUR_REPO_URL
-cd shinetsu-component`}</CodeBlock>
+            <CodeBlock>{`git clone https://github.com/nomanux/Shintesu-Component.git
+cd Shintesu-Component`}</CodeBlock>
           </Step>
 
           <Step num={2} title="Move into the frontend directory">
