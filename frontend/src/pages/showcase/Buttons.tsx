@@ -53,13 +53,16 @@ function TokenRow({
           Reset
         </button>
       )}
-      <span className="tc-row__value">{formatValue(value)}</span>
       {type === "color" ? (
         <label
-          className="tc-row__swatch"
-          style={{ background: value as string }}
+          className="tc-row__color-trigger"
           title={`Click to change ${label}`}
         >
+          <span className="tc-row__value">{formatValue(value)}</span>
+          <span
+            className="tc-row__swatch"
+            style={{ background: value as string }}
+          />
           <input
             type="color"
             value={value as string}
@@ -67,13 +70,16 @@ function TokenRow({
           />
         </label>
       ) : (
-        <input
-          type="number"
-          className="tc-row__number"
-          value={value as number}
-          min={0}
-          onChange={(e) => onChange(Number(e.target.value))}
-        />
+        <>
+          <span className="tc-row__value">{formatValue(value)}</span>
+          <input
+            type="number"
+            className="tc-row__number"
+            value={value as number}
+            min={0}
+            onChange={(e) => onChange(Number(e.target.value))}
+          />
+        </>
       )}
     </div>
   );

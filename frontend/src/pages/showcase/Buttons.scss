@@ -106,6 +106,27 @@
     flex-shrink: 0;
   }
 
+  &__color-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+
+    /* Hide the native color input — it fires via the label */
+    input[type="color"] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:hover .tc-row__value { color: var(--gray-8); }
+    &:hover .tc-row__swatch { box-shadow: 0 0 0 2px var(--brand-4); }
+  }
+
   &__swatch {
     position: relative;
     width: 20px;
