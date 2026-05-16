@@ -4,8 +4,9 @@ import { getShinetsuTheme } from "./theme";
 import ComponentShowcase from "./pages/ComponentShowcase";
 import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
+import DemoScreen from "./pages/DemoScreen";
 
-type Page = "home" | "showcase" | "docs";
+type Page = "home" | "showcase" | "docs" | "demo";
 
 /* ── URL helpers ─────────────────────────────────────────────────────────── */
 
@@ -32,6 +33,9 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
     const sub = raw.split("/")[1] ?? "introduction";
     return { page: "docs", section: "frame", docsSection: DOCS_SECTIONS.has(sub) ? sub : "introduction" };
   }
+  if (segment === "demo") {
+    return { page: "demo", section: "frame", docsSection: "introduction" };
+  }
   if (SHOWCASE_SECTIONS.has(segment)) {
     return { page: "showcase", section: segment, docsSection: "introduction" };
   }
@@ -42,6 +46,7 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
 function pushPath(page: Page, section: string, docsSection = "introduction") {
   let path: string;
   if (page === "home") path = "/";
+  else if (page === "demo") path = "/demo";
   else if (page === "docs") path = docsSection === "introduction" ? "/docs" : `/docs/${docsSection}`;
   else path = `/${section}`;
 
@@ -131,8 +136,14 @@ export default function App() {
             initialSection={activeSection}
             onHome={() => { setPage("home"); pushPath("home", "frame"); }}
             onSectionChange={handleSectionChange}
+            onOpenDemo={() => { setPage("demo"); pushPath("demo", "demo"); }}
             dark={dark}
             onToggleDark={() => setDark((d) => !d)}
+          />
+        )}
+        {page === "demo" && (
+          <DemoScreen
+            onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
           />
         )}
       </AntApp>

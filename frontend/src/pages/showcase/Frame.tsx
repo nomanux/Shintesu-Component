@@ -76,13 +76,20 @@ const navItems: NavItem[] = [
   },
 ];
 
-export default function FrameSection() {
+export default function FrameSection({ onOpenDemo }: { onOpenDemo?: () => void }) {
   const [activeNav, setActiveNav] = React.useState("n1");
 
   return (
     <Flex vertical gap={24}>
       <div>
-        <SectionLabel>Page frame template</SectionLabel>
+        <Flex justify="space-between" align="center" style={{ marginBottom: 0 }}>
+          <SectionLabel>Page frame template</SectionLabel>
+          {onOpenDemo && (
+            <Button type="primary" size="small" onClick={onOpenDemo}>
+              Go to Demo Screen →
+            </Button>
+          )}
+        </Flex>
         <Divider style={{ margin: "8px 0 16px" }} />
 
         <div className="frame-scroll-wrapper">
