@@ -7,14 +7,55 @@ import DocsPage from "./pages/DocsPage";
 
 type Page = "home" | "showcase" | "docs";
 
+/* ── URL helpers ─────────────────────────────────────────────────────────── */
+
+/** Known showcase section keys — used to detect whether a path is a section. */
+const SHOWCASE_SECTIONS = new Set([
+  "foundations", "frame", "buttons", "inputs", "select", "datepicker",
+  "form", "radio-tab", "table", "modal", "scroll",
+  "introduction", "installation",
+]);
+
+/** Known docs section keys */
+const DOCS_SECTIONS = new Set([
+  "introduction", "installation", "tokens", "components",
+]);
+
+function parsePath(): { page: Page; section: string; docsSection: string } {
+  const raw = window.location.pathname.replace(/^\//, ""); // strip leading /
+  const segment = raw.split("/")[0];
+
+  if (!segment || segment === "home") {
+    return { page: "showcase", section: "frame", docsSection: "introduction" };
+  }
+  if (segment === "docs") {
+    const sub = raw.split("/")[1] ?? "introduction";
+    return { page: "docs", section: "frame", docsSection: DOCS_SECTIONS.has(sub) ? sub : "introduction" };
+  }
+  if (SHOWCASE_SECTIONS.has(segment)) {
+    return { page: "showcase", section: segment, docsSection: "introduction" };
+  }
+  // Fallback
+  return { page: "showcase", section: "frame", docsSection: "introduction" };
+}
+
+function pushPath(page: Page, section: string, docsSection = "introduction") {
+  let path: string;
+  if (page === "home") path = "/";
+  else if (page === "docs") path = docsSection === "introduction" ? "/docs" : `/docs/${docsSection}`;
+  else path = `/${section}`;
+
+  if (window.location.pathname !== path) {
+    history.pushState(null, "", path);
+  }
+}
+
+/* ── App ─────────────────────────────────────────────────────────────────── */
+
 export default function App() {
   const [dark, setDark] = React.useState<boolean>(() => {
-    try {
-      const v = localStorage.getItem("shinetsu:dark");
-      return v === "1";
-    } catch {
-      return false;
-    }
+    try { return localStorage.getItem("shinetsu:dark") === "1"; }
+    catch { return false; }
   });
 
   React.useEffect(() => {
@@ -26,23 +67,47 @@ export default function App() {
         localStorage.removeItem("shinetsu:dark");
         document.documentElement.setAttribute("data-theme", "light");
       }
-    } catch {
-      // ignore
-    }
+    } catch { /* ignore */ }
   }, [dark]);
 
-  const [page, setPage] = React.useState<Page>("showcase");
-  const [activeSection, setActiveSection] = React.useState("frame");
-  const [docsSection, setDocsSection] = React.useState("introduction");
+  // Initialise state from the current URL
+  const initial = parsePath();
+  const [page, setPage] = React.useState<Page>(initial.page);
+  const [activeSection, setActiveSection] = React.useState(initial.section);
+  const [docsSection, setDocsSection] = React.useState(initial.docsSection);
 
-  const handleBrowse = (section?: string) => {
-    if (section) setActiveSection(section);
+  // Keep state in sync when the user presses Back/Forward
+  React.useEffect(() => {
+    const onPop = () => {
+      const p = parsePath();
+      setPage(p.page);
+      setActiveSection(p.section);
+      setDocsSection(p.docsSection);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  const handleBrowse = (section = "frame") => {
+    setActiveSection(section);
     setPage("showcase");
+    pushPath("showcase", section);
   };
 
-  const handleDocs = (section?: string) => {
-    if (section) setDocsSection(section);
+  const handleDocs = (section = "introduction") => {
+    setDocsSection(section);
     setPage("docs");
+    pushPath("docs", "docs", section);
+  };
+
+  const handleSectionChange = (section: string) => {
+    setActiveSection(section);
+    pushPath("showcase", section);
+  };
+
+  const handleDocsSectionChange = (section: string) => {
+    setDocsSection(section);
+    pushPath("docs", "docs", section);
   };
 
   return (
@@ -54,9 +119,9 @@ export default function App() {
         {page === "docs" && (
           <DocsPage
             initialSection={docsSection}
-            onHome={() => setPage("home")}
+            onHome={() => { setPage("home"); pushPath("home", "frame"); }}
             onShowcase={handleBrowse}
-            // pass dark state so pages can reflect theme if needed
+            onSectionChange={handleDocsSectionChange}
             dark={dark}
             onToggleDark={() => setDark((d) => !d)}
           />
@@ -64,7 +129,8 @@ export default function App() {
         {page === "showcase" && (
           <ComponentShowcase
             initialSection={activeSection}
-            onHome={() => setPage("home")}
+            onHome={() => { setPage("home"); pushPath("home", "frame"); }}
+            onSectionChange={handleSectionChange}
             dark={dark}
             onToggleDark={() => setDark((d) => !d)}
           />

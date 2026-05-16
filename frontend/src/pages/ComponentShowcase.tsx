@@ -145,6 +145,7 @@ const contentMap: Record<
 type Props = {
   initialSection?: string;
   onHome?: () => void;
+  onSectionChange?: (section: string) => void;
   dark?: boolean;
   onToggleDark?: () => void;
 };
@@ -152,6 +153,7 @@ type Props = {
 export default function ComponentShowcase({
   initialSection = "introduction",
   onHome,
+  onSectionChange,
   dark = false,
   onToggleDark,
 }: Props) {
@@ -176,6 +178,7 @@ export default function ComponentShowcase({
   const handleNavClick = (key: SectionKey) => {
     setActive(key);
     setDrawerOpen(false);
+    onSectionChange?.(key);
   };
 
   const navContent = (

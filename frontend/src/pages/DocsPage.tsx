@@ -31,6 +31,7 @@ type Props = {
   initialSection?: DocSection;
   onHome: () => void;
   onShowcase: (section?: string) => void;
+  onSectionChange?: (section: string) => void;
   dark?: boolean;
   onToggleDark?: () => void;
 };
@@ -41,6 +42,7 @@ export default function DocsPage({
   initialSection = "introduction",
   onHome,
   onShowcase,
+  onSectionChange,
   dark,
 }: Props) {
   const [section, setSection] = useState<DocSection>(initialSection);
@@ -52,6 +54,7 @@ export default function DocsPage({
       onShowcase(key);
     } else {
       setSection(key);
+      onSectionChange?.(key);
     }
   };
 
