@@ -31,8 +31,8 @@ export default function App() {
     }
   }, [dark]);
 
-  const [page, setPage] = React.useState<Page>("home");
-  const [activeSection, setActiveSection] = React.useState("foundations");
+  const [page, setPage] = React.useState<Page>("showcase");
+  const [activeSection, setActiveSection] = React.useState("frame");
   const [docsSection, setDocsSection] = React.useState("introduction");
 
   const handleBrowse = (section?: string) => {
