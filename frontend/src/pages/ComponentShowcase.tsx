@@ -291,7 +291,16 @@ export default function ComponentShowcase({
             <ConfigProvider
               theme={
                 active === "buttons"
-                  ? { components: { Button: buttonTokens } }
+                  ? {
+                      components: {
+                        Button: {
+                          ...buttonTokens,
+                          // SM and LG sizes use their own radius tokens — mirror the base value
+                          borderRadiusSM: buttonTokens.borderRadius,
+                          borderRadiusLG: buttonTokens.borderRadius,
+                        },
+                      },
+                    }
                   : undefined
               }
             >
