@@ -1,32 +1,67 @@
+import React from "react";
 import { Divider, Flex } from "antd";
 import { SectionLabel } from "./helpers";
 import CodeBlock from "./CodeBlock";
 import themeSource from "../../theme.ts?raw";
 
-function Step({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
+/* ── Shared small helpers ────────────────────────────────────────────────── */
+
+function Mono({ children }: { children: string }) {
+  return (
+    <code
+      style={{
+        fontFamily: "monospace",
+        fontSize: 12,
+        background: "var(--gray-3)",
+        padding: "1px 6px",
+        borderRadius: 4,
+        border: "1px solid var(--gray-4)",
+        color: "var(--brand-7)",
+      }}
+    >
+      {children}
+    </code>
+  );
+}
+
+function Step({
+  num,
+  title,
+  children,
+}: {
+  num: number;
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <div
         style={{
-          width: 24,
-          height: 24,
+          width: 26,
+          height: 26,
           borderRadius: "50%",
-          background: "var(--brand-1)",
-          border: "1px solid var(--brand-3)",
-          color: "var(--brand-7)",
-          fontSize: 11,
+          background: "var(--brand-6)",
+          color: "#fff",
+          fontSize: 12,
           fontWeight: 700,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
-          marginTop: 2,
+          marginTop: 1,
         }}
       >
         {num}
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "var(--gray-9)", marginBottom: 10 }}>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: "var(--gray-9)",
+            marginBottom: 10,
+          }}
+        >
           {title}
         </div>
         {children}
@@ -35,181 +70,269 @@ function Step({ num, title, children }: { num: number; title: string; children: 
   );
 }
 
-import React from "react";
+function Note({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        padding: "10px 14px",
+        background: "var(--brand-1)",
+        border: "1px solid var(--brand-3)",
+        borderRadius: 6,
+        fontSize: 13,
+        color: "var(--brand-8)",
+        lineHeight: 1.7,
+        marginBottom: 12,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function PathCard({
+  icon,
+  title,
+  desc,
+  tag,
+}: {
+  icon: string;
+  title: string;
+  desc: string;
+  tag?: string;
+}) {
+  return (
+    <div
+      style={{
+        padding: "16px 20px",
+        border: "1px solid var(--gray-4)",
+        borderRadius: 8,
+        background: "var(--gray-1)",
+        flex: 1,
+        minWidth: 0,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          marginBottom: 8,
+        }}
+      >
+        <span style={{ fontSize: 20 }}>{icon}</span>
+        <span
+          style={{ fontSize: 14, fontWeight: 700, color: "var(--gray-9)" }}
+        >
+          {title}
+        </span>
+        {tag && (
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              padding: "2px 6px",
+              borderRadius: 99,
+              background: "var(--brand-1)",
+              color: "var(--brand-7)",
+              border: "1px solid var(--brand-3)",
+              marginLeft: "auto",
+            }}
+          >
+            {tag}
+          </span>
+        )}
+      </div>
+      <p style={{ margin: 0, fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+        {desc}
+      </p>
+    </div>
+  );
+}
+
+function KitFile({
+  file,
+  desc,
+}: {
+  file: string;
+  desc: string;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 12,
+        alignItems: "flex-start",
+        padding: "10px 14px",
+        border: "1px solid var(--gray-4)",
+        borderRadius: 6,
+        background: "var(--gray-1)",
+      }}
+    >
+      <Mono>{file}</Mono>
+      <span style={{ fontSize: 13, color: "var(--gray-6)", lineHeight: 1.6 }}>
+        {desc}
+      </span>
+    </div>
+  );
+}
+
+/* ── Page ────────────────────────────────────────────────────────────────── */
 
 export default function InstallationSection() {
   return (
-    <Flex vertical gap={40}>
+    <Flex vertical gap={48}>
 
-      {/* Prerequisites */}
+      {/* ── Choose your path ── */}
       <div>
-        <SectionLabel>Prerequisites</SectionLabel>
+        <SectionLabel>Choose Your Path</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <div
-          style={{
-            padding: "12px 16px",
-            background: "var(--brand-1)",
-            border: "1px solid var(--brand-3)",
-            borderRadius: 6,
-            fontSize: 13,
-            color: "var(--brand-8)",
-            lineHeight: 1.7,
-          }}
-        >
-          Requires <strong>Node.js 18+</strong> and <strong>npm</strong> (or pnpm / yarn).
-        </div>
+        <Flex gap={12} wrap>
+          <PathCard
+            icon="📦"
+            title="Use components in my project"
+            desc="Copy 2 files from the kit and start building. No cloning, no running anything locally."
+            tag="Recommended"
+          />
+          <PathCard
+            icon="🖥️"
+            title="Run the showcase locally"
+            desc="Clone the repo and run the showcase on your machine to explore all components."
+          />
+        </Flex>
       </div>
 
-      {/* Steps */}
+      {/* ── PATH A: Kit setup ── */}
       <div>
-        <SectionLabel>Setup Steps</SectionLabel>
+        <SectionLabel>Path A — Use Components in Your Project</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex vertical gap={28}>
+        <Note>
+          📦 All you need is in the <strong>kit/</strong> folder on GitHub:{" "}
+          <a
+            href="https://github.com/nomanux/Shintesu-Component/tree/master/kit"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "var(--brand-6)", fontWeight: 600 }}
+          >
+            github.com/nomanux/Shintesu-Component/tree/master/kit
+          </a>
+        </Note>
 
+        <Flex vertical gap={24}>
+          <Step num={1} title="Install Ant Design (if not already)">
+            <CodeBlock language="bash">{`npm install antd @ant-design/icons`}</CodeBlock>
+          </Step>
+
+          <Step num={2} title="Copy theme.ts into your project">
+            <p style={{ margin: "0 0 10px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+              Download <Mono>kit/theme.ts</Mono> → paste into <Mono>src/theme.ts</Mono>, then wrap your app:
+            </p>
+            <CodeBlock>{`// src/App.tsx
+import { ConfigProvider } from "antd";
+import { getShinetsuTheme } from "./theme";
+
+export default function App() {
+  return (
+    <ConfigProvider theme={getShinetsuTheme()}>
+      {/* your app */}
+    </ConfigProvider>
+  );
+}`}</CodeBlock>
+          </Step>
+
+          <Step num={3} title="Copy index.css and import it">
+            <p style={{ margin: "0 0 10px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+              Download <Mono>kit/index.css</Mono> → paste into <Mono>src/index.css</Mono>:
+            </p>
+            <CodeBlock>{`// src/main.tsx
+import "./index.css";   // ← add this line`}</CodeBlock>
+          </Step>
+
+          <Step num={4} title="Copy the components you need">
+            <p style={{ margin: "0 0 10px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+              Copy from <Mono>kit/components/</Mono> into your project's <Mono>src/components/</Mono>:
+            </p>
+            <Flex vertical gap={8}>
+              <KitFile
+                file="SplitTable.tsx + SplitTable.scss"
+                desc="Freeze-column table with drag-to-resize, reorder, and synced scroll."
+              />
+              <KitFile
+                file="SpecialInput.tsx"
+                desc="Click to edit inline, double-click to open full-edit modal."
+              />
+              <KitFile
+                file="SpecialInput2.tsx"
+                desc="Variant of SpecialInput with alternate styling."
+              />
+              <KitFile
+                file="AppModal.tsx"
+                desc="Standard dialog with styled header, body and footer borders."
+              />
+            </Flex>
+          </Step>
+
+          <Step num={5} title="Browse the showcase for code snippets">
+            <p style={{ margin: "0 0 10px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+              Open any section in this showcase → click the <strong>Code</strong> tab → copy the snippet directly into your project.
+            </p>
+            <Note>
+              💡 The showcase is your living reference. Every variant has a working preview and copy-ready code.
+            </Note>
+          </Step>
+        </Flex>
+      </div>
+
+      {/* ── PATH B: Run locally ── */}
+      <div>
+        <SectionLabel>Path B — Run the Showcase Locally</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <Note>
+          Requires <strong>Node.js 18+</strong> and <strong>npm</strong>.
+        </Note>
+        <Flex vertical gap={20}>
           <Step num={1} title="Clone the repository">
-            <CodeBlock>{`git clone https://github.com/nomanux/Shintesu-Component.git
+            <CodeBlock language="bash">{`git clone https://github.com/nomanux/Shintesu-Component.git
 cd Shintesu-Component`}</CodeBlock>
           </Step>
 
           <Step num={2} title="Install dependencies">
-            <CodeBlock>{`cd frontend
+            <CodeBlock language="bash">{`cd frontend
 npm install`}</CodeBlock>
-            <p style={{ fontSize: 13, color: "var(--gray-6)", marginTop: 8, lineHeight: 1.65 }}>
-              All dependencies live in the <code style={{ fontFamily: "monospace", fontSize: 12, background: "var(--gray-3)", padding: "1px 5px", borderRadius: 3, border: "1px solid var(--gray-4)", color: "var(--brand-7)" }}>frontend/</code> folder.
-            </p>
           </Step>
 
           <Step num={3} title="Start the development server">
-            <CodeBlock>{`npm run dev`}</CodeBlock>
+            <CodeBlock language="bash">{`npm run dev`}</CodeBlock>
             <p style={{ fontSize: 13, color: "var(--gray-6)", marginTop: 8, lineHeight: 1.65 }}>
-              The showcase opens at{" "}
-              <code
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: 12,
-                  background: "var(--gray-3)",
-                  padding: "1px 6px",
-                  borderRadius: 4,
-                  border: "1px solid var(--gray-4)",
-                  color: "var(--brand-7)",
-                }}
-              >
-                http://localhost:5173
-              </code>
+              Opens at <Mono>http://localhost:5173</Mono>
             </p>
           </Step>
-
         </Flex>
       </div>
 
-      {/* Using in your project */}
+      {/* ── Kit structure ── */}
       <div>
-        <SectionLabel>Using in Your Project</SectionLabel>
+        <SectionLabel>Kit Structure</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex vertical gap={12}>
-          {[
-            "Open any component in the showcase and click the Code tab.",
-            "Copy the snippet into your own project.",
-            "Copy src/theme.ts and wrap your app with ConfigProvider.",
-            "Copy src/index.css and import it in your entry file.",
-          ].map((step, i) => (
-            <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-              <div
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: "50%",
-                  background: "var(--gray-3)",
-                  border: "1px solid var(--gray-4)",
-                  color: "var(--gray-7)",
-                  fontSize: 11,
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  marginTop: 2,
-                }}
-              >
-                {i + 1}
-              </div>
-              <span style={{ fontSize: 13, color: "var(--gray-7)", lineHeight: 1.65 }}>{step}</span>
-            </div>
-          ))}
-        </Flex>
+        <CodeBlock language="bash">{`kit/
+├── README.md                  # Quick-start guide
+├── theme.ts                   # All design tokens → wrap app in ConfigProvider
+├── index.css                  # CSS variables + Ant Design overrides
+└── components/
+    ├── SplitTable.tsx         # Freeze-column table
+    ├── SplitTable.scss
+    ├── SpecialInput.tsx       # Click-to-edit input
+    ├── SpecialInput2.tsx
+    └── AppModal.tsx           # Styled modal wrapper`}</CodeBlock>
       </div>
 
-      {/* Project structure */}
+      {/* ── theme.ts source ── */}
       <div>
-        <SectionLabel>Project Structure</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <CodeBlock>{`frontend/
-├── src/
-│   ├── components/           # Shared components
-│   │   ├── SplitTable.tsx    # Freeze-column table
-│   │   ├── SpecialInput.tsx  # Click-to-edit input
-│   │   └── SpecialInput2.tsx
-│   ├── pages/
-│   │   ├── showcase/         # One file per component
-│   │   │   ├── Buttons.tsx
-│   │   │   ├── Inputs.tsx
-│   │   │   └── ...
-│   │   └── ComponentShowcase.tsx
-│   ├── theme.ts              # Ant Design token overrides
-│   └── index.css             # CSS variables + global styles
-└── package.json`}</CodeBlock>
-      </div>
-
-      {/* theme.ts source */}
-      <div>
-        <SectionLabel>theme.ts</SectionLabel>
+        <SectionLabel>theme.ts — Full Source</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 13, color: "var(--gray-6)", marginBottom: 12, lineHeight: 1.65 }}>
-          Copy this file into your project and wrap your app with{" "}
-          <code style={{ fontFamily: "monospace", fontSize: 12, background: "var(--gray-3)", padding: "1px 6px", borderRadius: 4, border: "1px solid var(--gray-4)", color: "var(--brand-7)" }}>
-            ConfigProvider
-          </code>. All token overrides live here.
+          This is the live <Mono>theme.ts</Mono> file — always up to date. Copy it directly into your project.
         </p>
         <CodeBlock language="ts">{themeSource}</CodeBlock>
-      </div>
-
-      {/* Key files */}
-      <div>
-        <SectionLabel>Key Files</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex vertical gap={8}>
-          {[
-            { file: "theme.ts",   desc: "All Ant Design token overrides. Start here when customising colours or sizing." },
-            { file: "index.css",  desc: "CSS custom properties for the full brand palette. Referenced by every component." },
-          ].map((f) => (
-            <div
-              key={f.file}
-              style={{
-                padding: "12px 16px",
-                border: "1px solid var(--gray-4)",
-                borderRadius: 6,
-                background: "var(--gray-1)",
-              }}
-            >
-              <code
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: 12,
-                  background: "var(--gray-3)",
-                  padding: "2px 6px",
-                  borderRadius: 4,
-                  border: "1px solid var(--gray-4)",
-                  color: "var(--brand-7)",
-                  display: "inline-block",
-                  marginBottom: 6,
-                }}
-              >
-                {f.file}
-              </code>
-              <div style={{ fontSize: 13, color: "var(--gray-6)", lineHeight: 1.6 }}>{f.desc}</div>
-            </div>
-          ))}
-        </Flex>
       </div>
 
     </Flex>
