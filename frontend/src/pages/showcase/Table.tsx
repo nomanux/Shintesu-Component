@@ -444,6 +444,9 @@ type SplitTableCtx = {
   setOrder: React.Dispatch<React.SetStateAction<string[]>>;
   widths: Record<string, number>;
   setWidths: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  // Shared row selection — both panels read/write the same keys
+  selectedKeys: React.Key[];
+  setSelectedKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 };
 
 const SplitTableContext = React.createContext<SplitTableCtx | null>(null);
@@ -455,7 +458,8 @@ function useSplitTableState(): SplitTableCtx {
   const [widths, setWidths] = React.useState<Record<string, number>>(() =>
     Object.fromEntries(SPLIT_COLS_BASE.map((c) => [c.key, c.width])),
   );
-  return { order, setOrder, widths, setWidths };
+  const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
+  return { order, setOrder, widths, setWidths, selectedKeys, setSelectedKeys };
 }
 
 // ── Table component ────────────────────────────────────────────────────────
@@ -467,7 +471,7 @@ function ShowcaseTableForSplit({
   dataSource: SplitRow[];
   loading?: boolean;
 }) {
-  const { order, setOrder, widths, setWidths } =
+  const { order, setOrder, widths, setWidths, selectedKeys, setSelectedKeys } =
     React.useContext(SplitTableContext)!;
   const dragKey = React.useRef<string | null>(null);
 
@@ -532,6 +536,19 @@ function ShowcaseTableForSplit({
       dataSource={dataSource}
       scroll={{ x: SPLIT_TOTAL_WIDTH, y: 360 }}
       pagination={false}
+      rowClassName={(r) =>
+        selectedKeys.includes((r as SplitRow).key) ? "row-selected" : ""
+      }
+      onRow={(r) => ({
+        onClick: () =>
+          setSelectedKeys((prev) => {
+            const k = (r as SplitRow).key;
+            return prev.includes(k)
+              ? prev.filter((x) => x !== k)
+              : [...prev, k];
+          }),
+        style: { cursor: "pointer" },
+      })}
     />
   );
 }

@@ -52,24 +52,37 @@ const SplitTable = ({
     return null;
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!dragging || !tableWrapperRef.current) return;
-    const rect = tableWrapperRef.current.getBoundingClientRect();
-    let newWidth = e.clientX - rect.left;
-    const maximumWidth = tableWrapperRef.current.offsetWidth - 20;
-    newWidth = Math.max(0, Math.min(newWidth, maximumWidth));
-    if (newWidth < maximumWidth) setSplitWidth(newWidth);
-  };
-
   const handleMouseDown = () => {
     setDragging(true);
     document.body.style.userSelect = "none";
   };
 
-  const handleMouseUp = () => {
-    document.body.style.userSelect = "";
-    setDragging(false);
-  };
+  // Fix: define handlers INSIDE the effect so the same reference is added
+  // and removed — avoids the stale-closure / reference-mismatch bug.
+  useEffect(() => {
+    if (!dragging) return;
+
+    const onMove = (e: MouseEvent) => {
+      if (!tableWrapperRef.current) return;
+      const rect = tableWrapperRef.current.getBoundingClientRect();
+      let newWidth = e.clientX - rect.left;
+      const maximumWidth = tableWrapperRef.current.offsetWidth - 20;
+      newWidth = Math.max(0, Math.min(newWidth, maximumWidth));
+      if (newWidth < maximumWidth) setSplitWidth(newWidth);
+    };
+
+    const onUp = () => {
+      document.body.style.userSelect = "";
+      setDragging(false);
+    };
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+    return () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+    };
+  }, [dragging]); // setSplitWidth is stable (state setter)
 
   // Sync vertical scroll between left frozen panel and right scrollable panel.
   useEffect(() => {
@@ -104,20 +117,6 @@ const SplitTable = ({
     const raf = requestAnimationFrame(attachScrollSync);
     return () => cancelAnimationFrame(raf);
   }, [splitWidth, dataTable]);
-
-  useEffect(() => {
-    if (dragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    } else {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    }
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [dragging]);
 
   // Forward wheel events from the left panel to the right panel's scroll
   // container so the user can scroll from either side.
