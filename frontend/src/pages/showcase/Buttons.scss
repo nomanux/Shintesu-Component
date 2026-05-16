@@ -1,20 +1,169 @@
-/* Exclude icon-only buttons from min-width */
-.ant-btn:not(.ant-btn-icon-only) {
-  min-width: 110px;
+/* ── Token editor (Ant Design theme-editor style) ────────────────────────── */
 
-  @media (max-width: 480px) {
-    min-width: 80px;
+.tc-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--gray-2);
+  border-bottom: 1px solid var(--gray-4);
+
+  &__title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-9);
+  }
+
+  &__reset {
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    background: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--gray-5);
+    cursor: default;
+
+    &--active {
+      color: var(--brand-6);
+      cursor: pointer;
+      &:hover { color: var(--brand-7); }
+    }
   }
 }
 
-/* Primary hover: white bg + teal text/border */
+.tc-group__label {
+  padding: 10px 16px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-6);
+  background: var(--gray-1);
+  border-bottom: 1px solid var(--gray-3);
+}
+
+.tc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--gray-3);
+  background: var(--gray-1);
+  min-height: 36px;
+
+  &:hover { background: var(--gray-2); }
+  &:last-child { border-bottom: none; }
+
+  &__comp {
+    font-size: 10px;
+    font-weight: 700;
+    color: #56a11b;
+    font-family: monospace;
+    flex-shrink: 0;
+    width: 34px;
+  }
+
+  &__name {
+    flex: 1;
+    font-size: 12px;
+    font-family: monospace;
+    color: var(--gray-8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+
+    &--modified { color: #d4380d; font-weight: 600; }
+  }
+
+  &__reset-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand-6);
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    &:hover { color: var(--brand-7); text-decoration: underline; }
+  }
+
+  &__value {
+    font-size: 11px;
+    color: var(--gray-5);
+    font-family: monospace;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  &__swatch {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15);
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+
+    input[type="color"] {
+      position: absolute;
+      inset: -4px;
+      width: calc(100% + 8px);
+      height: calc(100% + 8px);
+      opacity: 0;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &__number {
+    width: 58px;
+    height: 24px;
+    font-size: 12px;
+    font-family: monospace;
+    border: 1px solid var(--gray-4);
+    border-radius: 4px;
+    text-align: right;
+    padding: 0 6px;
+    background: var(--gray-1);
+    color: var(--gray-9);
+    flex-shrink: 0;
+
+    &:focus {
+      outline: none;
+      border-color: var(--brand-6);
+      box-shadow: 0 0 0 2px rgba(0,155,148,0.1);
+    }
+  }
+}
+
+/* ── Button overrides ─────────────────────────────────────────────────────── */
+
+.ant-btn:not(.ant-btn-icon-only) {
+  min-width: 110px;
+
+  @media (max-width: 480px) { min-width: 80px; }
+}
+
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: var(--gray-1) !important;
   color: var(--brand-6) !important;
   border-color: var(--brand-6) !important;
 }
 
-/* Primary disabled: brand-4 bg + white text */
 .ant-btn-primary:disabled,
 .ant-btn-primary.ant-btn-disabled {
   background-color: var(--brand-4) !important;
@@ -22,7 +171,6 @@
   color: var(--gray-1) !important;
 }
 
-/* Default disabled: transparent border */
 .ant-btn-default:disabled,
 .ant-btn-default.ant-btn-disabled {
   border-color: transparent !important;

@@ -17,91 +17,70 @@ import {
   TOKEN_GROUPS,
 } from "./buttonTokens";
 
-// ── Token Customizer (controlled — state lives in ComponentShowcase) ──────────
+// ── Token Customizer (Ant Design theme-editor style) ─────────────────────────
+
+function formatValue(val: string | number): string {
+  if (typeof val === "number") return String(val);
+  if (val.length > 9) return val.slice(0, 8) + "…";
+  return val.toUpperCase();
+}
 
 function TokenRow({
   label,
   value,
+  defaultValue,
   type,
   onChange,
+  onReset,
 }: {
   label: string;
   value: string | number;
+  defaultValue: string | number;
   type: "color" | "number";
   onChange: (v: string | number) => void;
+  onReset: () => void;
 }) {
+  const modified = value !== defaultValue;
+
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        minHeight: 32,
-        padding: "2px 0",
-        borderBottom: "1px solid var(--gray-3)",
-      }}
-    >
-      <span
-        style={{
-          flex: 1,
-          fontSize: 12,
-          fontFamily: "monospace",
-          color: "var(--gray-7)",
-          minWidth: 0,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        }}
-      >
+    <div className="tc-row">
+      <span className="tc-row__comp">Comp</span>
+      <span className={`tc-row__name${modified ? " tc-row__name--modified" : ""}`}>
         {label}
       </span>
+      {modified && (
+        <button className="tc-row__reset-link" onClick={onReset}>
+          Reset
+        </button>
+      )}
+      <span className="tc-row__value">{formatValue(value)}</span>
       {type === "color" ? (
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-          <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--gray-6)" }}>
-            {value}
-          </span>
+        <label
+          className="tc-row__swatch"
+          style={{ background: value as string }}
+          title={`Click to change ${label}`}
+        >
           <input
             type="color"
             value={value as string}
             onChange={(e) => onChange(e.target.value)}
-            style={{
-              width: 24,
-              height: 24,
-              padding: 0,
-              border: "1px solid var(--gray-4)",
-              borderRadius: 4,
-              cursor: "pointer",
-              background: "none",
-            }}
           />
-        </div>
+        </label>
       ) : (
         <input
           type="number"
+          className="tc-row__number"
           value={value as number}
           min={0}
           onChange={(e) => onChange(Number(e.target.value))}
-          style={{
-            width: 60,
-            height: 24,
-            fontSize: 12,
-            fontFamily: "monospace",
-            border: "1px solid var(--gray-4)",
-            borderRadius: 4,
-            textAlign: "right",
-            padding: "0 6px",
-            background: "var(--gray-1)",
-            color: "var(--gray-9)",
-            flexShrink: 0,
-          }}
         />
       )}
     </div>
   );
 }
 
-/** Controlled token editor — no own state, no preview.
- *  Changes reflect live in the main content via ConfigProvider in ComponentShowcase. */
+/** Controlled token editor — Ant Design theme-editor visual style.
+ *  No own state, no preview. Changes reflect via ConfigProvider in ComponentShowcase. */
 export function ButtonTokenCustomizer({
   tokens,
   onChange,
@@ -111,75 +90,42 @@ export function ButtonTokenCustomizer({
 }) {
   const set = <K extends keyof BtnTokens>(key: K, val: BtnTokens[K]) =>
     onChange({ ...tokens, [key]: val });
+  const reset = (key: keyof BtnTokens) =>
+    onChange({ ...tokens, [key]: BUTTON_TOKEN_DEFAULTS[key] });
 
   const isDirty = JSON.stringify(tokens) !== JSON.stringify(BUTTON_TOKEN_DEFAULTS);
 
   return (
     <div>
-      {/* Sticky header — sticks to top of .showcase-right-panel scroll container */}
-      <div
-        style={{
-          padding: "10px 16px",
-          background: "var(--gray-2)",
-          borderBottom: "1px solid var(--gray-4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-        }}
-      >
-        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--gray-9)" }}>
-          Button Tokens
-        </span>
+      {/* Sticky header */}
+      <div className="tc-header">
+        <span className="tc-header__title">Button</span>
         <button
+          className={`tc-header__reset${isDirty ? " tc-header__reset--active" : ""}`}
           onClick={() => onChange({ ...BUTTON_TOKEN_DEFAULTS })}
           disabled={!isDirty}
-          style={{
-            fontSize: 11,
-            padding: "2px 8px",
-            border: "1px solid var(--gray-4)",
-            borderRadius: 4,
-            cursor: isDirty ? "pointer" : "default",
-            background: isDirty ? "var(--gray-1)" : "transparent",
-            color: isDirty ? "var(--brand-6)" : "var(--gray-5)",
-            fontWeight: isDirty ? 600 : 400,
-            transition: "all 0.15s",
-          }}
         >
-          Reset
+          Reset All
         </button>
       </div>
 
       {/* Grouped token rows */}
-      <div style={{ padding: "0 16px 12px" }}>
-        {TOKEN_GROUPS.map((group) => (
-          <div key={group.label}>
-            <div
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: 1,
-                textTransform: "uppercase",
-                color: "var(--gray-5)",
-                padding: "12px 0 4px",
-              }}
-            >
-              {group.label}
-            </div>
-            {group.tokens.map(({ key, type }) => (
-              <TokenRow
-                key={key}
-                label={key}
-                value={tokens[key]}
-                type={type}
-                onChange={(v) => set(key, v as BtnTokens[typeof key])}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+      {TOKEN_GROUPS.map((group) => (
+        <div key={group.label}>
+          <div className="tc-group__label">{group.label}</div>
+          {group.tokens.map(({ key, type }) => (
+            <TokenRow
+              key={key}
+              label={key}
+              value={tokens[key]}
+              defaultValue={BUTTON_TOKEN_DEFAULTS[key]}
+              type={type}
+              onChange={(v) => set(key, v as BtnTokens[typeof key])}
+              onReset={() => reset(key)}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
