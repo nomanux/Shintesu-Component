@@ -67,34 +67,19 @@ export default function InstallationSection() {
         <Flex vertical gap={28}>
 
           <Step num={1} title="Clone the repository">
-            <div
-              style={{
-                padding: "10px 14px",
-                marginBottom: 10,
-                background: "var(--gray-3)",
-                border: "1px solid var(--gray-4)",
-                borderRadius: 6,
-                fontSize: 13,
-                color: "var(--gray-7)",
-                lineHeight: 1.6,
-              }}
-            >
-              Replace <code style={{ fontFamily: "monospace", fontSize: 12, color: "var(--brand-7)" }}>YOUR_REPO_URL</code> below with your actual GitHub repository URL.
-              You can find it on GitHub under <strong>Code → Clone → HTTPS</strong>.
-            </div>
             <CodeBlock>{`git clone https://github.com/nomanux/Shintesu-Component.git
 cd Shintesu-Component`}</CodeBlock>
           </Step>
 
-          <Step num={2} title="Move into the frontend directory">
-            <CodeBlock>{`cd frontend`}</CodeBlock>
+          <Step num={2} title="Install dependencies">
+            <CodeBlock>{`cd frontend
+npm install`}</CodeBlock>
+            <p style={{ fontSize: 13, color: "var(--gray-6)", marginTop: 8, lineHeight: 1.65 }}>
+              All dependencies live in the <code style={{ fontFamily: "monospace", fontSize: 12, background: "var(--gray-3)", padding: "1px 5px", borderRadius: 3, border: "1px solid var(--gray-4)", color: "var(--brand-7)" }}>frontend/</code> folder.
+            </p>
           </Step>
 
-          <Step num={3} title="Install dependencies">
-            <CodeBlock>{`npm install`}</CodeBlock>
-          </Step>
-
-          <Step num={4} title="Start the development server">
+          <Step num={3} title="Start the development server">
             <CodeBlock>{`npm run dev`}</CodeBlock>
             <p style={{ fontSize: 13, color: "var(--gray-6)", marginTop: 8, lineHeight: 1.65 }}>
               The showcase opens at{" "}
