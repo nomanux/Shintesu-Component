@@ -107,7 +107,11 @@ export default function DemoScreen({ onBack }: Props) {
         }}
       >
         {/* Logo */}
-        <img src={shinetsuLogo} alt="Shinetsu" style={{ height: 20, width: "auto" }} />
+        <img
+          src={shinetsuLogo}
+          alt="Shinetsu"
+          style={{ height: 20, width: "auto" }}
+        />
 
         {/* Nav */}
         <div style={{ display: "flex", height: "100%", flex: 1 }}>
@@ -217,22 +221,20 @@ export default function DemoScreen({ onBack }: Props) {
           gap: 12,
         }}
       >
-        {/* Top dropzone */}
-        <Dropzone>Remove this frame and add your content</Dropzone>
-
-        {/* Table */}
+        {/* Table — fills all remaining height */}
         <div
           style={{
+            flex: 1,
+            minHeight: 0,
             background: "var(--gray-1)",
             border: "1px solid var(--gray-4)",
             padding: 8,
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <GlobalTable />
         </div>
-
-        {/* Bottom dropzone */}
-        <Dropzone>Remove this frame and add your content</Dropzone>
       </div>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
@@ -260,7 +262,12 @@ export default function DemoScreen({ onBack }: Props) {
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         footer={[
-          <Button key="ok" size="small" type="primary" onClick={() => setModalOpen(false)}>
+          <Button
+            key="ok"
+            size="small"
+            type="primary"
+            onClick={() => setModalOpen(false)}
+          >
             OK
           </Button>,
           <Button key="cancel" size="small" onClick={() => setModalOpen(false)}>
