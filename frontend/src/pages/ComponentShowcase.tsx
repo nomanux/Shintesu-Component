@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { Typography, Divider } from "antd";
+import { Typography, Divider, ConfigProvider } from "antd";
 import {
   BookOutlined,
   DownloadOutlined,
@@ -35,6 +35,7 @@ import FoundationsSection, {
 } from "./showcase/Foundations";
 import FrameSection, { FrameGuidance } from "./showcase/Frame";
 import ButtonsSection, { ButtonsGuidance, ButtonTokenCustomizer } from "./showcase/Buttons";
+import { type BtnTokens, BUTTON_TOKEN_DEFAULTS } from "./showcase/buttonTokens";
 import InputsSection, { InputsGuidance } from "./showcase/Inputs";
 import FormSection, { FormGuidance } from "./showcase/Form";
 import { TableSection, TableGuidance } from "./showcase/Table";
@@ -122,11 +123,7 @@ const contentMap: Record<
     guidance: <FoundationsGuidance />,
   },
   frame: { component: <FrameSection />, guidance: <FrameGuidance /> },
-  buttons: {
-    component: <ButtonsSection />,
-    guidance: <ButtonsGuidance />,
-    rightPanel: <ButtonTokenCustomizer />,
-  },
+  buttons: { component: <ButtonsSection />, guidance: <ButtonsGuidance /> },
   inputs: { component: <InputsSection />, guidance: <InputsGuidance /> },
   select: { component: <SelectSection />, guidance: <SelectGuidance /> },
   datepicker: {
@@ -163,6 +160,7 @@ export default function ComponentShowcase({
   );
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [lang, setLang] = React.useState<Lang>("en");
+  const [buttonTokens, setButtonTokens] = React.useState<BtnTokens>({ ...BUTTON_TOKEN_DEFAULTS });
 
   const t = (text: string) =>
     lang === "ja" ? (LABELS_JA[text] ?? text) : text;
@@ -290,20 +288,31 @@ export default function ComponentShowcase({
 
           {/* Content */}
           <main className="showcase-content">
-            <div className="showcase-content-body">
-              <Title level={3} style={{ marginBottom: 4 }}>
-                {t(sections.find((s) => s.key === active)?.label ?? "")}
-              </Title>
-              <Divider style={{ margin: "16px 0 24px" }} />
-              {contentMap[active].guidance}
-              {contentMap[active].component}
-            </div>
+            <ConfigProvider
+              theme={
+                active === "buttons"
+                  ? { components: { Button: buttonTokens } }
+                  : undefined
+              }
+            >
+              <div className="showcase-content-body">
+                <Title level={3} style={{ marginBottom: 4 }}>
+                  {t(sections.find((s) => s.key === active)?.label ?? "")}
+                </Title>
+                <Divider style={{ margin: "16px 0 24px" }} />
+                {contentMap[active].guidance}
+                {contentMap[active].component}
+              </div>
+            </ConfigProvider>
           </main>
 
           {/* Sticky right panel — rendered when a section provides one */}
-          {contentMap[active].rightPanel && (
+          {active === "buttons" && (
             <aside className="showcase-right-panel">
-              {contentMap[active].rightPanel}
+              <ButtonTokenCustomizer
+                tokens={buttonTokens}
+                onChange={setButtonTokens}
+              />
             </aside>
           )}
         </div>

@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, ConfigProvider, Divider, Flex } from "antd";
+import { Button, Divider, Flex } from "antd";
 import "./Buttons.scss";
-import { colors } from "../../theme";
 import {
   DownloadOutlined,
   UploadOutlined,
@@ -12,82 +11,13 @@ import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
+import {
+  type BtnTokens,
+  BUTTON_TOKEN_DEFAULTS,
+  TOKEN_GROUPS,
+} from "./buttonTokens";
 
-// ── Token Customizer ──────────────────────────────────────────────────────────
-
-const BUTTON_MIN_WIDTH = 110;
-
-type BtnTokens = {
-  // Sizing
-  borderRadius: number;
-  paddingInline: number;
-  fontWeight: number;
-  controlMinWidth: number;
-  // Primary colors
-  colorPrimary: string;
-  colorPrimaryHover: string;
-  colorPrimaryActive: string;
-  primaryColor: string;
-  // Default button colors
-  defaultBg: string;
-  defaultHoverBg: string;
-  defaultActiveBg: string;
-  defaultColor: string;
-  defaultHoverColor: string;
-  defaultActiveColor: string;
-};
-
-const DEFAULTS: BtnTokens = {
-  borderRadius: 0,
-  paddingInline: 7,
-  fontWeight: 500,
-  controlMinWidth: BUTTON_MIN_WIDTH,
-  colorPrimary: colors.brand[6],
-  colorPrimaryHover: colors.brand[6],
-  colorPrimaryActive: colors.brand[7],
-  primaryColor: "#FFFFFF",
-  defaultBg: colors.gray[3],
-  defaultHoverBg: colors.gray[4],
-  defaultActiveBg: colors.gray[5],
-  defaultColor: colors.gray[10],
-  defaultHoverColor: colors.gray[9],
-  defaultActiveColor: colors.gray[9],
-};
-
-const TOKEN_GROUPS: {
-  label: string;
-  tokens: { key: keyof BtnTokens; type: "color" | "number" }[];
-}[] = [
-  {
-    label: "Sizing",
-    tokens: [
-      { key: "borderRadius", type: "number" },
-      { key: "paddingInline", type: "number" },
-      { key: "fontWeight", type: "number" },
-      { key: "controlMinWidth", type: "number" },
-    ],
-  },
-  {
-    label: "Primary",
-    tokens: [
-      { key: "colorPrimary", type: "color" },
-      { key: "colorPrimaryHover", type: "color" },
-      { key: "colorPrimaryActive", type: "color" },
-      { key: "primaryColor", type: "color" },
-    ],
-  },
-  {
-    label: "Default",
-    tokens: [
-      { key: "defaultBg", type: "color" },
-      { key: "defaultHoverBg", type: "color" },
-      { key: "defaultActiveBg", type: "color" },
-      { key: "defaultColor", type: "color" },
-      { key: "defaultHoverColor", type: "color" },
-      { key: "defaultActiveColor", type: "color" },
-    ],
-  },
-];
+// ── Token Customizer (controlled — state lives in ComponentShowcase) ──────────
 
 function TokenRow({
   label,
@@ -170,119 +100,91 @@ function TokenRow({
   );
 }
 
-export function ButtonTokenCustomizer() {
-  const [tokens, setTokens] = React.useState<BtnTokens>({ ...DEFAULTS });
+/** Controlled token editor — no own state, no preview.
+ *  Changes reflect live in the main content via ConfigProvider in ComponentShowcase. */
+export function ButtonTokenCustomizer({
+  tokens,
+  onChange,
+}: {
+  tokens: BtnTokens;
+  onChange: (tokens: BtnTokens) => void;
+}) {
   const set = <K extends keyof BtnTokens>(key: K, val: BtnTokens[K]) =>
-    setTokens((prev) => ({ ...prev, [key]: val }));
-  const isDirty = JSON.stringify(tokens) !== JSON.stringify(DEFAULTS);
+    onChange({ ...tokens, [key]: val });
+
+  const isDirty = JSON.stringify(tokens) !== JSON.stringify(BUTTON_TOKEN_DEFAULTS);
 
   return (
-    <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-      {/* ── Controls ── */}
+    <div
+      style={{
+        border: "1px solid var(--gray-4)",
+        borderRadius: 6,
+        overflow: "hidden",
+        height: "100%",
+      }}
+    >
+      {/* Header */}
       <div
         style={{
-          width: 320,
-          flexShrink: 0,
-          border: "1px solid var(--gray-4)",
-          borderRadius: 6,
-          overflow: "hidden",
+          padding: "10px 16px",
+          background: "var(--gray-2)",
+          borderBottom: "1px solid var(--gray-4)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
         }}
       >
-        {/* Header */}
-        <div
-          style={{
-            padding: "10px 16px",
-            background: "var(--gray-2)",
-            borderBottom: "1px solid var(--gray-4)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span style={{ fontSize: 13, fontWeight: 600, color: "var(--gray-9)" }}>
-            Button Tokens
-          </span>
-          {isDirty && (
-            <button
-              onClick={() => setTokens({ ...DEFAULTS })}
-              style={{
-                fontSize: 11,
-                padding: "2px 8px",
-                border: "1px solid var(--gray-4)",
-                borderRadius: 4,
-                cursor: "pointer",
-                background: "var(--gray-1)",
-                color: "var(--gray-7)",
-              }}
-            >
-              Reset
-            </button>
-          )}
-        </div>
-
-        {/* Grouped token rows */}
-        <div style={{ padding: "0 16px 12px" }}>
-          {TOKEN_GROUPS.map((group) => (
-            <div key={group.label}>
-              <div
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: 1,
-                  textTransform: "uppercase",
-                  color: "var(--gray-5)",
-                  padding: "12px 0 4px",
-                }}
-              >
-                {group.label}
-              </div>
-              {group.tokens.map(({ key, type }) => (
-                <TokenRow
-                  key={key}
-                  label={key}
-                  value={tokens[key]}
-                  type={type}
-                  onChange={(v) => set(key, v as BtnTokens[typeof key])}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Live preview ── */}
-      <div style={{ flex: 1, minWidth: 240 }}>
-        <ConfigProvider theme={{ components: { Button: tokens } }}>
-          <div
+        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--gray-9)" }}>
+          Button Tokens
+        </span>
+        {isDirty && (
+          <button
+            onClick={() => onChange({ ...BUTTON_TOKEN_DEFAULTS })}
             style={{
+              fontSize: 11,
+              padding: "2px 8px",
               border: "1px solid var(--gray-4)",
-              borderRadius: 6,
-              padding: 24,
+              borderRadius: 4,
+              cursor: "pointer",
               background: "var(--gray-1)",
-              minHeight: 200,
+              color: "var(--gray-7)",
             }}
           >
-            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", color: "var(--gray-5)", marginBottom: 16 }}>
-              Preview
+            Reset
+          </button>
+        )}
+      </div>
+
+      {/* Grouped token rows */}
+      <div style={{ padding: "0 16px 12px" }}>
+        {TOKEN_GROUPS.map((group) => (
+          <div key={group.label}>
+            <div
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: 1,
+                textTransform: "uppercase",
+                color: "var(--gray-5)",
+                padding: "12px 0 4px",
+              }}
+            >
+              {group.label}
             </div>
-            <Flex vertical gap={12}>
-              <Flex gap={8} wrap>
-                <Button type="primary">Primary</Button>
-                <Button type="primary" disabled>Disabled</Button>
-                <Button type="primary" loading>Loading</Button>
-              </Flex>
-              <Flex gap={8} wrap>
-                <Button>Default</Button>
-                <Button disabled>Disabled</Button>
-              </Flex>
-              <Flex gap={8} wrap>
-                <Button type="primary" size="small">Small</Button>
-                <Button type="primary">Middle</Button>
-                <Button type="primary" size="large">Large</Button>
-              </Flex>
-            </Flex>
+            {group.tokens.map(({ key, type }) => (
+              <TokenRow
+                key={key}
+                label={key}
+                value={tokens[key]}
+                type={type}
+                onChange={(v) => set(key, v as BtnTokens[typeof key])}
+              />
+            ))}
           </div>
-        </ConfigProvider>
+        ))}
       </div>
     </div>
   );
@@ -379,13 +281,9 @@ export function ButtonDefault() {
         label="Sizes"
         preview={
           <Flex gap={8} align="center">
-            <Button type="primary" size="small">
-              Small
-            </Button>
+            <Button type="primary" size="small">Small</Button>
             <Button type="primary">Middle</Button>
-            <Button type="primary" size="large">
-              Large
-            </Button>
+            <Button type="primary" size="large">Large</Button>
           </Flex>
         }
         code={`import { Button } from "antd";
@@ -406,9 +304,7 @@ export function ButtonSizes() {
         label="Disabled"
         preview={
           <Flex gap={8}>
-            <Button type="primary" disabled>
-              Primary
-            </Button>
+            <Button type="primary" disabled>Primary</Button>
             <Button disabled>Default</Button>
           </Flex>
         }
@@ -429,23 +325,14 @@ export function ButtonDisabled() {
         label="With Icon"
         preview={
           <Flex wrap gap={8}>
-            <Button type="primary" icon={<DownloadOutlined />}>
-              Download
-            </Button>
-            <Button type="primary" icon={<UploadOutlined />}>
-              Upload
-            </Button>
+            <Button type="primary" icon={<DownloadOutlined />}>Download</Button>
+            <Button type="primary" icon={<UploadOutlined />}>Upload</Button>
             <Button icon={<EditOutlined />}>Edit</Button>
             <Button icon={<DeleteOutlined />}>Delete</Button>
           </Flex>
         }
         code={`import { Button } from "antd";
-import {
-  DownloadOutlined,
-  UploadOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { DownloadOutlined, UploadOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 export function ButtonWithIcon() {
   return (
@@ -464,14 +351,8 @@ export function ButtonWithIcon() {
         label="Loading"
         preview={
           <Flex gap={8}>
-            <Button type="primary" loading>
-              Loading
-            </Button>
-            <Button
-              type="primary"
-              loading={loading}
-              onClick={triggerLoading}
-            >
+            <Button type="primary" loading>Loading</Button>
+            <Button type="primary" loading={loading} onClick={triggerLoading}>
               Click to Load
             </Button>
             <Button loading>Loading</Button>
@@ -486,11 +367,7 @@ export function ButtonLoading() {
   return (
     <>
       <Button type="primary" loading>Loading</Button>
-      <Button
-        type="primary"
-        loading={loading}
-        onClick={() => setLoading(true)}
-      >
+      <Button type="primary" loading={loading} onClick={() => setLoading(true)}>
         Submit
       </Button>
     </>
