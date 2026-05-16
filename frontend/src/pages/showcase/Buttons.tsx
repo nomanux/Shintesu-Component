@@ -115,15 +115,8 @@ export function ButtonTokenCustomizer({
   const isDirty = JSON.stringify(tokens) !== JSON.stringify(BUTTON_TOKEN_DEFAULTS);
 
   return (
-    <div
-      style={{
-        border: "1px solid var(--gray-4)",
-        borderRadius: 6,
-        overflow: "hidden",
-        height: "100%",
-      }}
-    >
-      {/* Header */}
+    <div>
+      {/* Sticky header — sticks to top of .showcase-right-panel scroll container */}
       <div
         style={{
           padding: "10px 16px",
