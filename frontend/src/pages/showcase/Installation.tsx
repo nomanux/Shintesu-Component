@@ -251,9 +251,12 @@ import "./index.css";   // ← add this line`}</CodeBlock>
             <p style={{ margin: "0 0 10px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
               Copy from <Mono>kit/components/</Mono> into your project's <Mono>src/components/</Mono>:
             </p>
+            <Note>
+              ✅ The kit uses plain <strong>.css</strong> files — no <code style={{ fontFamily: "monospace", fontSize: 12 }}>sass</code> dependency needed.
+            </Note>
             <Flex vertical gap={8}>
               <KitFile
-                file="SplitTable.tsx + SplitTable.scss"
+                file="SplitTable.tsx + SplitTable.css"
                 desc="Freeze-column table with drag-to-resize, reorder, and synced scroll."
               />
               <KitFile
