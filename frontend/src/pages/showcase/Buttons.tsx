@@ -133,22 +133,23 @@ export function ButtonTokenCustomizer({
         <span style={{ fontSize: 13, fontWeight: 600, color: "var(--gray-9)" }}>
           Button Tokens
         </span>
-        {isDirty && (
-          <button
-            onClick={() => onChange({ ...BUTTON_TOKEN_DEFAULTS })}
-            style={{
-              fontSize: 11,
-              padding: "2px 8px",
-              border: "1px solid var(--gray-4)",
-              borderRadius: 4,
-              cursor: "pointer",
-              background: "var(--gray-1)",
-              color: "var(--gray-7)",
-            }}
-          >
-            Reset
-          </button>
-        )}
+        <button
+          onClick={() => onChange({ ...BUTTON_TOKEN_DEFAULTS })}
+          disabled={!isDirty}
+          style={{
+            fontSize: 11,
+            padding: "2px 8px",
+            border: "1px solid var(--gray-4)",
+            borderRadius: 4,
+            cursor: isDirty ? "pointer" : "default",
+            background: isDirty ? "var(--gray-1)" : "transparent",
+            color: isDirty ? "var(--brand-6)" : "var(--gray-5)",
+            fontWeight: isDirty ? 600 : 400,
+            transition: "all 0.15s",
+          }}
+        >
+          Reset
+        </button>
       </div>
 
       {/* Grouped token rows */}
