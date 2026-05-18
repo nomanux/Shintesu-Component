@@ -269,7 +269,8 @@ export default function ShowcaseTable() {
           e.dataTransfer.effectAllowed = "move";
         },
         onDragOver: (e: React.DragEvent) => e.preventDefault(),
-        onDrop: () => {
+        onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
           if (!dragKey.current || dragKey.current === key) return;
           setOrder((prev) => {
             const from = prev.indexOf(dragKey.current!);
@@ -508,6 +509,7 @@ function ShowcaseTableForSplit({
         },
         onDragOver: (e: React.DragEvent) => e.preventDefault(),
         onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
           // Same-panel: dragKey.current is set. Cross-panel: read from dataTransfer.
           const src = dragKey.current ?? e.dataTransfer.getData("splitColKey");
           dragKey.current = null;
