@@ -22,6 +22,7 @@ import {
 } from "antd";
 import type { MenuProps } from "antd";
 import { SplitTable, SpecialInput, AppModal } from "../components";
+import { TableHeaderCell } from "./showcase/Table";
 import { modalWidth } from "../theme";
 import shinetsuLogo from "../assets/shinetsu.svg";
 
@@ -180,20 +181,70 @@ const COLUMNS = [
   },
 ];
 
-const TOTAL_WIDTH = COLUMNS.reduce((s, c) => s + c.width, 0);
+const DEFAULT_WIDTHS = Object.fromEntries(COLUMNS.map((c) => [c.key, c.width]));
+const DEFAULT_ORDER = COLUMNS.map((c) => c.key);
 
-/* ── Inner table ─────────────────────────────────────────────────────────── */
+/* ── Inner table — drag-to-reorder + resize + row selection ─────────────── */
 
 function DataTable({ data }: { data: Row[] }) {
   const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
+  const [order, setOrder] = React.useState<string[]>(DEFAULT_ORDER);
+  const [widths, setWidths] = React.useState<Record<string, number>>(DEFAULT_WIDTHS);
+  const dragKey = React.useRef<string | null>(null);
+
+  const startResize = (key: string, startX: number) => {
+    const startW = widths[key];
+    const onMove = (e: MouseEvent) =>
+      setWidths((prev) => ({ ...prev, [key]: Math.max(50, startW + e.clientX - startX) }));
+    const onUp = () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+    };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  };
+
+  const columns = order.map((key) => {
+    const col = COLUMNS.find((c) => c.key === key)!;
+    const w = widths[key];
+    return {
+      ...col,
+      width: w,
+      onHeaderCell: () => ({
+        colKey: key,
+        style: { width: w },
+        onResizeStart: (x: number) => startResize(key, x),
+        onDragStart: (e: React.DragEvent) => {
+          dragKey.current = key;
+          e.dataTransfer.effectAllowed = "move";
+        },
+        onDragOver: (e: React.DragEvent) => e.preventDefault(),
+        onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
+          const src = dragKey.current;
+          dragKey.current = null;
+          if (!src || src === key) return;
+          setOrder((prev) => {
+            const next = [...prev];
+            next.splice(next.indexOf(src), 1);
+            next.splice(next.indexOf(key), 0, src);
+            return next;
+          });
+        },
+      }),
+    };
+  });
+
+  const totalWidth = order.reduce((s, k) => s + widths[k], 0);
 
   return (
     <Table
       bordered
       size="small"
-      columns={COLUMNS}
+      components={{ header: { cell: TableHeaderCell } }}
+      columns={columns}
       dataSource={data}
-      scroll={{ x: TOTAL_WIDTH, y: 320 }}
+      scroll={{ x: totalWidth, y: 320 }}
       pagination={false}
       rowClassName={(r) => (selectedKeys.includes(r.key) ? "row-selected" : "")}
       onRow={(r) => ({

@@ -132,7 +132,7 @@ function loadTableState(): TableState {
  *   • Resize: drag the right edge to change column width
  *   • Reorder: drag the header itself to swap column positions
  */
-function TableHeaderCell({
+export function TableHeaderCell({
   colKey,
   onResizeStart,
   onDragStart,
