@@ -145,6 +145,8 @@ const contentMap: Record<
 type Props = {
   initialSection?: string;
   onHome?: () => void;
+  onSectionChange?: (section: string) => void;
+  onOpenDemo?: () => void;
   dark?: boolean;
   onToggleDark?: () => void;
 };
@@ -152,6 +154,8 @@ type Props = {
 export default function ComponentShowcase({
   initialSection = "introduction",
   onHome,
+  onSectionChange,
+  onOpenDemo,
   dark = false,
   onToggleDark,
 }: Props) {
@@ -176,6 +180,7 @@ export default function ComponentShowcase({
   const handleNavClick = (key: SectionKey) => {
     setActive(key);
     setDrawerOpen(false);
+    onSectionChange?.(key);
   };
 
   const navContent = (
@@ -310,7 +315,9 @@ export default function ComponentShowcase({
                 </Title>
                 <Divider style={{ margin: "16px 0 24px" }} />
                 {contentMap[active].guidance}
-                {contentMap[active].component}
+                {active === "frame"
+                  ? <FrameSection onOpenDemo={onOpenDemo} />
+                  : contentMap[active].component}
               </div>
             </ConfigProvider>
           </main>

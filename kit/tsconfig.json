@@ -1,0 +1,39 @@
+{
+  /**
+   * This tsconfig is for IDE support when browsing kit/ inside the Shinetsu repo.
+   * When you copy kit/ into your own project, delete this file — your project's
+   * own tsconfig will take over.
+   *
+   * Errors about 'antd' / 'react' not found are expected when viewing kit files
+   * in isolation: the kit has no node_modules of its own. They disappear once
+   * the files are copied into a project with the dependencies installed.
+   */
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    /* Resolve antd / react from the parent project so the IDE shows
+       correct types when kit/ is open inside this monorepo. */
+    "paths": {
+      "antd":                  ["../frontend/node_modules/antd/es/index.d.ts"],
+      "antd/*":                ["../frontend/node_modules/antd/es/*"],
+      "react":                 ["../frontend/node_modules/@types/react/index.d.ts"],
+      "react/*":               ["../frontend/node_modules/@types/react/*"],
+      "@ant-design/icons":     ["../frontend/node_modules/@ant-design/icons/es/index.d.ts"],
+      "@ant-design/icons/*":   ["../frontend/node_modules/@ant-design/icons/es/*"]
+    },
+    "typeRoots": [
+      "../frontend/node_modules/@types"
+    ]
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"]
+}
