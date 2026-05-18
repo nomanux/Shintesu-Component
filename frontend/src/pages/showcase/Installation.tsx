@@ -319,28 +319,36 @@ npm install`}</CodeBlock>
         <Note>
           🚀 See the <strong>FrameTemplate</strong> running as a full page — no setup needed.
         </Note>
-        <button
-          onClick={() => {
-            history.pushState(null, "", "/kit/frametemplate");
-            window.dispatchEvent(new PopStateEvent("popstate"));
-          }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "9px 20px",
-            background: "var(--brand-6)",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            fontSize: 14,
-            fontWeight: 600,
-            cursor: "pointer",
-            fontFamily: "inherit",
-          }}
-        >
-          ▶ Run FrameTemplate
-        </button>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <button
+            onClick={() => {
+              history.pushState(null, "", "/kit/frametemplate");
+              window.dispatchEvent(new PopStateEvent("popstate"));
+            }}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "9px 20px", background: "var(--brand-6)", color: "#fff",
+              border: "none", borderRadius: 6, fontSize: 14, fontWeight: 600,
+              cursor: "pointer", fontFamily: "inherit",
+            }}
+          >
+            ▶ Run FrameTemplate
+          </button>
+          <button
+            onClick={() => {
+              history.pushState(null, "", "/kit/sample");
+              window.dispatchEvent(new PopStateEvent("popstate"));
+            }}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "9px 20px", background: "var(--brand-7)", color: "#fff",
+              border: "none", borderRadius: 6, fontSize: 14, fontWeight: 600,
+              cursor: "pointer", fontFamily: "inherit",
+            }}
+          >
+            ▶ Run Sample Screen
+          </button>
+        </div>
       </div>
 
       {/* ── Kit structure ── */}

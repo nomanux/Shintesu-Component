@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
 import DemoScreen from "./pages/DemoScreen";
 import KitGallery from "./pages/KitGallery";
+import KitSamplePage from "./pages/KitSamplePage";
 
 type Page = "home" | "showcase" | "docs" | "demo" | "kit";
 
@@ -38,7 +39,8 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
     return { page: "demo", section: "frame", docsSection: "introduction" };
   }
   if (segment === "kit") {
-    return { page: "kit", section: "frame", docsSection: "introduction" };
+    const sub = raw.split("/")[1] ?? "frametemplate";
+    return { page: "kit", section: sub, docsSection: "introduction" };
   }
   if (SHOWCASE_SECTIONS.has(segment)) {
     return { page: "showcase", section: segment, docsSection: "introduction" };
@@ -51,7 +53,7 @@ function pushPath(page: Page, section: string, docsSection = "introduction") {
   let path: string;
   if (page === "home") path = "/";
   else if (page === "demo") path = "/demo";
-  else if (page === "kit") path = "/kit/frametemplate";
+  else if (page === "kit") path = `/kit/${section}`;
   else if (page === "docs") path = docsSection === "introduction" ? "/docs" : `/docs/${docsSection}`;
   else path = `/${section}`;
 
@@ -151,9 +153,14 @@ export default function App() {
             onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
           />
         )}
-        {page === "kit" && (
+        {page === "kit" && activeSection !== "sample" && (
           <KitGallery
             onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
+          />
+        )}
+        {page === "kit" && activeSection === "sample" && (
+          <KitSamplePage
+            onBack={() => { setPage("showcase"); setActiveSection("installation"); pushPath("showcase", "installation"); }}
           />
         )}
       </AntApp>
