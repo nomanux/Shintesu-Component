@@ -111,7 +111,7 @@ function DataTable({ data }: { data: typeof SAMPLE_DATA }) {
 export default function FrameTemplate() {
   const [activeNav, setActiveNav] = React.useState("n1");
   const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(10);
+  const [pageSize] = React.useState(10);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const pagedData = SAMPLE_DATA.slice((page - 1) * pageSize, page * pageSize);

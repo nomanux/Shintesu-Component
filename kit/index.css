@@ -139,6 +139,29 @@ body {
   --ant-color-text-placeholder: var(--gray-9);
 }
 
+/* ── Custom down-arrow icon (global) ─────────────────────────────────────── */
+
+/* Replace Ant Design's built-in chevron-down with the branded DownOutlined.
+   Uses CSS mask-image so the icon inherits currentColor from its context
+   (works for Select suffix, Collapse expand, Menu submenu arrow, etc.). */
+
+.anticon-down > svg,
+.anticon-caret-down > svg {
+  display: none !important;
+}
+
+.anticon-down::before,
+.anticon-caret-down::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path fill-rule='evenodd' clip-rule='evenodd' d='M0.486251 3.1995C0.724828 2.94502 1.12452 2.93214 1.37899 3.1707L5.99974 7.50266L10.6204 3.1707C10.875 2.93214 11.2746 2.94502 11.5133 3.1995C11.7517 3.45398 11.7389 3.85367 11.4845 4.09224L6.4317 8.8292C6.18876 9.05695 5.81071 9.05695 5.56777 8.8292L0.515052 4.09224C0.260572 3.85367 0.247687 3.45398 0.486251 3.1995Z' fill='black'/></svg>") no-repeat center / contain;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path fill-rule='evenodd' clip-rule='evenodd' d='M0.486251 3.1995C0.724828 2.94502 1.12452 2.93214 1.37899 3.1707L5.99974 7.50266L10.6204 3.1707C10.875 2.93214 11.2746 2.94502 11.5133 3.1995C11.7517 3.45398 11.7389 3.85367 11.4845 4.09224L6.4317 8.8292C6.18876 9.05695 5.81071 9.05695 5.56777 8.8292L0.515052 4.09224C0.260572 3.85367 0.247687 3.45398 0.486251 3.1995Z' fill='black'/></svg>") no-repeat center / contain;
+  vertical-align: middle;
+}
+
 /* ── Dropdown menu ────────────────────────────────────────────────────────── */
 
 .ant-dropdown-menu-item {

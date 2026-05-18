@@ -3,7 +3,6 @@
  * Reuses the tc-* CSS classes defined in Buttons.scss (injected globally).
  */
 
-import React from "react";
 
 export type TokenDef<T> = { key: keyof T & string; type: "color" | "number" };
 export type TokenGroup<T> = { label: string; tokens: TokenDef<T>[] };

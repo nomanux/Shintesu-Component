@@ -25,7 +25,15 @@
     "paths": {
       "@/*": ["src/*"],
       "@kit": ["../kit/index.ts"],
-      "@kit/*": ["../kit/*"]
+      "@kit/*": ["../kit/*"],
+      /* Ensure kit files resolve antd/react from the frontend's node_modules
+         (bundler moduleResolution doesn't traverse sibling dirs automatically) */
+      "antd":                ["./node_modules/antd/es/index.d.ts"],
+      "antd/*":              ["./node_modules/antd/es/*"],
+      "react":               ["./node_modules/@types/react/index.d.ts"],
+      "react/*":             ["./node_modules/@types/react/*"],
+      "@ant-design/icons":   ["./node_modules/@ant-design/icons/es/index.d.ts"],
+      "@ant-design/icons/*": ["./node_modules/@ant-design/icons/es/*"]
     },
     "ignoreDeprecations": "6.0"
   },
