@@ -1,7 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Input, Button } from "antd";
 import AppModal from "./AppModal";
-import { specialInputColors } from "../theme";
+
+// Inline so this file has no dependency on theme.ts
+const COLORS = {
+  bg: "#A7CEF6",
+  border: "#81B0E0",
+  borderActive: "#227AD3",
+} as const;
 
 const sizeMap = {
   small: { height: 24, padding: "0 7px", fontSize: 14 },
@@ -94,12 +100,8 @@ export default function SpecialInput2({
           boxSizing: "border-box",
           fontFamily: "inherit",
           width: "100%",
-          background: specialInputColors.lblue,
-          border: `1px solid ${
-            focused || hovered
-              ? specialInputColors.lblueBorderHover
-              : specialInputColors.lblueBorder
-          }`,
+          background: COLORS.bg,
+          border: `1px solid ${focused || hovered ? COLORS.borderActive : COLORS.border}`,
           outline: "none",
           cursor: editable ? "text" : "pointer",
           ...style,

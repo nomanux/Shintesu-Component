@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import "./SplitTable.css";
+import "./SplitTable.scss";
 
 type SplitTableProps = {
   dataTable: React.ReactNode;

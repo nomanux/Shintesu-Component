@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-/* Left pane: clips native scrollbar outside visible area */
 .clip-vscroll {
   position: relative;
   overflow: hidden;
@@ -15,7 +14,6 @@
   flex-shrink: 0;
 }
 
-/* Inner scroller: pushes scrollbar out of the clipped area */
 .clip-vscroll__scroller {
   height: 100%;
   overflow-y: scroll;
@@ -24,7 +22,6 @@
   padding-right: 0;
 }
 
-/* Data wrapper: adds padding so content isn't hidden behind scrollbar */
 .clip-vscroll__dataScroller {
   padding-right: var(--sbw);
   margin-right: calc(-1 * var(--sbw));
@@ -32,7 +29,6 @@
 
 /* ── Custom scrollbar — Firefox ─────────────────────────────────────────── */
 
-/* .scroll-styled is a utility class for any scrollable container */
 .split-table-right,
 .clip-vscroll__scroller,
 .scroll-styled,
@@ -65,7 +61,6 @@
   background: transparent;
 }
 
-/* Default thumb (dim) */
 .split-table-right::-webkit-scrollbar-thumb,
 .clip-vscroll__scroller::-webkit-scrollbar-thumb,
 .scroll-styled::-webkit-scrollbar-thumb,
@@ -77,7 +72,6 @@
   background-clip: content-box !important;
 }
 
-/* Entering from outside: one color change when the container is hovered */
 .split-table-right:hover::-webkit-scrollbar-thumb,
 .clip-vscroll__scroller:hover::-webkit-scrollbar-thumb,
 .scroll-styled:hover::-webkit-scrollbar-thumb,
@@ -87,7 +81,6 @@
   background-clip: content-box !important;
 }
 
-/* Direct thumb hover: same as container-hover — no additional change */
 .split-table-right::-webkit-scrollbar-thumb:hover,
 .clip-vscroll__scroller::-webkit-scrollbar-thumb:hover,
 .scroll-styled::-webkit-scrollbar-thumb:hover,
@@ -104,9 +97,8 @@
   background: transparent;
 }
 
-/* ── Table scrollbar arrows ──────────────────────────────────────────────── */
+/* ── Table scrollbar — always reserve horizontal gutter ─────────────────── */
 
-/* Always reserve the horizontal scrollbar gutter */
 .split-table-container .ant-table-body,
 .split-table-container .ant-table-content {
   overflow-x: scroll !important;
@@ -122,7 +114,8 @@
   height: 12px !important;
 }
 
-/* Re-enable scrollbar buttons (global rule hides them) */
+/* ── Scrollbar arrow buttons ─────────────────────────────────────────────── */
+
 .split-table-right::-webkit-scrollbar-button,
 .split-table-container .ant-table-body::-webkit-scrollbar-button {
   display: block;
@@ -132,20 +125,23 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 7px 7px;
+}
 
-  &:hover {
-    background-color: var(--gray-3);
-  }
+.split-table-right::-webkit-scrollbar-button:hover,
+.split-table-container .ant-table-body::-webkit-scrollbar-button:hover {
+  background-color: var(--gray-3);
+}
 
-  &:active {
-    background-color: var(--gray-4);
-  }
+.split-table-right::-webkit-scrollbar-button:active,
+.split-table-container .ant-table-body::-webkit-scrollbar-button:active {
+  background-color: var(--gray-4);
+}
 
-  /* Hide double-button mode — only single arrows at each end */
-  &:double-button,
-  &:no-button {
-    display: none;
-  }
+.split-table-right::-webkit-scrollbar-button:double-button,
+.split-table-right::-webkit-scrollbar-button:no-button,
+.split-table-container .ant-table-body::-webkit-scrollbar-button:double-button,
+.split-table-container .ant-table-body::-webkit-scrollbar-button:no-button {
+  display: none;
 }
 
 /* Horizontal: left arrow */
@@ -177,21 +173,21 @@
 .resize-handler {
   position: relative;
   background: var(--gray-6) !important;
+}
 
-  &:hover {
-    background: var(--brand-6) !important;
-  }
+.resize-handler:hover {
+  background: var(--brand-6) !important;
+}
 
-  &::after {
-    content: "⋮";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 12px;
-    pointer-events: none;
-  }
+.resize-handler::after {
+  content: "⋮";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 12px;
+  pointer-events: none;
 }
 
 /* ── Merge table borders with outer wrapper ──────────────────────────────── */
@@ -201,12 +197,10 @@
   border-inline-start: none !important;
 }
 
-.split-table-container .ant-table-cell {
-  &:first-child {
-    border-inline-start: none !important;
-  }
+.split-table-container .ant-table-cell:first-child {
+  border-inline-start: none !important;
+}
 
-  &:last-child {
-    border-inline-end: none !important;
-  }
+.split-table-container .ant-table-cell:last-child {
+  border-inline-end: none !important;
 }

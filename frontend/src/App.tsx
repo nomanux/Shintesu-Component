@@ -5,6 +5,7 @@ import ComponentShowcase from "./pages/ComponentShowcase";
 import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
 import DemoScreen from "./pages/DemoScreen";
+import KitGallery from "./pages/KitGallery";
 
 type Page = "home" | "showcase" | "docs" | "demo" | "kit";
 
@@ -151,7 +152,7 @@ export default function App() {
           />
         )}
         {page === "kit" && (
-          <DemoScreen
+          <KitGallery
             onBack={() => { setPage("showcase"); setActiveSection("frame"); pushPath("showcase", "frame"); }}
           />
         )}

@@ -23,9 +23,11 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@kit": ["../kit/index.ts"],
+      "@kit/*": ["../kit/*"]
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src"]
+  "include": ["src", "../kit"]
 }

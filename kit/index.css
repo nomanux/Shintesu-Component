@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    Shinetsu Kit — global CSS
-   Import this in your entry file:  import "./index.css";
+   Import this once in your entry file:  import "./index.css"
    ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── Design tokens (CSS custom properties) ───────────────────────────────── */
@@ -32,12 +32,19 @@
 
   /* Semantic surfaces */
   --st-gray: #edf3f7;
+  --color-bg-app: #f5f5f5;
 
-  /* SplitTable scrollbar width */
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* SplitTable scrollbar width — used by SplitTable.scss */
   --sbw: 8px;
 }
 
-/* Dark theme overrides — apply <html data-theme="dark"> */
+/* ── Dark theme overrides — apply <html data-theme="dark"> ───────────────── */
+
 :root[data-theme="dark"] {
   --gray-1: #0d1117;
   --gray-2: #161b22;
@@ -51,12 +58,22 @@
   --gray-10: #f0f6fc;
   --brand-1: #0f2f2d;
   --brand-3: #2d7a75;
+  --color-bg-app: var(--gray-1);
 }
+
+/* ── Global reset ─────────────────────────────────────────────────────────── */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
 }
 
 body {
@@ -68,6 +85,12 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
+  background: var(--color-bg-app);
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  width: 100%;
 }
 
 /* ── Button ───────────────────────────────────────────────────────────────── */
@@ -152,6 +175,7 @@ body {
 .ant-table-tbody > tr.row-selected > td {
   background-color: var(--brand-1) !important;
 }
+
 .ant-table-tbody > tr.row-selected:hover > td {
   background-color: var(--brand-1) !important;
 }
@@ -185,7 +209,7 @@ div.ant-divider-horizontal {
   margin: 0;
 }
 
-/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+/* ── Global scrollbar ─────────────────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -207,81 +231,4 @@ div.ant-divider-horizontal {
 
 ::-webkit-scrollbar-button {
   display: none;
-}
-
-/* ── SplitTable ───────────────────────────────────────────────────────────── */
-
-.split-table-container {
-  display: flex;
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-}
-
-.clip-vscroll {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  flex-shrink: 0;
-}
-
-.clip-vscroll__scroller {
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  margin-right: calc(-1 * var(--sbw));
-  padding-right: 0;
-}
-
-.clip-vscroll__dataScroller {
-  padding-right: var(--sbw);
-  margin-right: calc(-1 * var(--sbw));
-}
-
-.split-table-right,
-.clip-vscroll__scroller,
-.split-table-container .ant-table-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--gray-5) transparent;
-}
-
-.split-table-right::-webkit-scrollbar,
-.clip-vscroll__scroller::-webkit-scrollbar,
-.split-table-container .ant-table-body::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-.split-table-right::-webkit-scrollbar-track,
-.clip-vscroll__scroller::-webkit-scrollbar-track,
-.split-table-container .ant-table-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.split-table-right::-webkit-scrollbar-thumb,
-.clip-vscroll__scroller::-webkit-scrollbar-thumb,
-.split-table-container .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: var(--gray-5);
-  border-radius: 100px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-.split-table-right::-webkit-scrollbar-thumb:hover,
-.clip-vscroll__scroller::-webkit-scrollbar-thumb:hover,
-.split-table-container .ant-table-body::-webkit-scrollbar-thumb:hover {
-  background-color: var(--gray-7);
-}
-
-.split-table-container .ant-table-body {
-  overflow-x: scroll !important;
-}
-
-.resize-handler {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  cursor: col-resize;
-  background: var(--gray-5);
 }
