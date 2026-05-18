@@ -240,13 +240,19 @@ export default function ShowcaseTable() {
 
   const startResize = (key: string, startX: number) => {
     const startW = widths[key];
+    let rafId: number | null = null;
+    let pendingW = startW;
     const onMove = (e: MouseEvent) => {
-      setWidths((prev) => ({
-        ...prev,
-        [key]: Math.max(60, startW + e.clientX - startX),
-      }));
+      pendingW = Math.max(60, startW + e.clientX - startX);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setWidths((prev) => ({ ...prev, [key]: pendingW }));
+        rafId = null;
+      });
     };
     const onUp = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); }
+      setWidths((prev) => ({ ...prev, [key]: pendingW }));
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };
@@ -478,12 +484,19 @@ function ShowcaseTableForSplit({
 
   const startResize = (key: string, startX: number) => {
     const startW = widths[key];
-    const onMove = (e: MouseEvent) =>
-      setWidths((prev) => ({
-        ...prev,
-        [key]: Math.max(60, startW + e.clientX - startX),
-      }));
+    let rafId: number | null = null;
+    let pendingW = startW;
+    const onMove = (e: MouseEvent) => {
+      pendingW = Math.max(60, startW + e.clientX - startX);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setWidths((prev) => ({ ...prev, [key]: pendingW }));
+        rafId = null;
+      });
+    };
     const onUp = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); }
+      setWidths((prev) => ({ ...prev, [key]: pendingW }));
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };

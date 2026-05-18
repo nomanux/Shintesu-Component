@@ -62,16 +62,22 @@ const SplitTable = ({
   useEffect(() => {
     if (!dragging) return;
 
+    let rafId: number | null = null;
+    let pendingW = 0;
     const onMove = (e: MouseEvent) => {
       if (!tableWrapperRef.current) return;
       const rect = tableWrapperRef.current.getBoundingClientRect();
-      let newWidth = e.clientX - rect.left;
-      const maximumWidth = tableWrapperRef.current.offsetWidth - 20;
-      newWidth = Math.max(0, Math.min(newWidth, maximumWidth));
-      if (newWidth < maximumWidth) setSplitWidth(newWidth);
+      const max = tableWrapperRef.current.offsetWidth - 20;
+      pendingW = Math.max(0, Math.min(e.clientX - rect.left, max));
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        if (pendingW < max) setSplitWidth(pendingW);
+        rafId = null;
+      });
     };
 
     const onUp = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
       document.body.style.userSelect = "";
       setDragging(false);
     };
