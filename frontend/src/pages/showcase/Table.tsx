@@ -17,6 +17,7 @@ import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
 import SplitTable from "../../components/SplitTable";
 import SpecialInput from "../../components/SpecialInput";
+import AppTable, { type AppColumn } from "../../components/AppTable";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
@@ -570,45 +571,28 @@ function ShowcaseTableForSplit({
 
 // ── Public components ──────────────────────────────────────────────────────
 
+// AppColumn-formatted columns for GlobalTable (maps label → title, adds defaultWidth)
+const GLOBAL_TABLE_COLS: AppColumn<SplitRow>[] = SPLIT_COLS_BASE.map((c) => ({
+  ...c,
+  title: c.label,
+  defaultWidth: c.width,
+}));
+
 export function GlobalTable() {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
-  const [splitWidth, setSplitWidth] = React.useState(0);
-  const shared = useSplitTableState();
-  const pagedData = splitTableData.slice(
-    (page - 1) * pageSize,
-    page * pageSize,
-  );
+  const pagedData = splitTableData.slice((page - 1) * pageSize, page * pageSize);
 
   return (
-    <SplitTableContext.Provider value={shared}>
-      <div>
-        <div className="global-table-outer" style={{ border: "1px solid var(--gray-4)" }}>
-          <SplitTable
-            data={pagedData}
-            dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}
-            splitWidth={splitWidth}
-            onSplitWidthChange={setSplitWidth}
-          />
-        </div>
-        <div
-          style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
-        >
-          <Pagination
-            size="small"
-            current={page}
-            pageSize={pageSize}
-            total={splitTableData.length}
-            showSizeChanger
-            showQuickJumper
-            onChange={(p, ps) => {
-              setPage(p);
-              setPageSize(ps);
-            }}
-          />
-        </div>
-      </div>
-    </SplitTableContext.Provider>
+    <AppTable
+      columns={GLOBAL_TABLE_COLS}
+      dataSource={pagedData}
+      height={400}
+      total={splitTableData.length}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={(p, ps) => { setPage(p); setPageSize(ps); }}
+    />
   );
 }
 

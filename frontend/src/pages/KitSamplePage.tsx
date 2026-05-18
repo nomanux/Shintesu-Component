@@ -12,17 +12,10 @@
  */
 
 import React from "react";
-import {
-  Button,
-  Dropdown,
-  Flex,
-  Input,
-  Pagination,
-  Table,
-} from "antd";
+import { Button, Dropdown, Flex, Input } from "antd";
 import type { MenuProps } from "antd";
-import { SplitTable, SpecialInput, AppModal } from "../components";
-import { TableHeaderCell } from "./showcase/Table";
+import { AppTable, SpecialInput, AppModal } from "../components";
+import type { AppColumn } from "../components";
 import { modalWidth } from "../theme";
 import shinetsuLogo from "../assets/shinetsu.svg";
 
@@ -181,94 +174,11 @@ const COLUMNS = [
   },
 ];
 
-const DEFAULT_WIDTHS = Object.fromEntries(COLUMNS.map((c) => [c.key, c.width]));
-const DEFAULT_ORDER = COLUMNS.map((c) => c.key);
-
-/* ── Inner table — drag-to-reorder + resize + row selection ─────────────── */
-
-function DataTable({ data }: { data: Row[] }) {
-  const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
-  const [order, setOrder] = React.useState<string[]>(DEFAULT_ORDER);
-  const [widths, setWidths] = React.useState<Record<string, number>>(DEFAULT_WIDTHS);
-  const dragKey = React.useRef<string | null>(null);
-
-  const startResize = (key: string, startX: number) => {
-    const startW = widths[key];
-    let rafId: number | null = null;
-    let pendingW = startW;
-    const onMove = (e: MouseEvent) => {
-      pendingW = Math.max(50, startW + e.clientX - startX);
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        setWidths((prev) => ({ ...prev, [key]: pendingW }));
-        rafId = null;
-      });
-    };
-    const onUp = () => {
-      if (rafId !== null) { cancelAnimationFrame(rafId); }
-      setWidths((prev) => ({ ...prev, [key]: pendingW }));
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", onUp);
-    };
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup", onUp);
-  };
-
-  const columns = order.map((key) => {
-    const col = COLUMNS.find((c) => c.key === key)!;
-    const w = widths[key];
-    return {
-      ...col,
-      width: w,
-      onHeaderCell: () => ({
-        colKey: key,
-        style: { width: w },
-        onResizeStart: (x: number) => startResize(key, x),
-        onDragStart: (e: React.DragEvent) => {
-          dragKey.current = key;
-          e.dataTransfer.effectAllowed = "move";
-        },
-        onDragOver: (e: React.DragEvent) => e.preventDefault(),
-        onDrop: (e: React.DragEvent) => {
-          e.preventDefault();
-          const src = dragKey.current;
-          dragKey.current = null;
-          if (!src || src === key) return;
-          setOrder((prev) => {
-            const next = [...prev];
-            next.splice(next.indexOf(src), 1);
-            next.splice(next.indexOf(key), 0, src);
-            return next;
-          });
-        },
-      }),
-    };
-  });
-
-  const totalWidth = order.reduce((s, k) => s + widths[k], 0);
-
-  return (
-    <Table
-      bordered
-      size="small"
-      components={{ header: { cell: TableHeaderCell } }}
-      columns={columns}
-      dataSource={data}
-      scroll={{ x: totalWidth, y: 320 }}
-      pagination={false}
-      rowClassName={(r) => (selectedKeys.includes(r.key) ? "row-selected" : "")}
-      onRow={(r) => ({
-        onClick: () =>
-          setSelectedKeys((prev) =>
-            prev.includes(r.key)
-              ? prev.filter((k) => k !== r.key)
-              : [...prev, r.key],
-          ),
-        style: { cursor: "pointer" },
-      })}
-    />
-  );
-}
+// AppColumn format — AppTable handles drag/resize/split automatically
+const APP_COLUMNS: AppColumn<Row>[] = COLUMNS.map((c) => ({
+  ...c,
+  defaultWidth: c.width,
+}));
 
 /* ── KitSamplePage ───────────────────────────────────────────────────────── */
 
@@ -276,11 +186,8 @@ type Props = { onBack?: () => void };
 
 export default function KitSamplePage({ onBack }: Props) {
   const [page, setPage] = React.useState(6);
-  const [pageSize] = React.useState(PAGE_SIZE_DEFAULT);
+  const [pageSize, setPageSize] = React.useState(PAGE_SIZE_DEFAULT);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [splitWidth, setSplitWidth] = React.useState(0);
-
-  const pagedData = allData.slice((page - 1) * pageSize, page * pageSize);
 
   const inlineLabel: React.CSSProperties = {
     fontSize: 13,
@@ -499,37 +406,18 @@ export default function KitSamplePage({ onBack }: Props) {
           </Flex>
         </Flex>
 
-        {/* SplitTable */}
-        <div
-          style={{
-            flex: 1,
-            minHeight: 0,
-            border: "1px solid var(--gray-4)",
-            overflow: "hidden",
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          <SplitTable
-            data={pagedData}
-            dataTable={<DataTable data={pagedData} />}
-            splitWidth={splitWidth}
-            onSplitWidthChange={setSplitWidth}
+        {/* AppTable — drag/resize/split built in */}
+        <div style={{ flex: 1, minHeight: 0, position: "relative", zIndex: 1 }}>
+          <AppTable
+            columns={APP_COLUMNS}
+            dataSource={allData}
+            height={400}
+            total={TOTAL_ROWS}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={(p, ps) => { setPage(p); setPageSize(ps as typeof pageSize); }}
           />
         </div>
-
-        {/* Pagination */}
-        <Flex justify="center" style={{ padding: "6px 0", flexShrink: 0 }}>
-          <Pagination
-            size="small"
-            current={page}
-            pageSize={pageSize}
-            total={TOTAL_ROWS}
-            showQuickJumper
-            showSizeChanger={false}
-            onChange={(p) => setPage(p)}
-          />
-        </Flex>
       </div>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
