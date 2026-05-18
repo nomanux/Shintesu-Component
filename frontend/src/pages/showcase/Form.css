@@ -1,0 +1,10 @@
+/* Half-width on desktop, full-width with horizontal scroll on mobile */
+.form-half-width {
+  width: 70%;
+}
+@media (max-width: 768px) {
+  .form-half-width {
+    width: 100%;
+    overflow-x: auto;
+  }
+}/*# sourceMappingURL=Form.css.map */
