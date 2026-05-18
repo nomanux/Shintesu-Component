@@ -470,26 +470,29 @@ export default function KitSamplePage({ onBack }: Props) {
           padding: "0 8px 8px",
         }}
       >
-        {/* Toolbar */}
+        {/* Toolbar — tab label overlaps table top border by 1px */}
         <Flex
-          align="center"
+          align="flex-end"
           justify="space-between"
-          style={{ padding: "6px 0", flexShrink: 0 }}
+          style={{ flexShrink: 0, paddingTop: 4 }}
         >
           <div
             style={{
               fontSize: 12,
               fontWeight: 600,
               color: "var(--gray-9)",
-              background: "var(--gray-2)",
+              background: "var(--gray-1)",
               border: "1px solid var(--gray-4)",
-              borderBottom: "none",
-              padding: "3px 12px",
+              borderBottom: "1px solid var(--gray-1)", /* hides bottom, merges with table */
+              padding: "4px 14px",
+              position: "relative",
+              zIndex: 2,
+              marginBottom: -1, /* overlaps table border */
             }}
           >
             起動画面一覧
           </div>
-          <Flex gap={4}>
+          <Flex gap={4} style={{ paddingBottom: 4 }}>
             <Button type="primary" size="small">行挿入(I)</Button>
             <Button type="primary" size="small">行複写(Y)</Button>
             <Button size="small">行削除(D)</Button>
@@ -503,6 +506,8 @@ export default function KitSamplePage({ onBack }: Props) {
             minHeight: 0,
             border: "1px solid var(--gray-4)",
             overflow: "hidden",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <SplitTable
