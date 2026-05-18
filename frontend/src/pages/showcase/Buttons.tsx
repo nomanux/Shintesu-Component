@@ -16,77 +16,8 @@ import {
   BUTTON_TOKEN_DEFAULTS,
   TOKEN_GROUPS,
 } from "./buttonTokens";
+import { TokenCustomizer } from "./TokenCustomizer";
 
-// ── Token Customizer (Ant Design theme-editor style) ─────────────────────────
-
-function formatValue(val: string | number): string {
-  if (typeof val === "number") return String(val);
-  if (val.length > 9) return val.slice(0, 8) + "…";
-  return val.toUpperCase();
-}
-
-function TokenRow({
-  label,
-  value,
-  defaultValue,
-  type,
-  onChange,
-  onReset,
-}: {
-  label: string;
-  value: string | number;
-  defaultValue: string | number;
-  type: "color" | "number";
-  onChange: (v: string | number) => void;
-  onReset: () => void;
-}) {
-  const modified = value !== defaultValue;
-
-  return (
-    <div className="tc-row">
-      <span className="tc-row__comp">Comp</span>
-      <span className={`tc-row__name${modified ? " tc-row__name--modified" : ""}`}>
-        {label}
-      </span>
-      {modified && (
-        <button className="tc-row__reset-link" onClick={onReset}>
-          Reset
-        </button>
-      )}
-      {type === "color" ? (
-        <label
-          className="tc-row__color-trigger"
-          title={`Click to change ${label}`}
-        >
-          <span className="tc-row__value">{formatValue(value)}</span>
-          <span
-            className="tc-row__swatch"
-            style={{ background: value as string }}
-          />
-          <input
-            type="color"
-            value={value as string}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        </label>
-      ) : (
-        <>
-          <span className="tc-row__value">{formatValue(value)}</span>
-          <input
-            type="number"
-            className="tc-row__number"
-            value={value as number}
-            min={0}
-            onChange={(e) => onChange(Number(e.target.value))}
-          />
-        </>
-      )}
-    </div>
-  );
-}
-
-/** Controlled token editor — Ant Design theme-editor visual style.
- *  No own state, no preview. Changes reflect via ConfigProvider in ComponentShowcase. */
 export function ButtonTokenCustomizer({
   tokens,
   onChange,
@@ -94,45 +25,14 @@ export function ButtonTokenCustomizer({
   tokens: BtnTokens;
   onChange: (tokens: BtnTokens) => void;
 }) {
-  const set = <K extends keyof BtnTokens>(key: K, val: BtnTokens[K]) =>
-    onChange({ ...tokens, [key]: val });
-  const reset = (key: keyof BtnTokens) =>
-    onChange({ ...tokens, [key]: BUTTON_TOKEN_DEFAULTS[key] });
-
-  const isDirty = JSON.stringify(tokens) !== JSON.stringify(BUTTON_TOKEN_DEFAULTS);
-
   return (
-    <div>
-      {/* Sticky header */}
-      <div className="tc-header">
-        <span className="tc-header__title">Button</span>
-        <button
-          className={`tc-header__reset${isDirty ? " tc-header__reset--active" : ""}`}
-          onClick={() => onChange({ ...BUTTON_TOKEN_DEFAULTS })}
-          disabled={!isDirty}
-        >
-          Reset All
-        </button>
-      </div>
-
-      {/* Grouped token rows */}
-      {TOKEN_GROUPS.map((group) => (
-        <div key={group.label}>
-          <div className="tc-group__label">{group.label}</div>
-          {group.tokens.map(({ key, type }) => (
-            <TokenRow
-              key={key}
-              label={key}
-              value={tokens[key]}
-              defaultValue={BUTTON_TOKEN_DEFAULTS[key]}
-              type={type}
-              onChange={(v) => set(key, v as BtnTokens[typeof key])}
-              onReset={() => reset(key)}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+    <TokenCustomizer
+      title="Button"
+      tokens={tokens}
+      defaults={BUTTON_TOKEN_DEFAULTS}
+      groups={TOKEN_GROUPS}
+      onChange={onChange}
+    />
   );
 }
 
