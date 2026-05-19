@@ -154,9 +154,11 @@ export const shinetsuTheme = {
       colorText: colors.gray[9],
       colorTextDisabled: colors.gray[9],
       colorBgContainerDisabled: colors.gray[3],
+      colorIcon: colors.gray[6],
       optionSelectedBg: colors.brand[1],
-      optionActiveBg: colors.brand[1],
-      optionSelectedColor: colors.gray[9],
+      optionActiveBg: colors.gray[3],
+      optionSelectedColor: colors.brand[6],
+      optionSelectedFontWeight: 500,
     },
 
     DatePicker: {
@@ -171,6 +173,7 @@ export const shinetsuTheme = {
       cellHoverBg: colors.brand[1],
       cellActiveWithRangeBg: colors.brand[1],
       cellRangeBorderColor: colors.brand[4],
+      colorIcon: colors.gray[5],
     },
 
     Table: {
@@ -207,7 +210,7 @@ export const shinetsuTheme = {
       hoverBorderColor: colors.brand[6],
       activeBorderColor: colors.brand[6],
       activeShadow: "0 0 0 2px rgba(0, 155, 148, 0.10)",
-      colorIcon: colors.brand[6],
+      colorIcon: colors.gray[5],
       colorText: colors.gray[9],
       colorTextPlaceholder: colors.gray[5],
       colorTextDisabled: colors.gray[9],

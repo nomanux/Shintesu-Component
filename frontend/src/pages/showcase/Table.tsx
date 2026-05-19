@@ -556,13 +556,10 @@ function ShowcaseTableForSplit({
         selectedKeys.includes((r as SplitRow).key) ? "row-selected" : ""
       }
       onRow={(r) => ({
-        onClick: () =>
-          setSelectedKeys((prev) => {
-            const k = (r as SplitRow).key;
-            return prev.includes(k)
-              ? prev.filter((x) => x !== k)
-              : [...prev, k];
-          }),
+        onClick: () => {
+          const k = (r as SplitRow).key;
+          setSelectedKeys((prev) => (prev[0] === k ? [] : [k]));
+        },
         style: { cursor: "pointer" },
       })}
     />
@@ -689,12 +686,14 @@ export function TableSection() {
 
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <CodeBlock>{SPLIT_USAGE_CODE}</CodeBlock>
       </div>
+      )}
 
       {/* Default — the standard SplitTable + pagination */}
       <Variant

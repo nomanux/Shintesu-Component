@@ -157,6 +157,7 @@ export default function ComponentShowcase({
   const [active, setActive] = React.useState<SectionKey>(initialSection as SectionKey);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [lang, setLang] = React.useState<Lang>("en");
+  const contentBodyRef = React.useRef<HTMLDivElement>(null);
 
   // ── Per-component token states ──────────────────────────────────────────
   const [buttonTokens, setButtonTokens] = React.useState<BtnTokens>({ ...BUTTON_TOKEN_DEFAULTS });
@@ -167,6 +168,24 @@ export default function ComponentShowcase({
   const [radioTabTokens, setRadioTabTokens] = React.useState<RadioTabTokens>({ ...RADIOTAB_TOKEN_DEFAULTS });
   const [tableTokens, setTableTokens] = React.useState<TableTokens>({ ...TABLE_TOKEN_DEFAULTS });
   const [modalTokens, setModalTokens] = React.useState<ModalTokens>({ ...MODAL_TOKEN_DEFAULTS });
+
+  React.useEffect(() => {
+    const el = document.documentElement;
+    el.style.setProperty("--kit-opt-sel-color", selectTokens.optionSelectedColor);
+    el.style.setProperty("--kit-opt-sel-bg",    selectTokens.optionSelectedBg);
+    el.style.setProperty("--kit-opt-active-bg", selectTokens.optionActiveBg);
+    return () => {
+      el.style.removeProperty("--kit-opt-sel-color");
+      el.style.removeProperty("--kit-opt-sel-bg");
+      el.style.removeProperty("--kit-opt-active-bg");
+    };
+  }, [selectTokens.optionSelectedColor, selectTokens.optionSelectedBg, selectTokens.optionActiveBg]);
+
+  React.useEffect(() => {
+    const el = document.documentElement;
+    el.style.setProperty("--kit-btn-ph-bg", buttonTokens.colorPrimaryHover);
+    return () => { el.style.removeProperty("--kit-btn-ph-bg"); };
+  }, [buttonTokens.colorPrimaryHover]);
 
   const t = (text: string) => (lang === "ja" ? (LABELS_JA[text] ?? text) : text);
 
@@ -354,6 +373,7 @@ export default function ComponentShowcase({
           {/* Content — ConfigProvider applies ALL component tokens at once */}
           <main className="showcase-content">
             <ConfigProvider
+              getPopupContainer={() => contentBodyRef.current ?? document.body}
               theme={{
                 components: {
                   Button: {
@@ -371,7 +391,15 @@ export default function ComponentShowcase({
                 },
               }}
             >
-              <div className="showcase-content-body">
+              <div
+                ref={contentBodyRef}
+                className="showcase-content-body"
+                style={{
+                  "--sc-opt-sel-color": selectTokens.optionSelectedColor,
+                  "--sc-opt-sel-bg":    selectTokens.optionSelectedBg,
+                  "--sc-opt-active-bg": selectTokens.optionActiveBg,
+                } as React.CSSProperties}
+              >
                 <Title level={3} style={{ marginBottom: 4 }}>
                   {t(sections.find((s) => s.key === active)?.label ?? "")}
                 </Title>

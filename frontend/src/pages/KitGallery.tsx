@@ -61,14 +61,10 @@ function Card({
 
 function ButtonsCard() {
   return (
-    <Card title="Button" description="Primary · Default · Danger · Ghost · Link · Disabled">
+    <Card title="Button" description="Primary · Default · Link · Disabled">
       <Flex wrap="wrap" gap={8}>
         <Button type="primary">Primary</Button>
         <Button>Default</Button>
-        <Button danger>Danger</Button>
-        <Button type="primary" ghost>
-          Ghost
-        </Button>
         <Button type="link">Link</Button>
         <Button type="primary" disabled>
           Disabled
@@ -89,11 +85,11 @@ function InputsCard() {
   return (
     <Card title="Input" description="Text · With prefix · Disabled · Textarea · Password">
       <Flex vertical gap={8} style={{ maxWidth: 340 }}>
-        <Input placeholder="Standard input" />
-        <Input prefix={<UserOutlined />} placeholder="With prefix icon" />
-        <Input.Password placeholder="Password" />
-        <Input placeholder="Disabled" disabled />
-        <Input.TextArea placeholder="Textarea" rows={3} />
+        <Input />
+        <Input prefix={<UserOutlined />} />
+        <Input.Password />
+        <Input disabled />
+        <Input.TextArea rows={3} />
       </Flex>
     </Card>
   );
@@ -110,25 +106,11 @@ const SELECT_OPTS = [
 
 function SelectCard() {
   return (
-    <Card title="Select" description="Single · Searchable · Multiple · Disabled">
+    <Card title="Select" description="Default · Filled · Disabled">
       <Flex vertical gap={8} style={{ maxWidth: 340 }}>
-        <Select placeholder="Single select" options={SELECT_OPTS} style={{ width: "100%" }} />
-        <Select
-          placeholder="Searchable"
-          showSearch
-          options={SELECT_OPTS}
-          style={{ width: "100%" }}
-          filterOption={(input, opt) =>
-            (opt?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-        />
-        <Select
-          mode="multiple"
-          placeholder="Multiple select"
-          options={SELECT_OPTS}
-          style={{ width: "100%" }}
-        />
-        <Select placeholder="Disabled" options={SELECT_OPTS} style={{ width: "100%" }} disabled />
+        <Select options={SELECT_OPTS} style={{ width: "100%" }} />
+        <Select options={SELECT_OPTS} style={{ width: "100%" }} value="opt1" />
+        <Select options={SELECT_OPTS} style={{ width: "100%" }} value="opt1" disabled />
       </Flex>
     </Card>
   );
@@ -140,9 +122,9 @@ function DatePickerCard() {
   return (
     <Card title="Date Picker" description="Single date · Date range">
       <Flex vertical gap={8}>
-        <DatePicker placeholder="Select date" style={{ width: 320 }} />
-        <RangePicker style={{ width: 320 }} />
-        <DatePicker picker="month" placeholder="Month picker" style={{ width: 320 }} />
+        <DatePicker placeholder="" style={{ width: 320 }} />
+        <RangePicker placeholder={["", ""]} style={{ width: 320 }} />
+        <DatePicker picker="month" placeholder="" style={{ width: 320 }} />
       </Flex>
     </Card>
   );

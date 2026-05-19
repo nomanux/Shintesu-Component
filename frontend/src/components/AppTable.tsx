@@ -141,9 +141,7 @@ function AppTableInner<T extends Record<string, unknown>>({
       onRow={(r) => ({
         onClick: () => {
           const k = (r as unknown as { key: React.Key }).key;
-          setSelectedKeys((prev) =>
-            prev.includes(k) ? prev.filter((x) => x !== k) : [...prev, k],
-          );
+          setSelectedKeys((prev) => (prev[0] === k ? [] : [k]));
         },
         style: { cursor: "pointer" },
       })}

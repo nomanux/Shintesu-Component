@@ -95,11 +95,7 @@ function DataTable({ data }: { data: typeof SAMPLE_DATA }) {
       rowClassName={(r) => (selectedKeys.includes(r.key) ? "row-selected" : "")}
       onRow={(r) => ({
         onClick: () =>
-          setSelectedKeys((prev) =>
-            prev.includes(r.key)
-              ? prev.filter((k) => k !== r.key)
-              : [...prev, r.key],
-          ),
+          setSelectedKeys((prev) => (prev[0] === r.key ? [] : [r.key])),
         style: { cursor: "pointer" },
       })}
     />
@@ -153,6 +149,7 @@ export default function FrameTemplate() {
               placement="bottomLeft"
             >
               <div
+                className={`nav-dropdown-trigger${activeNav === item.key ? " active" : ""}`}
                 onClick={() => setActiveNav(item.key)}
                 style={{
                   padding: "0 16px",

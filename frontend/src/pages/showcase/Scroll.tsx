@@ -54,7 +54,8 @@ function Variant({
 export default function ScrollSection() {
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
@@ -68,6 +69,7 @@ export default function ScrollSection() {
   {items.map((item) => <div key={item}>{item}</div>)}
 </div>`}</CodeBlock>
       </div>
+      )}
 
       {/* Vertical Scroll */}
       <Variant

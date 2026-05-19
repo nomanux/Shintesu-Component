@@ -13,8 +13,8 @@ export const SELECT_TOKEN_DEFAULTS: SelectTokens = {
   colorBorder: colors.gray[5],
   colorText: colors.gray[9],
   optionSelectedBg: colors.brand[1],
-  optionActiveBg: colors.brand[1],
-  optionSelectedColor: colors.gray[9],
+  optionActiveBg: colors.gray[3],
+  optionSelectedColor: colors.brand[6],
 };
 
 export const SELECT_TOKEN_GROUPS: TokenGroup<SelectTokens>[] = [

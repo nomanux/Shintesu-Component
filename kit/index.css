@@ -100,7 +100,7 @@ body {
 }
 
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  background-color: var(--gray-1) !important;
+  background-color: var(--kit-btn-ph-bg, var(--gray-1)) !important;
   color: var(--brand-6) !important;
   border-color: var(--brand-6) !important;
 }
@@ -139,6 +139,20 @@ body {
   --ant-color-text-placeholder: var(--gray-9);
 }
 
+/* Select dropdown option colors.
+   CSS variables allow the showcase token customizer to override these at runtime
+   by setting --kit-opt-sel-color etc. on :root. Fallbacks are the design defaults. */
+.ant-select-dropdown .ant-select-item-option-selected {
+  background: var(--kit-opt-sel-bg, var(--brand-1)) !important;
+}
+.ant-select-dropdown .ant-select-item-option-selected .ant-select-item-option-content {
+  color: var(--kit-opt-sel-color, var(--brand-6)) !important;
+  font-weight: 500 !important;
+}
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: var(--kit-opt-active-bg, var(--gray-3)) !important;
+}
+
 /* ── Custom down-arrow icon (global) ─────────────────────────────────────── */
 
 /* Replace Ant Design's built-in chevron-down with the branded DownOutlined.
@@ -164,6 +178,19 @@ body {
   pointer-events: none; /* never intercept mouse/drag events */
 }
 
+/* Select arrow: always gray-6 regardless of surrounding text color. */
+.ant-select-arrow {
+  color: var(--gray-6) !important;
+}
+
+/* Nav dropdown trigger: gray-6 by default, brand-6 when active. */
+.nav-dropdown-trigger .anticon-down::before {
+  background-color: var(--gray-6);
+}
+.nav-dropdown-trigger.active .anticon-down::before {
+  background-color: var(--brand-6);
+}
+
 /* ── Restore original sort arrows inside table column headers ──────────────
    .ant-table-column-sorter uses anticon-caret-up / anticon-caret-down for
    the ↑ ↓ sort indicators — undo the override there. */
@@ -178,6 +205,7 @@ body {
 .ant-table-column-sorter .anticon-down::before {
   display: none !important;
 }
+
 
 /* ── Dropdown menu ────────────────────────────────────────────────────────── */
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Divider, Flex } from "antd";
 import { SectionLabel } from "./helpers";
 import CodeBlock from "./CodeBlock";
-import themeSource from "../../theme.ts?raw";
+import themeSource from "@kit/theme.ts?raw";
 
 /* ── Shared small helpers ────────────────────────────────────────────────── */
 
