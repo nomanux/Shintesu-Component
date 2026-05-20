@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import { Input, Button } from "antd";
 import AppModal from "./AppModal";
+import { specialInputColors, colors } from "../theme";
 
-// Inline so this file has no dependency on theme.ts
 const COLORS = {
-  bg: "#C8FFFF",
-  border: "#A3EAEA",
-  borderActive: "#4DACA5",
+  bg: specialInputColors.rims,
+  border: specialInputColors.rimsBorder,
+  borderActive: colors.brand[5],
 } as const;
 
 const sizeMap = {

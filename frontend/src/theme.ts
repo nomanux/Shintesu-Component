@@ -1,5 +1,3 @@
-export const groupBorderColor = "#4DACA5"; // colors.brand[5] — used for group/container borders
-
 export const specialInputColors = {
   rims: "#C8FFFF",
   rimsBorder: "#A3EAEA",
