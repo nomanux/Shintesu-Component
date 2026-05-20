@@ -162,7 +162,8 @@ export function ${componentName}() {
 export default function ModalSection() {
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
@@ -201,6 +202,7 @@ export function ModalDefault() {
   );
 }`}</CodeBlock>
       </div>
+      )}
 
       {/* Small */}
       <Variant

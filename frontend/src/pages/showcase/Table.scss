@@ -71,14 +71,20 @@
   --ant-color-text-placeholder: var(--gray-9);
 }
 
+/* Keep the trigger value and non-selected option text in gray-9 */
 .ant-select-selection-item,
 .ant-select-open .ant-select-selection-item,
 .ant-select-open .ant-select-selector .ant-select-selection-item,
 .ant-select-single.ant-select-open .ant-select-selector .ant-select-selection-item,
 .ant-select-disabled .ant-select-selector .ant-select-selection-item,
 .ant-select-item-option-content,
-.ant-select-item-option-selected .ant-select-item-option-content,
 .ant-select-item-option-active .ant-select-item-option-content {
   color: var(--gray-9) !important;
+  font-weight: var(--font-weight-medium) !important;
+}
+
+/* Selected option text — higher specificity wins over the single-class rule above */
+.ant-select-item-option-selected .ant-select-item-option-content {
+  color: var(--brand-6) !important;
   font-weight: var(--font-weight-medium) !important;
 }

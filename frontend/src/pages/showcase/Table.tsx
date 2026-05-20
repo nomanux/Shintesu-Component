@@ -17,6 +17,7 @@ import CodeBlock from "./CodeBlock";
 import ExampleBlock from "./ExampleBlock";
 import SplitTable from "../../components/SplitTable";
 import SpecialInput from "../../components/SpecialInput";
+import AppTable, { type AppColumn } from "../../components/AppTable";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
@@ -132,7 +133,7 @@ function loadTableState(): TableState {
  *   • Resize: drag the right edge to change column width
  *   • Reorder: drag the header itself to swap column positions
  */
-function TableHeaderCell({
+export function TableHeaderCell({
   colKey,
   onResizeStart,
   onDragStart,
@@ -240,13 +241,19 @@ export default function ShowcaseTable() {
 
   const startResize = (key: string, startX: number) => {
     const startW = widths[key];
+    let rafId: number | null = null;
+    let pendingW = startW;
     const onMove = (e: MouseEvent) => {
-      setWidths((prev) => ({
-        ...prev,
-        [key]: Math.max(60, startW + e.clientX - startX),
-      }));
+      pendingW = Math.max(60, startW + e.clientX - startX);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setWidths((prev) => ({ ...prev, [key]: pendingW }));
+        rafId = null;
+      });
     };
     const onUp = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); }
+      setWidths((prev) => ({ ...prev, [key]: pendingW }));
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };
@@ -269,7 +276,8 @@ export default function ShowcaseTable() {
           e.dataTransfer.effectAllowed = "move";
         },
         onDragOver: (e: React.DragEvent) => e.preventDefault(),
-        onDrop: () => {
+        onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
           if (!dragKey.current || dragKey.current === key) return;
           setOrder((prev) => {
             const from = prev.indexOf(dragKey.current!);
@@ -477,12 +485,19 @@ function ShowcaseTableForSplit({
 
   const startResize = (key: string, startX: number) => {
     const startW = widths[key];
-    const onMove = (e: MouseEvent) =>
-      setWidths((prev) => ({
-        ...prev,
-        [key]: Math.max(60, startW + e.clientX - startX),
-      }));
+    let rafId: number | null = null;
+    let pendingW = startW;
+    const onMove = (e: MouseEvent) => {
+      pendingW = Math.max(60, startW + e.clientX - startX);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setWidths((prev) => ({ ...prev, [key]: pendingW }));
+        rafId = null;
+      });
+    };
     const onUp = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); }
+      setWidths((prev) => ({ ...prev, [key]: pendingW }));
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };
@@ -508,6 +523,7 @@ function ShowcaseTableForSplit({
         },
         onDragOver: (e: React.DragEvent) => e.preventDefault(),
         onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
           // Same-panel: dragKey.current is set. Cross-panel: read from dataTransfer.
           const src = dragKey.current ?? e.dataTransfer.getData("splitColKey");
           dragKey.current = null;
@@ -540,13 +556,10 @@ function ShowcaseTableForSplit({
         selectedKeys.includes((r as SplitRow).key) ? "row-selected" : ""
       }
       onRow={(r) => ({
-        onClick: () =>
-          setSelectedKeys((prev) => {
-            const k = (r as SplitRow).key;
-            return prev.includes(k)
-              ? prev.filter((x) => x !== k)
-              : [...prev, k];
-          }),
+        onClick: () => {
+          const k = (r as SplitRow).key;
+          setSelectedKeys((prev) => (prev[0] === k ? [] : [k]));
+        },
         style: { cursor: "pointer" },
       })}
     />
@@ -555,45 +568,28 @@ function ShowcaseTableForSplit({
 
 // ── Public components ──────────────────────────────────────────────────────
 
+// AppColumn-formatted columns for GlobalTable (maps label → title, adds defaultWidth)
+const GLOBAL_TABLE_COLS: AppColumn<SplitRow>[] = SPLIT_COLS_BASE.map((c) => ({
+  ...c,
+  title: c.label,
+  defaultWidth: c.width,
+}));
+
 export function GlobalTable() {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
-  const [splitWidth, setSplitWidth] = React.useState(0);
-  const shared = useSplitTableState();
-  const pagedData = splitTableData.slice(
-    (page - 1) * pageSize,
-    page * pageSize,
-  );
+  const pagedData = splitTableData.slice((page - 1) * pageSize, page * pageSize);
 
   return (
-    <SplitTableContext.Provider value={shared}>
-      <div>
-        <div className="global-table-outer" style={{ border: "1px solid var(--gray-4)" }}>
-          <SplitTable
-            data={pagedData}
-            dataTable={<ShowcaseTableForSplit dataSource={pagedData} />}
-            splitWidth={splitWidth}
-            onSplitWidthChange={setSplitWidth}
-          />
-        </div>
-        <div
-          style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
-        >
-          <Pagination
-            size="small"
-            current={page}
-            pageSize={pageSize}
-            total={splitTableData.length}
-            showSizeChanger
-            showQuickJumper
-            onChange={(p, ps) => {
-              setPage(p);
-              setPageSize(ps);
-            }}
-          />
-        </div>
-      </div>
-    </SplitTableContext.Provider>
+    <AppTable
+      columns={GLOBAL_TABLE_COLS}
+      dataSource={pagedData}
+      height={400}
+      total={splitTableData.length}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={(p, ps) => { setPage(p); setPageSize(ps); }}
+    />
   );
 }
 
@@ -690,12 +686,14 @@ export function TableSection() {
 
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <CodeBlock>{SPLIT_USAGE_CODE}</CodeBlock>
       </div>
+      )}
 
       {/* Default — the standard SplitTable + pagination */}
       <Variant

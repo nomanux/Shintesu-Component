@@ -64,8 +64,14 @@
     transition: transform 0.25s ease;
   }
 
+  svg {
+    color: var(--gray-6);
+    flex-shrink: 0;
+  }
+
   &:hover {
     color: var(--brand-6);
+    svg { color: var(--brand-6); }
   }
 
   &:hover::after,
@@ -75,7 +81,12 @@
 
   &.active {
     color: var(--brand-6);
+    svg { color: var(--brand-6); }
   }
+}
+
+.frame-user svg {
+  color: var(--gray-6);
 }
 
 .frame-tag {

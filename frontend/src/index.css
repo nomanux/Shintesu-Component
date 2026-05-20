@@ -1,5 +1,9 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Shinetsu Kit — global CSS
+   Import this once in your entry file:  import "./index.css"
+   ───────────────────────────────────────────────────────────────────────────── */
+
 /* ── Design tokens (CSS custom properties) ───────────────────────────────── */
-/* Mirror of theme.ts colors — keep in sync. Single source of truth for CSS. */
 
 :root {
   /* Brand */
@@ -26,20 +30,21 @@
   --gray-9: #192a42;
   --gray-10: #060f1c;
 
-  /* Semantic / app-specific surfaces */
-  --color-bg-app: #f5f5f5;
+  /* Semantic surfaces */
   --st-gray: #edf3f7;
+  --color-bg-app: #f5f5f5;
 
   /* Font weights */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
 
-  /* SplitTable scrollbar width */
+  /* SplitTable scrollbar width — used by SplitTable.scss */
   --sbw: 8px;
 }
 
-/* ── Global dark theme overrides (applies when `data-theme="dark"` on <html>) */
+/* ── Dark theme overrides — apply <html data-theme="dark"> ───────────────── */
+
 :root[data-theme="dark"] {
   --gray-1: #0d1117;
   --gray-2: #161b22;
@@ -51,11 +56,12 @@
   --gray-8: #c9d1d9;
   --gray-9: #e6edf3;
   --gray-10: #f0f6fc;
-
   --brand-1: #0f2f2d;
   --brand-3: #2d7a75;
   --color-bg-app: var(--gray-1);
 }
+
+/* ── Global reset ─────────────────────────────────────────────────────────── */
 
 *,
 *::before,
@@ -87,11 +93,186 @@ body {
   width: 100%;
 }
 
+/* ── Button ───────────────────────────────────────────────────────────────── */
+
+.ant-btn:not(.ant-btn-icon-only) {
+  min-width: 110px;
+}
+
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: var(--kit-btn-ph-bg, var(--gray-1)) !important;
+  color: var(--brand-6) !important;
+  border-color: var(--brand-6) !important;
+}
+
+.ant-btn-primary:disabled,
+.ant-btn-primary.ant-btn-disabled {
+  background-color: var(--brand-4) !important;
+  border-color: var(--brand-4) !important;
+  color: var(--gray-1) !important;
+}
+
+.ant-btn-default:disabled,
+.ant-btn-default.ant-btn-disabled {
+  border-color: transparent !important;
+}
+
+/* ── Input ────────────────────────────────────────────────────────────────── */
+
+.ant-input-affix-wrapper .ant-input-prefix {
+  margin-inline-end: var(--ant-padding-xs) !important;
+}
+
+.ant-input-prefix .anticon,
+.ant-input-suffix .anticon {
+  color: var(--brand-6) !important;
+}
+
+.ant-input[disabled],
+.ant-input-disabled {
+  cursor: default !important;
+}
+
+/* ── Select ───────────────────────────────────────────────────────────────── */
+
+.ant-select {
+  --ant-color-text-placeholder: var(--gray-9);
+}
+
+/* Select dropdown option colors.
+   CSS variables allow the showcase token customizer to override these at runtime
+   by setting --kit-opt-sel-color etc. on :root. Fallbacks are the design defaults. */
+.ant-select-dropdown .ant-select-item-option-selected {
+  background: var(--kit-opt-sel-bg, var(--brand-1)) !important;
+}
+.ant-select-dropdown .ant-select-item-option-selected .ant-select-item-option-content {
+  color: var(--kit-opt-sel-color, var(--brand-6)) !important;
+  font-weight: 500 !important;
+}
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: var(--kit-opt-active-bg, var(--gray-3)) !important;
+}
+
+/* ── Custom down-arrow icon (global) ─────────────────────────────────────── */
+
+/* Replace Ant Design's built-in chevron-down with the branded DownOutlined.
+   Uses CSS mask-image so the icon inherits currentColor from its context
+   (works for Select suffix, Collapse expand, Menu submenu arrow, etc.).
+   Table sort arrows (.ant-table-column-sorter) are excluded below. */
+
+.anticon-down > svg,
+.anticon-caret-down > svg {
+  display: none !important;
+}
+
+.anticon-down::before,
+.anticon-caret-down::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path fill-rule='evenodd' clip-rule='evenodd' d='M0.486251 3.1995C0.724828 2.94502 1.12452 2.93214 1.37899 3.1707L5.99974 7.50266L10.6204 3.1707C10.875 2.93214 11.2746 2.94502 11.5133 3.1995C11.7517 3.45398 11.7389 3.85367 11.4845 4.09224L6.4317 8.8292C6.18876 9.05695 5.81071 9.05695 5.56777 8.8292L0.515052 4.09224C0.260572 3.85367 0.247687 3.45398 0.486251 3.1995Z' fill='black'/></svg>") no-repeat center / contain;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path fill-rule='evenodd' clip-rule='evenodd' d='M0.486251 3.1995C0.724828 2.94502 1.12452 2.93214 1.37899 3.1707L5.99974 7.50266L10.6204 3.1707C10.875 2.93214 11.2746 2.94502 11.5133 3.1995C11.7517 3.45398 11.7389 3.85367 11.4845 4.09224L6.4317 8.8292C6.18876 9.05695 5.81071 9.05695 5.56777 8.8292L0.515052 4.09224C0.260572 3.85367 0.247687 3.45398 0.486251 3.1995Z' fill='black'/></svg>") no-repeat center / contain;
+  vertical-align: middle;
+  pointer-events: none; /* never intercept mouse/drag events */
+}
+
+/* Select arrow: always gray-6 regardless of surrounding text color. */
+.ant-select-arrow {
+  color: var(--gray-6) !important;
+}
+
+/* Nav dropdown trigger: gray-6 by default, brand-6 when active. */
+.nav-dropdown-trigger .anticon-down::before {
+  background-color: var(--gray-6);
+}
+.nav-dropdown-trigger.active .anticon-down::before {
+  background-color: var(--brand-6);
+}
+
+/* ── Restore original sort arrows inside table column headers ──────────────
+   .ant-table-column-sorter uses anticon-caret-up / anticon-caret-down for
+   the ↑ ↓ sort indicators — undo the override there. */
+.ant-table-column-sorter .anticon-caret-up > svg,
+.ant-table-column-sorter .anticon-caret-down > svg,
+.ant-table-column-sorter .anticon-down > svg {
+  display: inline-block !important;
+}
+
+.ant-table-column-sorter .anticon-caret-up::before,
+.ant-table-column-sorter .anticon-caret-down::before,
+.ant-table-column-sorter .anticon-down::before {
+  display: none !important;
+}
+
+
+/* ── Dropdown menu ────────────────────────────────────────────────────────── */
+
+.ant-dropdown-menu-item {
+  color: var(--gray-9) !important;
+}
+
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-item.ant-dropdown-menu-item-selected {
+  color: var(--brand-7) !important;
+}
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+
+.ant-table-cell {
+  padding: 2px !important;
+}
+
+.ant-table-cell.cell-text {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.ant-table-cell.cell-checkbox {
+  text-align: center;
+}
+
+.ant-table-thead > tr > th {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  text-align: center !important;
+  line-height: 18px !important;
+}
+
+.ant-table-tbody > tr.row-selected > td {
+  background-color: var(--brand-1) !important;
+}
+
+.ant-table-tbody > tr.row-selected:hover > td {
+  background-color: var(--brand-1) !important;
+}
+
+.ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin-bottom: 0;
+}
+
+/* ── Radio Button (Tab) ───────────────────────────────────────────────────── */
+
+.ant-radio-button-wrapper {
+  border-bottom: none !important;
+}
+
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover {
+  background-color: var(--brand-1) !important;
+}
+
+.ant-radio-button-wrapper-checked {
+  font-weight: 600 !important;
+  border-color: var(--brand-4) !important;
+}
+
+.ant-radio-button-wrapper-checked::before {
+  background-color: var(--brand-4) !important;
+}
+
 /* ── Divider ──────────────────────────────────────────────────────────────── */
 
-/* Default to no margin — set inline style only when spacing is needed.
-   Higher specificity (tag + class) beats Ant's class default without
-   !important, so inline style={{ margin }} still wins. */
 div.ant-divider-horizontal {
   margin: 0;
 }

@@ -25,7 +25,7 @@ export const BUTTON_TOKEN_DEFAULTS: BtnTokens = {
   fontWeight: 500,
   controlMinWidth: BUTTON_MIN_WIDTH,
   colorPrimary: colors.brand[6],
-  colorPrimaryHover: colors.brand[6],
+  colorPrimaryHover: colors.gray[1],
   colorPrimaryActive: colors.brand[7],
   primaryColor: "#FFFFFF",
   defaultBg: colors.gray[3],

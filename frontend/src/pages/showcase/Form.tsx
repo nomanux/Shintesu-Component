@@ -64,7 +64,7 @@ function ValidationDemo() {
         name="logonId"
         rules={[{ required: true, message: "Please enter your Logon ID" }]}
       >
-        <Input placeholder="e.g. user.name" />
+        <Input />
       </Form.Item>
       <Form.Item
         label="Email"
@@ -74,7 +74,7 @@ function ValidationDemo() {
           { type: "email", message: "Enter a valid email" },
         ]}
       >
-        <Input placeholder="name@example.com" />
+        <Input />
       </Form.Item>
       <Form.Item
         label="Password"

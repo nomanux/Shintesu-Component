@@ -54,7 +54,8 @@ function Variant({
 export default function SelectSection() {
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
@@ -74,6 +75,7 @@ export function SelectDefault() {
   );
 }`}</CodeBlock>
       </div>
+      )}
 
       {/* Default */}
       <Variant
@@ -83,7 +85,6 @@ export function SelectDefault() {
             suffixIcon={<DownIcon />}
             style={{ width: 200 }}
             options={OPTIONS}
-            placeholder="Select an option"
           />
         }
         code={`<Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={options} />`}
@@ -108,11 +109,11 @@ export function SelectDefault() {
         label="Disabled"
         preview={
           <Flex gap={12}>
-            <Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={OPTIONS} disabled placeholder="Disabled" />
+            <Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={OPTIONS} disabled />
             <Select suffixIcon={<DownIcon />} style={{ width: 200 }} options={OPTIONS} disabled value="option1" />
           </Flex>
         }
-        code={`<Select disabled placeholder="Disabled" options={options} />
+        code={`<Select disabled options={options} />
 <Select disabled value="option1" options={options} />`}
       />
 

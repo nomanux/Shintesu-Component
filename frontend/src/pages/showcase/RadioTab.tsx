@@ -104,7 +104,8 @@ function Tabs({
 export default function RadioTabSection() {
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
@@ -148,6 +149,7 @@ export function RadioTabsDefault() {
   );
 }`}</CodeBlock>
       </div>
+      )}
 
       {/* Default — Table panel */}
       <Variant
@@ -162,8 +164,8 @@ export function RadioTabsDefault() {
                 label: "Tabs - 2",
                 content: (
                   <Flex vertical gap={12}>
-                    <Input placeholder="Field 1" />
-                    <Input placeholder="Field 2" />
+                    <Input />
+                    <Input />
                   </Flex>
                 ),
               },
@@ -192,8 +194,8 @@ export function RadioTabsDefault() {
     tab1: <YourTable />,
     tab2: (
       <Flex vertical gap={12}>
-        <Input placeholder="Field 1" />
-        <Input placeholder="Field 2" />
+        <Input />
+        <Input />
       </Flex>
     ),
     tab3: (

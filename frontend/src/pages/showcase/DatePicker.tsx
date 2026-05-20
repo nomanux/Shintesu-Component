@@ -50,7 +50,8 @@ const FORMAT = "YYYY/MM/DD";
 export default function DatePickerSection() {
   return (
     <Flex vertical gap={32}>
-      {/* Usage */}
+      {/* Usage — hidden for now */}
+      {(false as boolean) && (
       <div>
         <SectionLabel>Usage</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
@@ -60,6 +61,7 @@ export function DatePickerDefault() {
   return <DatePicker format="YYYY/MM/DD" />;
 }`}</CodeBlock>
       </div>
+      )}
 
       {/* Default */}
       <Variant
