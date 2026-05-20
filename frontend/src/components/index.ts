@@ -1,7 +1,7 @@
-// Kit components (SplitTable, SpecialInput, SpecialInput2, AppModal)
-export * from "@kit/components";
-
-// Frontend-only components
+export { default as AppModal } from "./AppModal";
+export { default as SpecialInput } from "./SpecialInput";
+export { default as SpecialInput2 } from "./SpecialInput2";
+export { default as SplitTable } from "./SplitTable";
 export { default as AppTable } from "./AppTable";
 export type { AppColumn, AppTableProps } from "./AppTable";
 export { TableHeaderCell } from "./TableHeaderCell";
