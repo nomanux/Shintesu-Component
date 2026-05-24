@@ -29,7 +29,7 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
   const segment = raw.split("/")[0];
 
   if (!segment || segment === "home") {
-    return { page: "showcase", section: "frame", docsSection: "introduction" };
+    return { page: "home", section: "frame", docsSection: "introduction" };
   }
   if (segment === "docs") {
     const sub = raw.split("/")[1] ?? "introduction";

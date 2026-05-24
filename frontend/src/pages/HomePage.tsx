@@ -158,10 +158,10 @@ const WHY_LIST = [
 
 type Props = {
   onBrowse: (section?: string) => void;
-  onDocs: (section?: string) => void;
+  onDocs?: (section?: string) => void;
 };
 
-export default function HomePage({ onBrowse, onDocs }: Props) {
+export default function HomePage({ onBrowse }: Props) {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
 
   const filtered =
@@ -182,13 +182,9 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
           </div>
           <ul className="hp-nav-links">
             <li onClick={() => onBrowse()}>Components</li>
-            <li onClick={() => onDocs()}>Docs</li>
             <li>GitHub</li>
           </ul>
           <div className="hp-nav-cta">
-            <button className="hp-btn-ghost" onClick={() => onBrowse()}>
-              Sign in
-            </button>
             <button
               className="hp-btn-primary"
               onClick={() => onBrowse("buttons")}
@@ -200,64 +196,7 @@ export default function HomePage({ onBrowse, onDocs }: Props) {
       </nav>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="hp-hero">
-        <div className="hp-container hp-hero-grid">
-          <div className="hp-hero-left">
-            <div className="hp-badge">
-              <span className="hp-badge-dot" />
-              Built on Ant Design v6
-            </div>
-            <h1 className="hp-h1">
-              One theme. Every project.
-              <br />
-              <em>Zero drift.</em>
-            </h1>
-            <p className="hp-hero-desc">
-              Your <code className="hp-inline-code">--color-brand</code> is
-              already set. Stop re-declaring it across 6 different repos.
-              Shinetsu reads your token file directly — every component, every
-              project, always in sync.
-            </p>
-            <div className="hp-hero-actions">
-              <button className="hp-btn-lg" onClick={() => onBrowse("buttons")}>
-                Browse Components →
-              </button>
-              <button className="hp-btn-outline-lg">
-                <GithubIcon /> View on GitHub
-              </button>
-            </div>
-          </div>
-          <div className="hp-hero-right">
-            <div className="hp-code-window">
-              <div className="hp-code-bar">
-                <span className="hp-dot hp-dot-r" />
-                <span className="hp-dot hp-dot-y" />
-                <span className="hp-dot hp-dot-g" />
-                <span className="hp-code-filename">SplitTable.tsx</span>
-              </div>
-              <div className="hp-code-body">
-                <pre>{`// One import. Full design system.
-
-import { SplitTable, useTheme }
-  from '@shinetsu/core'
-
-export function DataView() {
-  const theme = useTheme()
-
-  return (
-    <SplitTable
-      columns={columns}
-      frozenLeft={2}
-      syncedScroll
-      resizable
-    />
-  )
-}`}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection onBrowse={onBrowse} />
 
       {/* ── Stats ────────────────────────────────────────────────────────── */}
       <div className="hp-stats">
@@ -457,16 +396,36 @@ export function DataView() {
   );
 }
 
-function GithubIcon() {
+/* ── Hero Section ─────────────────────────────────────────────────────────── */
+
+function HeroSection({ onBrowse }: { onBrowse: (k: string) => void }) {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-    </svg>
+    <section className="hp-hero-simple">
+      {/* Announcement pill */}
+      <div className="hp-hero-simple__badge" onClick={() => onBrowse("foundations")}>
+        <span className="hp-hero-simple__badge-mark">S</span>
+        <span>Shinetsu v6.2 — built on Ant Design v6 🎉</span>
+        <span className="hp-hero-simple__badge-arrow">›</span>
+      </div>
+
+      {/* Headline */}
+      <h1 className="hp-hero-simple__h1">
+        One theme system for<br />every project you ship
+      </h1>
+
+      {/* Subtitle */}
+      <p className="hp-hero-simple__sub">
+        Token-driven components built on Ant Design. Consistent, accessible and
+        ready to use across your entire product suite.
+      </p>
+
+      {/* CTA */}
+      <button
+        className="hp-hero-simple__cta"
+        onClick={() => onBrowse("buttons")}
+      >
+        Browse components
+      </button>
+    </section>
   );
 }

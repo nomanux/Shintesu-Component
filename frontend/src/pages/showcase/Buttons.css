@@ -181,7 +181,7 @@
 }
 
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  background-color: var(--gray-1) !important;
+  background-color: var(--kit-btn-ph-bg, var(--gray-1)) !important;
   color: var(--brand-6) !important;
   border-color: var(--brand-6) !important;
 }

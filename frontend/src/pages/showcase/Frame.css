@@ -65,7 +65,14 @@
   transform: translateY(100%);
   transition: transform 0.25s ease;
 }
+.frame-nav-item svg {
+  color: var(--gray-6);
+  flex-shrink: 0;
+}
 .frame-nav-item:hover {
+  color: var(--brand-6);
+}
+.frame-nav-item:hover svg {
   color: var(--brand-6);
 }
 .frame-nav-item:hover::after, .frame-nav-item.ant-dropdown-open::after {
@@ -73,6 +80,13 @@
 }
 .frame-nav-item.active {
   color: var(--brand-6);
+}
+.frame-nav-item.active svg {
+  color: var(--brand-6);
+}
+
+.frame-user svg {
+  color: var(--gray-6);
 }
 
 .frame-tag {

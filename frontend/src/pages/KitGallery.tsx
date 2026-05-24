@@ -15,7 +15,6 @@ import { GlobalTable } from "./showcase/Table";
 import { colors, modalWidth } from "../theme";
 
 const { Title, Text } = Typography;
-const { RangePicker } = DatePicker;
 
 /* ── Section card ─────────────────────────────────────────────────────────── */
 
@@ -61,14 +60,12 @@ function Card({
 
 function ButtonsCard() {
   return (
-    <Card title="Button" description="Primary · Default · Link · Disabled">
+    <Card title="Button" description="Primary · Default · Disabled · Primary Disabled">
       <Flex wrap="wrap" gap={8}>
         <Button type="primary">Primary</Button>
         <Button>Default</Button>
-        <Button type="link">Link</Button>
-        <Button type="primary" disabled>
-          Disabled
-        </Button>
+        <Button disabled>Disabled</Button>
+        <Button type="primary" disabled>Primary Disabled</Button>
       </Flex>
       <Flex wrap="wrap" gap={8} style={{ marginTop: 12 }}>
         <Button type="primary" size="small">Small</Button>
@@ -120,11 +117,9 @@ function SelectCard() {
 
 function DatePickerCard() {
   return (
-    <Card title="Date Picker" description="Single date · Date range">
+    <Card title="Date Picker" description="Single date">
       <Flex vertical gap={8}>
         <DatePicker placeholder="" style={{ width: 320 }} />
-        <RangePicker placeholder={["", ""]} style={{ width: 320 }} />
-        <DatePicker picker="month" placeholder="" style={{ width: 320 }} />
       </Flex>
     </Card>
   );
