@@ -268,7 +268,7 @@
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color: var(--gray-5);
+  color: var(--gray-6);
 }
 .showcase-nav-item.active .showcase-nav-icon {
   color: var(--brand-6);
@@ -333,6 +333,18 @@
 .showcase-content-body {
   max-width: 960px;
   padding: 32px 40px 32px 60px;
+  position: relative;
+  /* Select popup token bridge — values come from inline CSS vars set by the token customizer */
+}
+.showcase-content-body .ant-select-item-option-selected {
+  background: var(--sc-opt-sel-bg, var(--brand-1));
+}
+.showcase-content-body .ant-select-item-option-selected .ant-select-item-option-content {
+  color: var(--sc-opt-sel-color, var(--brand-6));
+  font-weight: 500;
+}
+.showcase-content-body .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: var(--sc-opt-active-bg, var(--gray-3));
 }
 @media (max-width: 1280px) {
   .showcase-content-body {
