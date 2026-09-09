@@ -8,11 +8,11 @@ export const specialInputColors = {
 
 /** Canonical modal widths — reference these instead of hardcoding pixel values. */
 export const modalWidth = {
-  sm: 400,
-  md: 520, // default
-  lg: 720,
-  xl: 900,
-  xxl: 1160,
+  sm: 480,
+  md: 640,
+  lg: 768,
+  xl: 960,
+  "2xl": 1200,
 } as const;
 
 export const colors = {
