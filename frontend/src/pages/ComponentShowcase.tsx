@@ -44,6 +44,7 @@ import SelectSection, { SelectGuidance } from "./showcase/Select";
 import DatePickerSection, { DatePickerGuidance } from "./showcase/DatePicker";
 import IntroductionSection from "./showcase/Introduction";
 import InstallationSection from "./showcase/Installation";
+import ThemeChanges from "./showcase/ThemeChanges";
 
 import { TokenCustomizer } from "./showcase/TokenCustomizer";
 import { type InputTokens, INPUT_TOKEN_DEFAULTS, INPUT_TOKEN_GROUPS } from "./showcase/inputTokens";
@@ -116,6 +117,25 @@ const sections = [
 
 type SectionKey = (typeof sections)[number]["key"];
 type Lang = "en" | "ja";
+
+/* ── What the theme changes, per section ──────────────────────────────────── */
+
+const themeChangesMap: Partial<Record<SectionKey, React.ReactNode>> = {
+  foundations: <ThemeChanges components={["global"]} cssSections={["Global reset", "Divider"]} />,
+  buttons: <ThemeChanges components={["Button"]} cssSections={["Button"]} />,
+  inputs: <ThemeChanges components={["Input"]} cssSections={["Input"]} />,
+  select: <ThemeChanges components={["Select"]} cssSections={["Select", "Custom down-arrow icon"]} />,
+  datepicker: <ThemeChanges components={["DatePicker"]} />,
+  form: <ThemeChanges components={["Form"]} />,
+  "radio-tab": <ThemeChanges components={["Radio"]} cssSections={["Radio Button (Tab)"]} />,
+  table: (
+    <ThemeChanges
+      components={["Table", "Pagination"]}
+      cssSections={["Table", "Restore original sort arrows"]}
+    />
+  ),
+  scroll: <ThemeChanges components={[]} cssSections={["Global scrollbar"]} />,
+};
 
 /* ── Content map ──────────────────────────────────────────────────────────── */
 
@@ -405,6 +425,7 @@ export default function ComponentShowcase({
                 </Title>
                 <Divider style={{ margin: "16px 0 24px" }} />
                 {contentMap[active].guidance}
+                {themeChangesMap[active]}
                 {active === "frame"
                   ? <FrameSection onOpenDemo={onOpenDemo} />
                   : contentMap[active].component}

@@ -6,49 +6,22 @@ export default function IntroductionSection() {
   return (
     <Flex vertical gap={40}>
 
-      {/* What is Shinetsu */}
+      {/* What is SH Component */}
       <div>
-        <SectionLabel>What is Shinetsu?</SectionLabel>
+        <SectionLabel>What is SH Component?</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.75, margin: 0 }}>
-          Shinetsu is a production-ready UI component collection built on{" "}
-          <strong style={{ color: "var(--gray-9)" }}>Ant Design v6</strong>. It provides
-          a unified set of components backed by a single token file so your team ships
-          consistent, on-brand UI across every project without re-declaring the same
-          variables from scratch.
+          <strong style={{ color: "var(--gray-9)" }}>SH Component</strong> is a UI component
+          library for building ERP applications. It is built on{" "}
+          <strong style={{ color: "var(--gray-9)" }}>Ant Design v6</strong> and customized
+          with its own theme.
         </p>
-      </div>
-
-      {/* Design principles */}
-      <div>
-        <SectionLabel>Design Principles</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <Flex vertical gap={12}>
-          {[
-            { title: "One token system", body: "Every component reads from the same CSS variable file. Change --brand-6 once and the whole product updates." },
-            { title: "Ant Design foundation", body: "Built on Ant Design v6 with curated theme overrides. All built-in accessibility and keyboard navigation come included." },
-            { title: "TypeScript-safe", body: "Full prop types on every component. Errors surface in your editor, not in production." },
-            { title: "Showcase-first", body: "Every variant is live. You see exactly what you get before copying the code." },
-            { title: "Accessible by default", body: "Keyboard nav, focus rings, and ARIA are handled by Ant Design — you don't add them." },
-          ].map((p) => (
-            <div
-              key={p.title}
-              style={{
-                padding: "14px 16px",
-                border: "1px solid var(--gray-4)",
-                borderRadius: 6,
-                background: "var(--gray-1)",
-              }}
-            >
-              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--gray-9)", marginBottom: 4 }}>
-                {p.title}
-              </div>
-              <div style={{ fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
-                {p.body}
-              </div>
-            </div>
-          ))}
-        </Flex>
+        <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.75, margin: "12px 0 0" }}>
+          Use these components instead of plain Ant Design when you build an ERP screen.
+          Colors, typography and spacing come from one shared token file, so every
+          application looks and behaves the same, and a theme change in one place updates
+          them all.
+        </p>
       </div>
 
       {/* Quick start */}
@@ -56,7 +29,7 @@ export default function IntroductionSection() {
         <SectionLabel>Quick Start</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.7, margin: "0 0 16px" }}>
-          Wrap your app with the Shinetsu theme and you're ready to use any component.
+          Wrap your app with the SH Component theme and you're ready to use any component.
         </p>
         <CodeBlock>{`import { ConfigProvider } from "antd";
 import { shinetsuTheme } from "./theme";

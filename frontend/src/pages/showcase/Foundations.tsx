@@ -2,7 +2,7 @@ import React from "react";
 import "./Foundations.scss";
 import { App, Divider, Flex, Typography } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
-import { colors } from "../../theme";
+import { colors, modalWidth } from "../../theme";
 import { SectionLabel, VariantLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
@@ -135,6 +135,73 @@ const heightTokens = [
   { name: "controlHeightLG", px: 40 },
 ];
 
+// ── Color roles & sizes ──────────────────────────────────────────────────
+
+type TokenRow = { token: string; value: string; use: string; swatch?: string };
+
+const colorRoles: TokenRow[] = [
+  { token: "--brand-6", value: colors.brand[6], swatch: colors.brand[6], use: "Primary action: primary button, link, focus border, selected text" },
+  { token: "--brand-7", value: colors.brand[7], swatch: colors.brand[7], use: "Primary action while pressed" },
+  { token: "--brand-4", value: colors.brand[4], swatch: colors.brand[4], use: "Disabled primary button background" },
+  { token: "--brand-3", value: colors.brand[3], swatch: colors.brand[3], use: "Border on a brand-tinted surface" },
+  { token: "--brand-1", value: colors.brand[1], swatch: colors.brand[1], use: "Hover and selected background: table rows, options, menu items" },
+  { token: "--gray-9",  value: colors.gray[9],  swatch: colors.gray[9],  use: "Headings, input values, table cells, form labels" },
+  { token: "--gray-8",  value: colors.gray[8],  swatch: colors.gray[8],  use: "Body text (Ant Design default text color)" },
+  { token: "--gray-7",  value: colors.gray[7],  swatch: colors.gray[7],  use: "Secondary text" },
+  { token: "--gray-6",  value: colors.gray[6],  swatch: colors.gray[6],  use: "Tertiary text, captions, disabled text on buttons" },
+  { token: "--gray-5",  value: colors.gray[5],  swatch: colors.gray[5],  use: "Input and select borders, placeholder text, input icons" },
+  { token: "--gray-4",  value: colors.gray[4],  swatch: colors.gray[4],  use: "Dividers and card borders" },
+  { token: "--gray-3",  value: colors.gray[3],  swatch: colors.gray[3],  use: "Default button background, disabled field background" },
+  { token: "--gray-2",  value: colors.gray[2],  swatch: colors.gray[2],  use: "Layout background behind content" },
+  { token: "--gray-1",  value: colors.gray[1],  swatch: colors.gray[1],  use: "Surfaces: cards, inputs, modals, table header" },
+];
+
+const sizeRows: TokenRow[] = [
+  { token: "borderRadius",    value: "0",     use: "All controls, cards and modals have square corners" },
+  { token: "fontSize",        value: "14px",  use: "Base text size for body, inputs and tables" },
+  { token: "controlHeight",   value: "32px",  use: "Default height of buttons, inputs and selects" },
+  { token: "controlHeightSM", value: "24px",  use: "Small controls, e.g. inside table cells" },
+  { token: "controlHeightLG", value: "40px",  use: "Large controls" },
+  { token: "Button min width", value: "110px", use: "Every button with text (icon-only buttons excluded)" },
+  { token: "Form field gap",  value: "16px / 8px", use: "16px between inline fields, 8px between stacked fields" },
+  { token: "modalWidth.sm",   value: `${modalWidth.sm}px`,     use: "Small modal, e.g. a confirmation" },
+  { token: "modalWidth.md",   value: `${modalWidth.md}px`,     use: "Default modal width" },
+  { token: "modalWidth.lg",   value: `${modalWidth.lg}px`,     use: "Large modal" },
+  { token: "modalWidth.xl",   value: `${modalWidth.xl}px`,     use: "X-Large modal" },
+  { token: 'modalWidth["2xl"]', value: `${modalWidth["2xl"]}px`, use: "XX-Large modal" },
+];
+
+function TokenTable({ rows }: { rows: TokenRow[] }) {
+  const { message } = App.useApp();
+
+  const copy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      message.success(`Copied ${text}`);
+    } catch {
+      message.error("Copy failed");
+    }
+  };
+
+  return (
+    <div className="token-table">
+      {rows.map((r) => (
+        <div key={r.token} className="token-row">
+          <button type="button" className="token-copy" title={`Copy ${r.token}`} onClick={() => copy(r.token)}>
+            {r.swatch && <span className="token-swatch" style={{ background: r.swatch }} />}
+            <span className="type-token">{r.token}</span>
+            <CopyOutlined className="token-copy-icon" />
+          </button>
+          <button type="button" className="token-copy" title={`Copy ${r.value}`} onClick={() => copy(r.value)}>
+            <span className="type-spec">{r.value}</span>
+          </button>
+          <span className="token-use">{r.use}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ── Component ────────────────────────────────────────────────────────────
 
 export default function FoundationsSection() {
@@ -166,6 +233,16 @@ import { colors } from "./theme";
   border: 1px solid var(--brand-3);
 }`}</CodeBlock>
         </div>
+      </div>
+
+      {/* Color roles */}
+      <div>
+        <SectionLabel>Color Roles</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <VariantLabel style={{ marginBottom: 12 }}>
+          Which color to use for what. Click a token name or value to copy it.
+        </VariantLabel>
+        <TokenTable rows={colorRoles} />
       </div>
 
       {/* Typography */}
@@ -288,6 +365,16 @@ font-weight: var(--font-weight-medium);
             </Flex>
           ))}
         </Flex>
+      </div>
+
+      {/* Sizes */}
+      <div>
+        <SectionLabel>Sizes</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <VariantLabel style={{ marginBottom: 12 }}>
+          Sizes set by the theme. Click a name or value to copy it.
+        </VariantLabel>
+        <TokenTable rows={sizeRows} />
       </div>
     </Flex>
   );
