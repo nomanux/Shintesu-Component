@@ -197,7 +197,7 @@ export default function DemoScreen({ onBack }: Props) {
         style={{
           flex: 1,
           overflow: "auto",
-          padding: 12,
+          padding: "8px 12px",
           background: "var(--st-gray)",
           display: "flex",
           flexDirection: "column",
