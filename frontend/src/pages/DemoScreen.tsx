@@ -186,7 +186,7 @@ export default function DemoScreen({ onBack }: Props) {
           flexShrink: 0,
         }}
       >
-        <Title level={5} style={{ margin: 0 }}>
+        <Title level={5} style={{ margin: 0, lineHeight: "20px" }}>
           Page title
         </Title>
       </div>

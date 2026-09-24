@@ -129,7 +129,7 @@ export default function FrameSection({ onOpenDemo }: { onOpenDemo?: () => void }
 
           {/* Page title */}
           <div className="frame-page-title">
-            <Title level={5} style={{ margin: 0 }}>
+            <Title level={5} style={{ margin: 0, lineHeight: "20px" }}>
               Page title
             </Title>
           </div>
