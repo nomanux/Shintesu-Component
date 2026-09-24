@@ -315,7 +315,7 @@ export default function App() {
         </p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           {[
-            { label: "▶ FrameTemplate", path: "/kit/frametemplate", primary: true },
+            { label: "▶ Component Gallery", path: "/kit/component", primary: true },
             { label: "▶ Sample Screen",  path: "/kit/sample",        primary: false },
           ].map(({ label, path, primary }) => (
             <button

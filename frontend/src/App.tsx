@@ -39,7 +39,7 @@ function parsePath(): { page: Page; section: string; docsSection: string } {
     return { page: "demo", section: "frame", docsSection: "introduction" };
   }
   if (segment === "kit") {
-    const sub = raw.split("/")[1] ?? "frametemplate";
+    const sub = raw.split("/")[1] ?? "component";
     return { page: "kit", section: sub, docsSection: "introduction" };
   }
   if (SHOWCASE_SECTIONS.has(segment)) {
