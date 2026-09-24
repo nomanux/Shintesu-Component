@@ -575,7 +575,7 @@ const GLOBAL_TABLE_COLS: AppColumn<SplitRow>[] = SPLIT_COLS_BASE.map((c) => ({
   defaultWidth: c.width,
 }));
 
-export function GlobalTable() {
+export function GlobalTable({ height = 400 }: { height?: number | "fill" }) {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
   const pagedData = splitTableData.slice((page - 1) * pageSize, page * pageSize);
@@ -584,7 +584,7 @@ export function GlobalTable() {
     <AppTable
       columns={GLOBAL_TABLE_COLS}
       dataSource={pagedData}
-      height={400}
+      height={height}
       total={splitTableData.length}
       page={page}
       pageSize={pageSize}

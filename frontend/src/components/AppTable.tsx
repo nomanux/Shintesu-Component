@@ -28,8 +28,8 @@ export type AppColumn<T = unknown> = ColumnType<T> & {
 export type AppTableProps<T extends Record<string, unknown>> = {
   columns: AppColumn<T>[];
   dataSource: T[];
-  /** Container height (px). Default 400. */
-  height?: number;
+  /** Container height (px), or "fill" to take all the height of a flex-column parent. Default 400. */
+  height?: number | "fill";
   /** Total record count for external pagination. Omit for no pagination. */
   total?: number;
   page?: number;
@@ -122,7 +122,9 @@ function AppTableInner<T extends Record<string, unknown>>({
   });
 
   const totalWidth = order.reduce((s, k) => s + widths[k], 0);
-  const scrollY = height - reservedHeight - (total !== undefined ? 40 : 0) - 40;
+  const fill = height === "fill";
+  // With "fill", SplitTable sizes the body to its container, so scrollY is only a placeholder.
+  const scrollY = fill ? 100 : height - reservedHeight - (total !== undefined ? 40 : 0) - 40;
 
   /* ── Inner Ant Table ── */
   const innerTable = (
@@ -150,8 +152,14 @@ function AppTableInner<T extends Record<string, unknown>>({
   );
 
   return (
-    <div>
-      <div style={{ height, border: "1px solid var(--gray-4)", overflow: "hidden" }}>
+    <div style={fill ? { flex: 1, minHeight: 0, display: "flex", flexDirection: "column" } : undefined}>
+      <div
+        style={{
+          ...(fill ? { flex: 1, minHeight: 0 } : { height }),
+          border: "1px solid var(--gray-4)",
+          overflow: "hidden",
+        }}
+      >
         <SplitTable
           data={dataSource}
           dataTable={innerTable}

@@ -228,7 +228,7 @@ export default function DemoScreen({ onBack }: Props) {
               flexDirection: "column",
             }}
           >
-            <GlobalTable />
+            <GlobalTable height="fill" />
           </div>
         </div>
       </div>
