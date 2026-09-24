@@ -9,6 +9,7 @@ import { Button, Dropdown, Flex, Typography } from "antd";
 import type { MenuProps } from "antd";
 import { AppModal } from "../components";
 import { GlobalTable } from "./showcase/Table";
+import FrameFilterBar from "./showcase/FrameFilterBar";
 import { modalWidth } from "../theme";
 import logo from "../assets/logo.svg";
 import profileIcon from "../assets/Profile.svg";
@@ -203,6 +204,11 @@ export default function DemoScreen({ onBack }: Props) {
           gap: 12,
         }}
       >
+        {/* Filter bar */}
+        <div style={{ border: "1px solid var(--gray-4)", flexShrink: 0 }}>
+          <FrameFilterBar />
+        </div>
+
         {/* Table — fills all remaining height */}
         <div
           style={{

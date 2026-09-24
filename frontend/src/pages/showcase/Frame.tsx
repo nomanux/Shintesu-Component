@@ -8,6 +8,7 @@ import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import { GlobalTable } from "./Table";
+import FrameFilterBar from "./FrameFilterBar";
 import logo from "../../assets/logo.svg";
 import profileIcon from "../../assets/Profile.svg";
 
@@ -136,6 +137,7 @@ export default function FrameSection({ onOpenDemo }: { onOpenDemo?: () => void }
 
           {/* Content with drop zones */}
           <div className="frame-content">
+            <FrameFilterBar />
             <Divider />
             <div className="frame-table-wrapper">
               <GlobalTable />

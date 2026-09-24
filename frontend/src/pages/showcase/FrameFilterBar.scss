@@ -1,0 +1,70 @@
+/* FrameFilterBar — search / import bar above the Frame table */
+
+.ffb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding: 8px 20px;
+  background: var(--gray-1);
+}
+
+.ffb-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 1 767px;
+  min-width: 0;
+}
+
+.ffb-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.ffb-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-left: auto; /* stay right-aligned when the bar wraps */
+}
+
+.ffb-counts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ffb-field {
+  display: flex;
+  align-items: center;
+  height: 24px;
+
+  &--grow {
+    flex: 1;
+    min-width: 0;
+
+    > .ant-input {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}
+
+.ffb-label {
+  flex-shrink: 0;
+  padding-right: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gray-9);
+  white-space: nowrap;
+
+  &--aligned {
+    min-width: 60px;
+    padding-left: 8px;
+    text-align: right;
+  }
+}
