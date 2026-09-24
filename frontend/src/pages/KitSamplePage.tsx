@@ -2,7 +2,7 @@
  * KitSamplePage — sample business screen
  * URL: /kit/sample
  *
- * Reproduces a typical Shinetsu data-entry screen:
+ * Reproduces a typical SH-Component data-entry screen:
  *  • Full nav bar with multiple menu items (keyboard shortcuts)
  *  • 2-column filter form using SpecialInput and Input
  *  • Table toolbar with row-action buttons
@@ -17,7 +17,7 @@ import type { MenuProps } from "antd";
 import { AppTable, SpecialInput, AppModal } from "../components";
 import type { AppColumn } from "../components";
 import { modalWidth } from "../theme";
-import shinetsuLogo from "../assets/shinetsu.svg";
+import logo from "../assets/logo.svg";
 
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
@@ -221,7 +221,7 @@ export default function KitSamplePage({ onBack }: Props) {
           flexShrink: 0,
         }}
       >
-        <img src={shinetsuLogo} alt="Shinetsu" style={{ height: 18, width: "auto", marginRight: 12 }} />
+        <img src={logo} alt="SH-Component" style={{ height: 18, width: "auto", marginRight: 12 }} />
 
         <div style={{ display: "flex", height: "100%", flex: 1 }}>
           {NAV.map((item) => {

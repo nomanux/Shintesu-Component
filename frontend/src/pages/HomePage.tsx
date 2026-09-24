@@ -125,7 +125,7 @@ const FEATURES = [
   {
     icon: "◎",
     title: "Cross-project theme",
-    body: "All your projects share the same Shinetsu theme. Onboard a new project in minutes. Consistency becomes automatic, not aspirational.",
+    body: "All your projects share the same SH-Component theme. Onboard a new project in minutes. Consistency becomes automatic, not aspirational.",
   },
   {
     icon: "◉",
@@ -138,7 +138,7 @@ const FEATURES = [
 const WHY_LIST = [
   {
     title: "One codebase, every project",
-    body: "All your company's projects use the same Shinetsu theme. Brand consistency across your entire product suite, automatically.",
+    body: "All your company's projects use the same SH-Component theme. Brand consistency across your entire product suite, automatically.",
   },
   {
     title: "Docs that actually help",
@@ -177,7 +177,7 @@ export default function HomePage({ onBrowse }: Props) {
           <div className="hp-logo" onClick={() => onBrowse()}>
             <span className="hp-logo-mark">S</span>
             <span className="hp-logo-text">
-              Shin<em>etsu</em>
+              SH<em>-Component</em>
             </span>
           </div>
           <ul className="hp-nav-links">
@@ -218,7 +218,7 @@ export default function HomePage({ onBrowse }: Props) {
       {/* ── Why ──────────────────────────────────────────────────────────── */}
       <section className="hp-section">
         <div className="hp-container">
-          <p className="hp-eyebrow">Why Shinetsu</p>
+          <p className="hp-eyebrow">Why SH-Component</p>
           <h2 className="hp-h2">Built for real product teams.</h2>
           <p className="hp-section-desc">
             Not a generic kit. A focused, opinionated system where every
@@ -336,7 +336,7 @@ export default function HomePage({ onBrowse }: Props) {
           <div className="hp-quote">
             <blockquote>
               "We used to spend the first two sprints of every new project
-              setting up the same components. With Shinetsu, we{" "}
+              setting up the same components. With SH-Component, we{" "}
               <strong>start shipping features on day one.</strong> The token
               system means we've not had a brand consistency issue since."
             </blockquote>
@@ -358,7 +358,7 @@ export default function HomePage({ onBrowse }: Props) {
         <div className="hp-container hp-cta-body">
           <h2>Ready to ship faster?</h2>
           <p>
-            Add Shinetsu to your project, set your theme once and build with
+            Add SH-Component to your project, set your theme once and build with
             components that are already production-ready, accessible and
             documented.
           </p>
@@ -378,7 +378,7 @@ export default function HomePage({ onBrowse }: Props) {
       <footer className="hp-footer">
         <div className="hp-container hp-footer-inner">
           <div className="hp-footer-logo">
-            Shin<span>Etsu</span>
+            SH<span>-Component</span>
           </div>
           <ul className="hp-footer-links">
             {["Components", "Docs", "GitHub", "Changelog"].map((l) => (
@@ -404,7 +404,7 @@ function HeroSection({ onBrowse }: { onBrowse: (k: string) => void }) {
       {/* Announcement pill */}
       <div className="hp-hero-simple__badge" onClick={() => onBrowse("foundations")}>
         <span className="hp-hero-simple__badge-mark">S</span>
-        <span>Shinetsu v6.2 — built on Ant Design v6 🎉</span>
+        <span>SH-Component v6.2 — built on Ant Design v6 🎉</span>
         <span className="hp-hero-simple__badge-arrow">›</span>
       </div>
 

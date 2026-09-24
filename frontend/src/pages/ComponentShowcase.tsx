@@ -1,7 +1,7 @@
 /**
  * ComponentShowcase
  *
- * Developer reference page for the Shinetsu design system.
+ * Developer reference page for the SH-Component design system.
  * Each section lives in its own file under ./showcase/.
  */
 
@@ -318,7 +318,7 @@ export default function ComponentShowcase({
           <div className="showcase-header-logo" onClick={onHome}>
             <span className="showcase-logo-mark">S</span>
             <span className="showcase-logo-text">
-              Shin<em>etsu</em>
+              SH<em>-Component</em>
             </span>
           </div>
 

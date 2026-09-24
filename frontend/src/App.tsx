@@ -1,6 +1,6 @@
 import React from "react";
 import { App as AntApp, ConfigProvider } from "antd";
-import { getShinetsuTheme } from "./theme";
+import { getShComponentTheme } from "./theme";
 import ComponentShowcase from "./pages/ComponentShowcase";
 import HomePage from "./pages/HomePage";
 import DocsPage from "./pages/DocsPage";
@@ -66,17 +66,17 @@ function pushPath(page: Page, section: string, docsSection = "introduction") {
 
 export default function App() {
   const [dark, setDark] = React.useState<boolean>(() => {
-    try { return localStorage.getItem("shinetsu:dark") === "1"; }
+    try { return localStorage.getItem("sh-component:dark") === "1"; }
     catch { return false; }
   });
 
   React.useEffect(() => {
     try {
       if (dark) {
-        localStorage.setItem("shinetsu:dark", "1");
+        localStorage.setItem("sh-component:dark", "1");
         document.documentElement.setAttribute("data-theme", "dark");
       } else {
-        localStorage.removeItem("shinetsu:dark");
+        localStorage.removeItem("sh-component:dark");
         document.documentElement.setAttribute("data-theme", "light");
       }
     } catch { /* ignore */ }
@@ -123,7 +123,7 @@ export default function App() {
   };
 
   return (
-    <ConfigProvider theme={getShinetsuTheme(dark)}>
+    <ConfigProvider theme={getShComponentTheme(dark)}>
       <AntApp>
         {page === "home" && (
           <HomePage onBrowse={handleBrowse} onDocs={handleDocs} />

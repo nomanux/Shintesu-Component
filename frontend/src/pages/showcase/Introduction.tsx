@@ -6,12 +6,12 @@ export default function IntroductionSection() {
   return (
     <Flex vertical gap={40}>
 
-      {/* What is SH Component */}
+      {/* What is SH-Component */}
       <div>
-        <SectionLabel>What is SH Component?</SectionLabel>
+        <SectionLabel>What is SH-Component?</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.75, margin: 0 }}>
-          <strong style={{ color: "var(--gray-9)" }}>SH Component</strong> is a UI component
+          <strong style={{ color: "var(--gray-9)" }}>SH-Component</strong> is a UI component
           library for building ERP applications. It is built on{" "}
           <strong style={{ color: "var(--gray-9)" }}>Ant Design v6</strong> and customized
           with its own theme.
@@ -29,15 +29,15 @@ export default function IntroductionSection() {
         <SectionLabel>Quick Start</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <p style={{ fontSize: 14, color: "var(--gray-7)", lineHeight: 1.7, margin: "0 0 16px" }}>
-          Wrap your app with the SH Component theme and you're ready to use any component.
+          Wrap your app with the SH-Component theme and you're ready to use any component.
         </p>
         <CodeBlock>{`import { ConfigProvider } from "antd";
-import { shinetsuTheme } from "./theme";
+import { shComponentTheme } from "./theme";
 import "./index.css";
 
 export default function App() {
   return (
-    <ConfigProvider theme={shinetsuTheme}>
+    <ConfigProvider theme={shComponentTheme}>
       {/* your app here */}
     </ConfigProvider>
   );

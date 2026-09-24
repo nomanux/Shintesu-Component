@@ -90,7 +90,7 @@ const tokens = {
   controlHeightLG: 40,
 };
 
-export const shinetsuTheme = {
+export const shComponentTheme = {
   token: {
     ...tokens,
   },
@@ -218,8 +218,8 @@ export const shinetsuTheme = {
   },
 };
 
-export function getShinetsuTheme(dark = false) {
-  if (!dark) return shinetsuTheme;
+export function getShComponentTheme(dark = false) {
+  if (!dark) return shComponentTheme;
 
   // Dark-mode token overrides
   const darkTokens = {
@@ -245,9 +245,9 @@ export function getShinetsuTheme(dark = false) {
 
   // Keep component overrides but adjust some sensible dark values
   const darkComponents = {
-    ...shinetsuTheme.components,
+    ...shComponentTheme.components,
     Button: {
-      ...shinetsuTheme.components.Button,
+      ...shComponentTheme.components.Button,
       defaultBg: colors.gray[3],
       defaultHoverBg: colors.gray[4],
       defaultActiveBg: colors.gray[5],
@@ -255,19 +255,19 @@ export function getShinetsuTheme(dark = false) {
       defaultHoverColor: colors.gray[1],
     },
     Input: {
-      ...shinetsuTheme.components.Input,
+      ...shComponentTheme.components.Input,
       colorBorder: colors.gray[5],
       colorBgContainer: colors.gray[9],
       colorText: colors.gray[1],
       colorTextPlaceholder: colors.gray[6],
     },
     Select: {
-      ...shinetsuTheme.components.Select,
+      ...shComponentTheme.components.Select,
       colorText: colors.gray[1],
       colorBgContainerDisabled: colors.gray[8],
     },
     Table: {
-      ...shinetsuTheme.components.Table,
+      ...shComponentTheme.components.Table,
       colorBgContainer: colors.gray[9],
       headerBg: colors.gray[9],
       headerColor: colors.gray[1],

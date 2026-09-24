@@ -1,7 +1,7 @@
 import React from "react";
 import { Segmented, Tabs } from "antd";
 import { DownOutlined, RightOutlined } from "@ant-design/icons";
-import { colors, shinetsuTheme } from "../../theme";
+import { colors, shComponentTheme } from "../../theme";
 import indexCss from "../../index.css?raw";
 import { ANTD_DEFAULTS } from "./antdDefaults";
 import CodeBlock from "./CodeBlock";
@@ -31,8 +31,8 @@ type Row = { key: string; antd: Value; ours: Value };
 function changedTokens(component: string): Row[] {
   const ours: Record<string, Value> =
     component === "global"
-      ? shinetsuTheme.token
-      : ((shinetsuTheme.components as Record<string, Record<string, Value>>)[component] ?? {});
+      ? shComponentTheme.token
+      : ((shComponentTheme.components as Record<string, Record<string, Value>>)[component] ?? {});
   const defaults = ANTD_DEFAULTS[component] ?? {};
   return Object.keys(ours)
     .filter((k) => k in defaults && normalize(defaults[k]) !== normalize(ours[k]))
