@@ -219,11 +219,11 @@ import "./index.css";   // before any antd imports
 
 // src/App.tsx
 import { ConfigProvider } from "antd";
-import { getShinetsuTheme } from "./theme";
+import { getShComponentTheme } from "./theme";
 
 export default function App() {
   return (
-    <ConfigProvider theme={getShinetsuTheme()}>
+    <ConfigProvider theme={getShComponentTheme()}>
       {/* your app */}
     </ConfigProvider>
   );

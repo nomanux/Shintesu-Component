@@ -10,7 +10,7 @@ import type { MenuProps } from "antd";
 import { AppModal } from "../components";
 import { GlobalTable } from "./showcase/Table";
 import { modalWidth } from "../theme";
-import shinetsuLogo from "../assets/shinetsu.svg";
+import logo from "../assets/logo.svg";
 import profileIcon from "../assets/Profile.svg";
 
 const { Title } = Typography;
@@ -90,8 +90,8 @@ export default function DemoScreen({ onBack }: Props) {
       >
         {/* Logo */}
         <img
-          src={shinetsuLogo}
-          alt="Shinetsu"
+          src={logo}
+          alt="SH-Component"
           style={{ height: 20, width: "auto" }}
         />
 

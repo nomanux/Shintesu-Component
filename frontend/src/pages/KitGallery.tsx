@@ -323,7 +323,7 @@ export default function KitGallery({ onBack }: Props) {
               All Components
             </Title>
             <Text type="secondary">
-              Live previews of every component in the Shinetsu design system.
+              Live previews of every component in the SH-Component design system.
             </Text>
           </div>
 

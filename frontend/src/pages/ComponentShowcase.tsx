@@ -1,7 +1,7 @@
 /**
  * ComponentShowcase
  *
- * Developer reference page for the Shinetsu design system.
+ * Developer reference page for the SH-Component design system.
  * Each section lives in its own file under ./showcase/.
  */
 

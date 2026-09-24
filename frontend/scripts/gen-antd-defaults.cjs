@@ -21,7 +21,7 @@ const built = esbuild.buildSync({
 });
 const mod = { exports: {} };
 new Function("module", "exports", "require", built.outputFiles[0].text)(mod, mod.exports, require);
-const ours = mod.exports.shinetsuTheme;
+const ours = mod.exports.shComponentTheme;
 
 // Ant Design defaults
 const { theme } = req("antd");

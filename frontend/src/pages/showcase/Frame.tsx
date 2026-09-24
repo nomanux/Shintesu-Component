@@ -8,7 +8,7 @@ import { SectionLabel } from "./helpers";
 import DeveloperGuidance from "./DeveloperGuidance";
 import CodeBlock from "./CodeBlock";
 import { GlobalTable } from "./Table";
-import shinetsuLogo from "../../assets/shinetsu.svg";
+import logo from "../../assets/logo.svg";
 import profileIcon from "../../assets/Profile.svg";
 
 function DownArrow() {
@@ -35,7 +35,7 @@ export function FrameGuidance() {
     <DeveloperGuidance
       bullets={[
         "Standard application page shell: header, title bar, content with drop frames",
-        "Header: Shinetsu logo (left), navigation items (center), staging tag + user (right)",
+        "Header: SH-Component logo (left), navigation items (center), staging tag + user (right)",
         "Active nav item shows teal text with a teal underline",
         "Page title sits in its own bar below the header",
       ]}
@@ -96,7 +96,7 @@ export default function FrameSection({ onOpenDemo }: { onOpenDemo?: () => void }
         <div className="frame-demo">
           {/* Header */}
           <div className="frame-header">
-            <img src={shinetsuLogo} alt="Shinetsu" className="frame-logo" />
+            <img src={logo} alt="SH-Component" className="frame-logo" />
 
             <div className="frame-nav">
               {navItems.map((item) => (
@@ -153,11 +153,11 @@ export default function FrameSection({ onOpenDemo }: { onOpenDemo?: () => void }
         </div>
 
         <div style={{ marginTop: 16 }}>
-          <CodeBlock>{`import shinetsuLogo from "./assets/shinetsu.svg";
+          <CodeBlock>{`import logo from "./assets/logo.svg";
 
 <div className="frame-demo">
   <div className="frame-header">
-    <img src={shinetsuLogo} alt="Shinetsu" className="frame-logo" />
+    <img src={logo} alt="SH-Component" className="frame-logo" />
     <div className="frame-nav">
       <Dropdown
         menu={{ items: [{ key: "1", label: "Submenu 1" }, /* ...3 more */] }}
