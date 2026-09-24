@@ -254,10 +254,11 @@ body {
 
 /* ── Pagination ───────────────────────────────────────────────────────────── */
 
-/* Page-size select ("10 / page") uses the pagination's gray text, not the
-   darker Select text color. */
+/* Page-size select ("10 / page") matches the pagination text, not the
+   darker, larger Select text. */
 .ant-pagination .ant-select-content {
   color: var(--gray-7);
+  font-size: 13px;
 }
 
 /* ── Radio Button (Tab) ───────────────────────────────────────────────────── */

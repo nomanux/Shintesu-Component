@@ -118,6 +118,7 @@ export const ANTD_DEFAULTS: Record<string, Record<string, string | number>> = {
     labelColor: "rgba(0,0,0,0.88)",
   },
   Pagination: {
+    fontSize: 14,
     colorText: "rgba(0,0,0,0.88)",
     itemActiveBg: "#ffffff",
     itemActiveColor: "#1677ff",

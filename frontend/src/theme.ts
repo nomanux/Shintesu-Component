@@ -140,6 +140,7 @@ export const shComponentTheme = {
     },
 
     Pagination: {
+      fontSize: 13,
       colorText: colors.gray[7],
       itemActiveBg: colors.brand[6],
       itemActiveColor: colors.gray[1],
