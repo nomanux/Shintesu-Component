@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "antd";
+import { Segmented, Tabs } from "antd";
 import { DownOutlined, RightOutlined } from "@ant-design/icons";
 import { colors, shinetsuTheme } from "../../theme";
 import indexCss from "../../index.css?raw";
@@ -48,8 +48,15 @@ function cssSection(title: string): string {
   return lines.slice(start, end === -1 ? undefined : end).join("\n").trim();
 }
 
-function configSnippet(components: string[]): string {
-  const fmt = (v: Value) => (typeof v === "string" ? JSON.stringify(v) : String(v));
+/** "brand-6" → "colors.brand[6]" */
+const colorsRef = (name: string) => name.replace(/^(\w+)-(\d+)$/, "colors.$1[$2]");
+
+function configSnippet(components: string[], useThemeColors: boolean): string {
+  const fmt = (v: Value) => {
+    const name = TOKEN_NAME[normalize(v)];
+    if (useThemeColors && name) return colorsRef(name);
+    return typeof v === "string" ? JSON.stringify(v) : String(v);
+  };
   const body = (rows: Row[], indent: string) =>
     rows.map((r) => `${indent}${r.key}: ${fmt(r.ours)},`).join("\n");
 
@@ -65,7 +72,10 @@ function configSnippet(components: string[]): string {
     parts.push(`    components: {\n${inner}\n    },`);
   }
 
-  return `<ConfigProvider
+  const usesColors = useThemeColors && /colors\.\w+\[/.test(parts.join("\n"));
+  const header = usesColors ? `import { colors } from "./theme";\n\n` : "";
+
+  return `${header}<ConfigProvider
   theme={{
 ${parts.join("\n")}
   }}
@@ -144,6 +154,7 @@ type Props = {
 
 export default function ThemeChanges({ components, cssSections = [] }: Props) {
   const [open, setOpen] = React.useState(true);
+  const [valueMode, setValueMode] = React.useState<"theme" | "hex">("theme");
 
   const tokenCount = components.reduce((n, c) => n + changedTokens(c).length, 0);
   const css = cssSections.map(cssSection).filter(Boolean).join("\n\n");
@@ -185,7 +196,22 @@ export default function ThemeChanges({ components, cssSections = [] }: Props) {
             Only the changes on this page. If you already use our <code>theme.ts</code>, you don't
             need this.
           </p>
-          <CodeBlock language="tsx">{configSnippet(components)}</CodeBlock>
+          <Segmented
+            size="small"
+            value={valueMode}
+            onChange={(v) => setValueMode(v as "theme" | "hex")}
+            options={[
+              { label: "Theme colors", value: "theme" },
+              { label: "Hex values", value: "hex" },
+            ]}
+            style={{ marginBottom: 8 }}
+          />
+          <p style={{ margin: "0 0 12px", fontSize: 12, color: "var(--gray-6)", lineHeight: 1.6 }}>
+            {valueMode === "theme"
+              ? <>Uses <code>colors</code> from <code>theme.ts</code>. Change a color there once and every component follows.</>
+              : <>Plain values, no imports. Use this if you don't copy <code>theme.ts</code>.</>}
+          </p>
+          <CodeBlock language="tsx">{configSnippet(components, valueMode === "theme")}</CodeBlock>
         </>
       ),
     },
