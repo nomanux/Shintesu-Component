@@ -22,9 +22,9 @@ export default function DemoScreen({ onBack }: Props) {
         onSave={() => setModalOpen(true)}
         headerExtra={
           onBack && (
-            <button type="button" className="frame-back" onClick={onBack}>
+            <Button size="small" onClick={onBack}>
               ← Back to Showcase
-            </button>
+            </Button>
           )
         }
       />
