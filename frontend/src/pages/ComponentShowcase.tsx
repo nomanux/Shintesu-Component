@@ -131,7 +131,7 @@ const themeChangesMap: Partial<Record<SectionKey, React.ReactNode>> = {
   table: (
     <ThemeChanges
       components={["Table", "Pagination"]}
-      cssSections={["Table", "Restore original sort arrows"]}
+      cssSections={["Table", "Pagination", "Restore original sort arrows"]}
     />
   ),
   scroll: <ThemeChanges components={[]} cssSections={["Global scrollbar"]} />,
