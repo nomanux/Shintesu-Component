@@ -16,7 +16,7 @@ type Page = "home" | "showcase" | "docs" | "demo" | "kit";
 const SHOWCASE_SECTIONS = new Set([
   "foundations", "frame", "buttons", "inputs", "select", "datepicker",
   "form", "radio-tab", "table", "modal", "scroll",
-  "introduction", "installation", "guidelines",
+  "introduction", "installation",
 ]);
 
 /** Known docs section keys */
