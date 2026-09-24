@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Button, Dropdown, Flex, Typography } from "antd";
+import { Button, Divider, Dropdown, Flex, Typography } from "antd";
 import type { MenuProps } from "antd";
 import { AppModal } from "../components";
 import { GlobalTable } from "./showcase/Table";
@@ -204,24 +204,32 @@ export default function DemoScreen({ onBack }: Props) {
           gap: 12,
         }}
       >
-        {/* Filter bar */}
-        <div style={{ border: "1px solid var(--gray-4)", flexShrink: 0 }}>
-          <FrameFilterBar />
-        </div>
-
-        {/* Table — fills all remaining height */}
+        {/* Filter bar + table — one panel, split by a divider */}
         <div
           style={{
             flex: 1,
             minHeight: 0,
             background: "var(--gray-1)",
             border: "1px solid var(--gray-4)",
-            padding: 8,
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <GlobalTable />
+          <FrameFilterBar />
+          <Divider />
+
+          {/* Table — fills all remaining height */}
+          <div
+            style={{
+              flex: 1,
+              minHeight: 0,
+              padding: "8px 20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <GlobalTable />
+          </div>
         </div>
       </div>
 
