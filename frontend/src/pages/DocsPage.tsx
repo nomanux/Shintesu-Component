@@ -65,7 +65,7 @@ export default function DocsPage({
         <div className="docs-topnav-logo" onClick={onHome}>
           <img src={logo} alt="SH-Component" />
           <span>
-            Shin<em>Etsu</em>
+            SH<em>-Component</em>
           </span>
         </div>
 

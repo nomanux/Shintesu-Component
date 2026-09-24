@@ -318,7 +318,7 @@ export default function ComponentShowcase({
           <div className="showcase-header-logo" onClick={onHome}>
             <span className="showcase-logo-mark">S</span>
             <span className="showcase-logo-text">
-              Shin<em>etsu</em>
+              SH<em>-Component</em>
             </span>
           </div>
 

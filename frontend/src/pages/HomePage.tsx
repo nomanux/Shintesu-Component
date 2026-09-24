@@ -177,7 +177,7 @@ export default function HomePage({ onBrowse }: Props) {
           <div className="hp-logo" onClick={() => onBrowse()}>
             <span className="hp-logo-mark">S</span>
             <span className="hp-logo-text">
-              Shin<em>etsu</em>
+              SH<em>-Component</em>
             </span>
           </div>
           <ul className="hp-nav-links">
@@ -378,7 +378,7 @@ export default function HomePage({ onBrowse }: Props) {
       <footer className="hp-footer">
         <div className="hp-container hp-footer-inner">
           <div className="hp-footer-logo">
-            Shin<span>Etsu</span>
+            SH<span>-Component</span>
           </div>
           <ul className="hp-footer-links">
             {["Components", "Docs", "GitHub", "Changelog"].map((l) => (
