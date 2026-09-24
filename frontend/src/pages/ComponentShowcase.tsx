@@ -11,6 +11,7 @@ import {
   BookOutlined,
   DownloadOutlined,
   BgColorsOutlined,
+  CheckSquareOutlined,
   LayoutOutlined,
   FilterOutlined,
   EditOutlined,
@@ -44,6 +45,7 @@ import SelectSection, { SelectGuidance } from "./showcase/Select";
 import DatePickerSection, { DatePickerGuidance } from "./showcase/DatePicker";
 import IntroductionSection from "./showcase/Introduction";
 import InstallationSection from "./showcase/Installation";
+import GuidelinesSection from "./showcase/Guidelines";
 
 import { TokenCustomizer } from "./showcase/TokenCustomizer";
 import { type InputTokens, INPUT_TOKEN_DEFAULTS, INPUT_TOKEN_GROUPS } from "./showcase/inputTokens";
@@ -62,6 +64,7 @@ const ICONS: Record<string, React.ReactNode> = {
   introduction: <BookOutlined />,
   installation: <DownloadOutlined />,
   foundations: <BgColorsOutlined />,
+  guidelines: <CheckSquareOutlined />,
   frame: <LayoutOutlined />,
   buttons: <FilterOutlined />,
   inputs: <EditOutlined />,
@@ -80,6 +83,7 @@ const LABELS_JA: Record<string, string> = {
   Introduction: "はじめに",
   Installation: "インストール",
   Foundations: "基盤",
+  Guidelines: "ガイドライン",
   Frame: "フレーム",
   Buttons: "ボタン",
   Inputs: "入力",
@@ -102,6 +106,7 @@ const sections = [
   { key: "introduction", label: "Introduction", group: "GETTING STARTED" },
   { key: "installation", label: "Installation", group: "GETTING STARTED" },
   { key: "foundations", label: "Foundations", group: "DESIGN SYSTEM" },
+  { key: "guidelines", label: "Guidelines", group: "DESIGN SYSTEM" },
   { key: "frame", label: "Frame", group: "TEMPLATES" },
   { key: "buttons", label: "Buttons", group: "COMPONENTS" },
   { key: "inputs", label: "Inputs", group: "COMPONENTS" },
@@ -123,6 +128,7 @@ const contentMap: Record<SectionKey, { component: React.ReactNode; guidance: Rea
   introduction: { component: <IntroductionSection />, guidance: null },
   installation: { component: <InstallationSection />, guidance: null },
   foundations: { component: <FoundationsSection />, guidance: <FoundationsGuidance /> },
+  guidelines: { component: <GuidelinesSection />, guidance: null },
   frame: { component: <FrameSection />, guidance: <FrameGuidance /> },
   buttons: { component: <ButtonsSection />, guidance: <ButtonsGuidance /> },
   inputs: { component: <InputsSection />, guidance: <InputsGuidance /> },

@@ -192,35 +192,28 @@ export default function InstallationSection() {
         <SectionLabel>How It Works</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <Note>
-          <strong>This is not an npm package.</strong> There is nothing to install by name.
-          You copy the source files from the <GhLink href={GITHUB_ROOT}>GitHub repo</GhLink> into
-          your own project and edit them like any other code.
+          <strong>This is not an npm package.</strong> You copy files from the{" "}
+          <GhLink href={GITHUB_ROOT}>GitHub repo</GhLink> into your project. Most projects only
+          need the theme: two files that make plain Ant Design components use our colors, fonts
+          and sizes. You keep writing your own code with Ant Design as usual.
         </Note>
-        <p style={bodyText}>Your project needs:</p>
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: "var(--gray-7)", lineHeight: 1.9 }}>
-          <li>React with TypeScript</li>
-          <li><Mono>antd</Mono> v6</li>
-          <li><Mono>sass</Mono>, only if you use SplitTable or AppTable</li>
-        </ul>
+        <p style={bodyText}>Your project needs React and <Mono>antd</Mono> v6.</p>
       </div>
 
-      {/* ── Steps ── */}
+      {/* ── Add the theme ── */}
       <div>
-        <SectionLabel>Add the Components to Your Project</SectionLabel>
+        <SectionLabel>Add the Theme</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
 
         <div>
-          <Step num={1} title="Copy the theme files">
+          <Step num={1} title="Copy the two theme files">
             <p style={bodyText}>
               Copy <GhLink href={GITHUB_THEME}>theme.ts</GhLink> to <Mono>src/theme.ts</Mono> and{" "}
-              <GhLink href={GITHUB_CSS}>index.css</GhLink> to <Mono>src/index.css</Mono>. Every
-              component needs both: <Mono>theme.ts</Mono> sets the Ant Design tokens and{" "}
-              <Mono>index.css</Mono> defines the CSS variables (<Mono>--brand-6</Mono>,{" "}
-              <Mono>--gray-4</Mono>, …).
+              <GhLink href={GITHUB_CSS}>index.css</GhLink> to <Mono>src/index.css</Mono>.
             </p>
           </Step>
 
-          <Step num={2} title="Load the theme in your app">
+          <Step num={2} title="Load them in your app">
             <CodeBlock language="tsx">{`// src/main.tsx
 import "./index.css";   // before any antd imports
 
@@ -237,28 +230,58 @@ export default function App() {
 }`}</CodeBlock>
           </Step>
 
-          <Step num={3} title="Copy the component files you need">
+          <Step num={3} title="Load the Inter font">
             <p style={bodyText}>
-              Copy files from <GhLink href={GITHUB_COMPONENTS}>frontend/src/components/</GhLink> into
-              your <Mono>src/components/</Mono>. Some components use other ones, so copy every file
-              listed on the row.
+              The theme uses Inter but doesn't include it. Add this to the <Mono>{"<head>"}</Mono> of
+              your <Mono>index.html</Mono>:
             </p>
-            <ComponentFiles />
-            <Note type="warning">
-              ⚠️ Keep the same folder layout. The components import the theme with{" "}
-              <Mono>../theme</Mono>, so they must sit in <Mono>src/components/</Mono> next to{" "}
-              <Mono>src/theme.ts</Mono>.
-            </Note>
-          </Step>
-
-          <Step num={4} title="Use them">
-            <CodeBlock language="tsx">{`import AppModal from "./components/AppModal";`}</CodeBlock>
-            <p style={{ ...bodyText, marginTop: 10 }}>
-              Each section of this showcase has a <strong>Code</strong> tab with a ready-to-copy
-              example for every variant.
-            </p>
+            <CodeBlock language="html">{`<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>`}</CodeBlock>
           </Step>
         </div>
+
+        <p style={{ ...bodyText, marginTop: 4 }}>After this, your project has:</p>
+        <ul style={{ margin: "0 0 16px", paddingLeft: 20, fontSize: 13, color: "var(--gray-7)", lineHeight: 1.9 }}>
+          <li>Our colors, font, sizes and square corners on every Ant Design component</li>
+          <li>
+            CSS variables such as <Mono>var(--brand-6)</Mono> and <Mono>var(--gray-4)</Mono> for your
+            own styles, and the <Mono>colors</Mono> and <Mono>modalWidth</Mono> exports for
+            TypeScript. The Foundations page lists every value and what it is for.
+          </li>
+        </ul>
+        <Note type="warning">
+          ⚠️ <Mono>index.css</Mono> also sets global styles: the <Mono>body</Mono> font and
+          background, <Mono>box-sizing: border-box</Mono>, a thin scrollbar, and overrides for
+          Ant Design buttons, tables, radios and dividers. Check these against your project's
+          existing styles.
+        </Note>
+      </div>
+
+      {/* ── Components (optional) ── */}
+      <div>
+        <SectionLabel>Components (Optional)</SectionLabel>
+        <Divider style={{ margin: "8px 0 16px" }} />
+        <p style={bodyText}>
+          Only needed if you want one of these exact components. Copy the files from{" "}
+          <GhLink href={GITHUB_COMPONENTS}>frontend/src/components/</GhLink> into your{" "}
+          <Mono>src/components/</Mono>. Some components use other ones, so copy every file listed on
+          the row.
+        </p>
+        <ComponentFiles />
+        <div style={{ marginTop: 12 }}>
+          <Note type="warning">
+            ⚠️ Keep them in <Mono>src/components/</Mono> next to <Mono>src/theme.ts</Mono>, because
+            they import <Mono>../theme</Mono>. SplitTable and AppTable also need <Mono>sass</Mono>.
+          </Note>
+        </div>
+        <p style={bodyText}>
+          Each component section of this showcase has a <strong>Code</strong> tab with a
+          ready-to-copy example for every variant.
+        </p>
       </div>
 
       {/* ── Try it live ── */}
@@ -343,9 +366,9 @@ npm run dev`}</CodeBlock>
         <SectionLabel>Source Structure</SectionLabel>
         <Divider style={{ margin: "8px 0 16px" }} />
         <CodeBlock language="bash">{`frontend/src/
-├── theme.ts                 ← always copy
-├── index.css                ← always copy
-└── components/
+├── theme.ts                 ← the theme
+├── index.css                ← the theme
+└── components/              ← optional
     ├── AppModal.tsx
     ├── AppTable.tsx
     ├── SpecialInput.tsx
