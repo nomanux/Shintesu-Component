@@ -438,10 +438,32 @@ npm install`}</CodeBlock>
       </div>
 
       {/* ── Try it live ── */}
-      <div>
-        <SectionLabel>Try It Live</SectionLabel>
-        <Divider style={{ margin: "8px 0 16px" }} />
-        <p style={{ margin: "0 0 14px", fontSize: 13, color: "var(--gray-6)", lineHeight: 1.65 }}>
+      <div
+        style={{
+          padding: "20px 24px",
+          background: "var(--brand-1)",
+          border: "1px solid var(--brand-3)",
+          borderLeft: "4px solid var(--brand-6)",
+          borderRadius: 8,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+          <span
+            style={{
+              padding: "2px 8px",
+              background: "var(--brand-6)",
+              color: "#fff",
+              borderRadius: 4,
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+            }}
+          >
+            LIVE DEMO
+          </span>
+          <span style={{ fontSize: 16, fontWeight: 600, color: "var(--gray-9)" }}>Try It Live</span>
+        </div>
+        <p style={{ margin: "0 0 16px", fontSize: 13, color: "var(--gray-7)", lineHeight: 1.65 }}>
           Launch a full-page demo directly in this window — no setup required.
         </p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -460,9 +482,9 @@ npm install`}</CodeBlock>
                 alignItems: "center",
                 gap: 8,
                 padding: "9px 20px",
-                background: primary ? "var(--brand-6)" : "var(--gray-2)",
+                background: primary ? "var(--brand-6)" : "var(--gray-1)",
                 color: primary ? "#fff" : "var(--gray-8)",
-                border: primary ? "none" : "1px solid var(--gray-4)",
+                border: primary ? "none" : "1px solid var(--brand-3)",
                 borderRadius: 6,
                 fontSize: 14,
                 fontWeight: 600,
