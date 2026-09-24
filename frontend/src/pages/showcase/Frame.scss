@@ -127,7 +127,7 @@
 }
 
 .frame-content {
-  padding: 12px;
+  padding: 8px 12px;
   background: var(--st-gray);
   display: flex;
   flex-direction: column;
@@ -148,6 +148,44 @@
 .frame-table-wrapper {
   background: var(--gray-1);
   padding: 8px 20px;
+}
+
+/* Full-screen variant (Demo Screen): fills the viewport, table takes the free height */
+.frame-demo--full {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-width: 0;
+  border: none;
+
+  .frame-header,
+  .frame-page-title,
+  .frame-footer {
+    flex-shrink: 0;
+  }
+
+  .frame-content {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .frame-table-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.frame-back {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid var(--gray-4);
+  border-radius: 4px;
+  background: var(--gray-2);
+  color: var(--gray-7);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 /* ── Typography spec grid ───────────────────────────────────────────────── */
