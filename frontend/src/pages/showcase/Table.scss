@@ -3,8 +3,12 @@
 .global-table-outer {
   height: 400px;
 
-  @media (max-width: 768px) { height: 300px; }
-  @media (max-width: 480px) { height: 220px; }
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+  @media (max-width: 480px) {
+    height: 220px;
+  }
 }
 
 /* ── Ant Design Table overrides ─────────────────────────────────────────── */
@@ -40,11 +44,13 @@
 
 /* Selected row */
 .ant-table-tbody > tr.row-selected > td {
-  background-color: var(--brand-1) !important;
+  background-color: var(--brand-6) !important;
+  color: #fff;
 }
 
 .ant-table-tbody > tr.row-selected:hover > td {
-  background-color: var(--brand-1) !important;
+  background-color: var(--brand-6) !important;
+  color: #fff;
 }
 
 /* Pagination: keep top margin, drop bottom margin */
@@ -75,7 +81,9 @@
 .ant-select-selection-item,
 .ant-select-open .ant-select-selection-item,
 .ant-select-open .ant-select-selector .ant-select-selection-item,
-.ant-select-single.ant-select-open .ant-select-selector .ant-select-selection-item,
+.ant-select-single.ant-select-open
+  .ant-select-selector
+  .ant-select-selection-item,
 .ant-select-disabled .ant-select-selector .ant-select-selection-item,
 .ant-select-item-option-content,
 .ant-select-item-option-active .ant-select-item-option-content {

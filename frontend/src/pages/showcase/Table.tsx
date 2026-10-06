@@ -18,6 +18,7 @@ import ExampleBlock from "./ExampleBlock";
 import SplitTable from "../../components/SplitTable";
 import SpecialInput from "../../components/SpecialInput";
 import AppTable, { type AppColumn } from "../../components/AppTable";
+import { useClickOutside } from "../../components/useClickOutside";
 
 const tableData = Array.from({ length: 50 }, (_, i) => ({ key: i + 1 }));
 
@@ -575,6 +576,54 @@ const GLOBAL_TABLE_COLS: AppColumn<SplitRow>[] = SPLIT_COLS_BASE.map((c) => ({
   defaultWidth: c.width,
 }));
 
+// Form-style table: every data column is an editable Input or Select.
+const SELECT_CELL = () => (
+  <Select
+    size="small"
+    suffixIcon={<DownIcon />}
+    style={{ width: "100%" }}
+    options={SELECT_OPTIONS}
+  />
+);
+const INPUT_CELL = () => <Input size="small" />;
+
+const FORM_TABLE_COLS: AppColumn<SplitRow>[] = [
+  {
+    key: "no",
+    title: "No.",
+    defaultWidth: 60,
+    onCell: () => ({ className: "cell-text" }),
+    render: (_: unknown, __: SplitRow, i: number) => i + 1,
+  },
+  ...Array.from({ length: 8 }, (_, i): AppColumn<SplitRow> => ({
+    key: i % 2 === 0 ? `select${i}` : `input${i}`,
+    title: "Table header",
+    defaultWidth: 150,
+    render: i % 2 === 0 ? SELECT_CELL : INPUT_CELL,
+  })),
+];
+
+const FORM_TABLE_CODE = `import { Input, Select } from "antd";
+import AppTable, { type AppColumn } from "@/components/AppTable";
+
+// Editable cells: render an Input or Select (size="small", width 100%).
+const COLUMNS: AppColumn<Row>[] = [
+  { key: "no", title: "No.", defaultWidth: 60,
+    onCell: () => ({ className: "cell-text" }),
+    render: (_, __, i) => i + 1 },
+  { key: "category", title: "Table header", defaultWidth: 150,
+    render: () => (
+      <Select size="small" style={{ width: "100%" }} options={OPTIONS} />
+    ) },
+  { key: "name", title: "Table header", defaultWidth: 150,
+    render: () => <Input size="small" /> },
+  // ...repeat for each column
+];
+
+export function FormTable({ data }: { data: Row[] }) {
+  return <AppTable columns={COLUMNS} dataSource={data} height={400} />;
+}`;
+
 export function GlobalTable({ height = 400 }: { height?: number | "fill" }) {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
@@ -624,9 +673,19 @@ function SplitTableDemo({
 }) {
   const [splitWidth, setSplitWidth] = React.useState(0);
   const shared = useSplitTableState();
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const { setSelectedKeys } = shared;
+  const clearSelection = React.useCallback(
+    () => setSelectedKeys([]),
+    [setSelectedKeys],
+  );
+  useClickOutside(containerRef, clearSelection);
   return (
     <SplitTableContext.Provider value={shared}>
-      <div style={{ height, border: "1px solid var(--gray-4)" }}>
+      <div
+        ref={containerRef}
+        style={{ height, border: "1px solid var(--gray-4)" }}
+      >
         <SplitTable
           data={data}
           dataTable={
@@ -777,6 +836,19 @@ export function EmptyTable() {
     </div>
   );
 }`}
+      />
+
+      {/* Input & Select — every data column is editable */}
+      <Variant
+        label="Input & Select"
+        preview={
+          <AppTable
+            columns={FORM_TABLE_COLS}
+            dataSource={splitTableData.slice(0, 10)}
+            height={400}
+          />
+        }
+        code={FORM_TABLE_CODE}
       />
     </Flex>
   );

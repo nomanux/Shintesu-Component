@@ -234,7 +234,7 @@ const SplitTable = ({
           top: isSplit ? 0 : "auto",
           bottom: 0,
           left: splitWidth,
-          width: "6px",
+          width: "10px",
           height: isSplit ? "100%" : "16px",
           cursor: "col-resize",
           background: "var(--gray-5)",

@@ -17,6 +17,7 @@ import { Pagination, Table } from "antd";
 import type { ColumnType, TableProps } from "antd/es/table";
 import SplitTable from "./SplitTable";
 import { TableHeaderCell } from "./TableHeaderCell";
+import { useClickOutside } from "./useClickOutside";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 
@@ -64,6 +65,9 @@ function AppTableInner<T extends Record<string, unknown>>({
   const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
   const [splitWidth, setSplitWidth] = React.useState(0);
   const dragKey = React.useRef<string | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const clearSelection = React.useCallback(() => setSelectedKeys([]), []);
+  useClickOutside(containerRef, clearSelection);
 
   /* ── Resize (RAF-throttled) ── */
   const startResize = (key: string, startX: number) => {
@@ -154,6 +158,7 @@ function AppTableInner<T extends Record<string, unknown>>({
   return (
     <div style={fill ? { flex: 1, minHeight: 0, display: "flex", flexDirection: "column" } : undefined}>
       <div
+        ref={containerRef}
         style={{
           ...(fill ? { flex: 1, minHeight: 0 } : { height }),
           border: "1px solid var(--gray-4)",

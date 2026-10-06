@@ -241,11 +241,13 @@ body {
 }
 
 .ant-table-tbody > tr.row-selected > td {
-  background-color: var(--brand-1) !important;
+  background-color: #ff4d4f !important;
+  color: #fff;
 }
 
 .ant-table-tbody > tr.row-selected:hover > td {
-  background-color: var(--brand-1) !important;
+  background-color: #ff4d4f !important;
+  color: #fff;
 }
 
 .ant-table-wrapper .ant-table-pagination.ant-pagination {
