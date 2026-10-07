@@ -1,24 +1,19 @@
 /**
- * KitSamplePage — sample business screen
+ * KitSamplePage — the Frame template with a sample search form on top
  * URL: /kit/sample
  *
- * Reproduces a typical SH-Component data-entry screen:
- *  • Full nav bar with multiple menu items (keyboard shortcuts)
- *  • 2-column filter form using SpecialInput and Input
- *  • Table toolbar with row-action buttons
- *  • SplitTable with SpecialInput (#Value-C) and Input (#Value-L) cells
- *  • Ant Design Pagination
- *  • Footer with 更新 / 閉じる buttons
+ * Uses FrameTemplate (the same shell as the Demo Screen) with the LOGON
+ * search form in place of the default search bar and the LOGON table in the
+ * table area.
  */
 
 import React from "react";
-import { Button, Dropdown, Flex, Input } from "antd";
-import type { MenuProps } from "antd";
+import { Button, Flex, Input, Radio, theme } from "antd";
 import { AppTable, SpecialInput, AppModal } from "../components";
 import type { AppColumn } from "../components";
-import { modalWidth } from "../theme";
-import logo from "../assets/logo.svg";
-
+import FrameTemplate from "./showcase/FrameTemplate";
+import { colors, modalWidth } from "../theme";
+import "./showcase/RadioTab.scss";
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -54,42 +49,6 @@ const allData: Row[] = Array.from({ length: TOTAL_ROWS }, (_, i) => ({
   system3: "",
   level: "",
 }));
-
-/* ── Down arrow icon ─────────────────────────────────────────────────────── */
-
-function ChevronDown({ size = 10 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M0.486 3.2C0.725 2.945 1.125 2.932 1.379 3.171L6 7.503L10.62 3.171C10.875 2.932 11.275 2.945 11.513 3.2C11.752 3.454 11.739 3.854 11.485 4.092L6.432 8.829C6.189 9.057 5.811 9.057 5.568 8.829L0.515 4.092C0.261 3.854 0.248 3.454 0.486 3.2Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-/* ── Nav items ───────────────────────────────────────────────────────────── */
-
-const subMenu = (prefix: string): MenuProps["items"] =>
-  Array.from({ length: 4 }, (_, i) => ({
-    key: `${prefix}-${i + 1}`,
-    label: `サブメニュー ${i + 1}`,
-  }));
-
-const NAV: { label: string; hasMenu?: boolean; active?: boolean }[] = [
-  { label: "ファイル(F)" },
-  { label: "ツール(T)" },
-  { label: "業務(G)", hasMenu: true },
-  { label: "マスタメンテナンス(M)", hasMenu: true },
-  { label: "セキュリティ(S)", hasMenu: true, active: true },
-  { label: "レイアウト(Z)" },
-  { label: "ロック(L)" },
-  { label: "ユーザメンテ(O)", hasMenu: true },
-  { label: "ウィンドウ(W)", hasMenu: true },
-  { label: "ヘルプ(H)" },
-];
 
 /* ── Table columns ───────────────────────────────────────────────────────── */
 
@@ -180,267 +139,149 @@ const APP_COLUMNS: AppColumn<Row>[] = COLUMNS.map((c) => ({
   defaultWidth: c.width,
 }));
 
-/* ── KitSamplePage ───────────────────────────────────────────────────────── */
+/* ── Search form ─────────────────────────────────────────────────────────── */
+
+const inlineLabel: React.CSSProperties = {
+  fontSize: 13,
+  color: "var(--gray-9)",
+  whiteSpace: "nowrap",
+  display: "flex",
+  alignItems: "center",
+};
+
+function SampleSearchForm() {
+  return (
+    <div style={{ width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: "6px 24px", alignItems: "center" }}>
+      {/* Left column */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>LOGONID</span>
+          <SpecialInput size="small" style={{ width: 120 }} />
+          <Input size="small" style={{ flex: 1 }} />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>業務レベル</span>
+          <SpecialInput size="small" style={{ width: 120 }} />
+          <Input size="small" style={{ flex: 1 }} />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>システム種別</span>
+          <Input size="small" defaultValue="100" style={{ flex: 1 }} />
+        </div>
+      </div>
+
+      {/* Right column */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>所属部門</span>
+          <SpecialInput size="small" style={{ width: 100 }} />
+          <Input size="small" style={{ flex: 1 }} />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>画面ID</span>
+          <SpecialInput size="small" style={{ width: 80 }} />
+          <Input size="small" style={{ flex: 1 }} />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>事業所</span>
+          <Input size="small" defaultValue="11" style={{ width: 60 }} />
+        </div>
+      </div>
+
+      {/* Buttons */}
+      <Flex gap={6} align="flex-end" style={{ height: "100%", paddingBottom: 2 }}>
+        <Button type="primary" size="small">検索(S)</Button>
+        <Button size="small">クリア(L)</Button>
+      </Flex>
+    </div>
+  );
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+
+const TABS = ["起動画面一覧", "業務レベル一覧", "システム種別一覧", "事業所一覧"];
+
+function SampleTable() {
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(PAGE_SIZE_DEFAULT);
+  const [activeTab, setActiveTab] = React.useState(TABS[0]);
+  const { token } = theme.useToken();
+
+  return (
+    <>
+      {/* Toolbar — Radio Button (Tab) tabs on the left, row actions on the right */}
+      <Flex align="flex-end" justify="space-between" style={{ flexShrink: 0 }}>
+        <div style={{ lineHeight: 0, position: "relative", zIndex: 1, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <Radio.Group
+            value={activeTab}
+            onChange={(e) => setActiveTab(e.target.value)}
+            buttonStyle="outline"
+            size="small"
+            style={{ display: "flex", gap: token.marginXXS }}
+          >
+            {TABS.map((tab) => (
+              <Radio.Button key={tab} value={tab}>
+                {tab}
+              </Radio.Button>
+            ))}
+          </Radio.Group>
+        </div>
+        <Flex gap={4} style={{ paddingBottom: 4 }}>
+          <Button type="primary" size="small">行挿入(I)</Button>
+          <Button type="primary" size="small">行複写(Y)</Button>
+          <Button size="small">行削除(D)</Button>
+        </Flex>
+      </Flex>
+
+      {/* Panel overlaps the tab bar by 1px to merge borders; AppTable has drag/resize/split built in */}
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column",
+          border: `1px solid ${colors.brand[4]}`,
+          marginTop: -1,
+          position: "relative",
+          zIndex: 2,
+          background: colors.gray[1],
+          padding: token.paddingSM,
+        }}
+      >
+        <AppTable
+          columns={APP_COLUMNS}
+          dataSource={allData}
+          height="fill"
+          total={TOTAL_ROWS}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={(p, ps) => { setPage(p); setPageSize(ps as typeof pageSize); }}
+        />
+      </div>
+    </>
+  );
+}
 
 type Props = { onBack?: () => void };
 
 export default function KitSamplePage({ onBack }: Props) {
-  const [page, setPage] = React.useState(6);
-  const [pageSize, setPageSize] = React.useState(PAGE_SIZE_DEFAULT);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  const inlineLabel: React.CSSProperties = {
-    fontSize: 13,
-    color: "var(--gray-9)",
-    whiteSpace: "nowrap",
-    display: "flex",
-    alignItems: "center",
-  };
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        overflow: "hidden",
-        background: "var(--gray-1)",
-        fontSize: 13,
-      }}
-    >
-      {/* ── Header ───────────────────────────────────────────────────── */}
-      <header
-        style={{
-          height: 40,
-          background: "var(--gray-1)",
-          borderBottom: "1px solid var(--gray-4)",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 12px",
-          gap: 0,
-          flexShrink: 0,
-        }}
-      >
-        <img src={logo} alt="SH-Component" style={{ height: 18, width: "auto", marginRight: 12 }} />
-
-        <div style={{ display: "flex", height: "100%", flex: 1 }}>
-          {NAV.map((item) => {
-            const content = (
-              <div
-                style={{
-                  padding: "0 10px",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  cursor: "pointer",
-                  fontSize: 12,
-                  fontWeight: item.active ? 600 : 400,
-                  color: item.active ? "var(--brand-6)" : "var(--gray-9)",
-                  borderBottom: item.active
-                    ? "2px solid var(--brand-6)"
-                    : "2px solid transparent",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {item.label}
-                {item.hasMenu && <ChevronDown size={9} />}
-              </div>
-            );
-
-            return item.hasMenu ? (
-              <Dropdown
-                key={item.label}
-                menu={{ items: subMenu(item.label) }}
-                trigger={["click"]}
-                placement="bottomLeft"
-              >
-                {content}
-              </Dropdown>
-            ) : (
-              <div key={item.label}>{content}</div>
-            );
-          })}
-        </div>
-
-        <Flex gap={10} align="center">
-          <span
-            style={{
-              background: "var(--brand-1)",
-              color: "var(--brand-7)",
-              border: "1px solid var(--brand-2)",
-              borderRadius: 10,
-              padding: "2px 8px",
-              fontSize: 11,
-              whiteSpace: "nowrap",
-            }}
-          >
-            Staging v0.1
-          </span>
-          <Flex gap={4} align="center" style={{ cursor: "pointer", fontSize: 12, color: "var(--gray-9)" }}>
-            <span>hin01</span>
-            <ChevronDown size={9} />
-          </Flex>
-          {onBack && (
-            <button
-              onClick={onBack}
-              style={{
-                fontSize: 11,
-                padding: "2px 8px",
-                border: "1px solid var(--gray-4)",
-                borderRadius: 3,
-                background: "var(--gray-2)",
-                color: "var(--gray-7)",
-                cursor: "pointer",
-              }}
-            >
-              ← Back
-            </button>
-          )}
-        </Flex>
-      </header>
-
-      {/* ── Page title ───────────────────────────────────────────────── */}
-      <div
-        style={{
-          padding: "5px 16px",
-          borderBottom: "1px solid var(--gray-4)",
-          fontSize: 13,
-          fontWeight: 600,
-          color: "var(--gray-9)",
-          flexShrink: 0,
-        }}
-      >
-        LOGON起動画面管理マスタ 直江津事業所 BJIT
-      </div>
-
-      {/* ── Filter form ──────────────────────────────────────────────── */}
-      <div
-        style={{
-          padding: "8px 16px",
-          borderBottom: "1px solid var(--gray-4)",
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: "6px 24px", alignItems: "center" }}>
-          {/* Left column */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>LOGONID</span>
-              <SpecialInput size="small" style={{ width: 120 }} />
-              <Input size="small" style={{ flex: 1 }} />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>業務レベル</span>
-              <SpecialInput size="small" style={{ width: 120 }} />
-              <Input size="small" style={{ flex: 1 }} />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 80, justifyContent: "flex-end" }}>システム種別</span>
-              <Input size="small" defaultValue="100" style={{ flex: 1 }} />
-            </div>
-          </div>
-
-          {/* Right column */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>所属部門</span>
-              <SpecialInput size="small" style={{ width: 100 }} />
-              <Input size="small" style={{ flex: 1 }} />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>画面ID</span>
-              <SpecialInput size="small" style={{ width: 80 }} />
-              <Input size="small" style={{ flex: 1 }} />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ ...inlineLabel, width: 64, justifyContent: "flex-end" }}>事業所</span>
-              <Input size="small" defaultValue="11" style={{ width: 60 }} />
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <Flex gap={6} align="flex-end" style={{ height: "100%", paddingBottom: 2 }}>
-            <Button type="primary" size="small">検索(S)</Button>
-            <Button size="small">クリア(L)</Button>
-          </Flex>
-        </div>
-      </div>
-
-      {/* ── Table area ───────────────────────────────────────────────── */}
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          padding: "0 8px 8px",
-        }}
-      >
-        {/* Toolbar — tab label overlaps table top border by 1px */}
-        <Flex
-          align="flex-end"
-          justify="space-between"
-          style={{ flexShrink: 0, paddingTop: 4 }}
-        >
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              color: "var(--gray-9)",
-              background: "var(--gray-1)",
-              border: "1px solid var(--gray-4)",
-              borderBottom: "1px solid var(--gray-1)", /* hides bottom, merges with table */
-              padding: "4px 14px",
-              position: "relative",
-              zIndex: 2,
-              marginBottom: -1, /* overlaps table border */
-            }}
-          >
-            起動画面一覧
-          </div>
-          <Flex gap={4} style={{ paddingBottom: 4 }}>
-            <Button type="primary" size="small">行挿入(I)</Button>
-            <Button type="primary" size="small">行複写(Y)</Button>
-            <Button size="small">行削除(D)</Button>
-          </Flex>
-        </Flex>
-
-        {/* AppTable — drag/resize/split built in */}
-        <div style={{ flex: 1, minHeight: 0, position: "relative", zIndex: 1 }}>
-          <AppTable
-            columns={APP_COLUMNS}
-            dataSource={allData}
-            height={400}
-            total={TOTAL_ROWS}
-            page={page}
-            pageSize={pageSize}
-            onPageChange={(p, ps) => { setPage(p); setPageSize(ps as typeof pageSize); }}
-          />
-        </div>
-      </div>
-
-      {/* ── Footer ───────────────────────────────────────────────────── */}
-      <div
-        style={{
-          padding: "8px 16px",
-          background: "var(--gray-1)",
-          borderTop: "1px solid var(--gray-4)",
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: 8,
-          flexShrink: 0,
-        }}
-      >
-        <Button
-          type="primary"
-          size="small"
-          onClick={() => setModalOpen(true)}
-        >
-          更新(U)
-        </Button>
-        <Button size="small" onClick={onBack}>閉じる(X)</Button>
-      </div>
+    <>
+      <FrameTemplate
+        fullScreen
+        filterBar={<SampleSearchForm />}
+        table={<SampleTable />}
+        onSave={() => setModalOpen(true)}
+        headerExtra={
+          onBack && (
+            <Button size="small" onClick={onBack}>
+              ← Back to Showcase
+            </Button>
+          )
+        }
+      />
 
       {/* ── Confirm modal ─────────────────────────────────────────────── */}
       <AppModal
@@ -461,6 +302,6 @@ export default function KitSamplePage({ onBack }: Props) {
           変更を保存してもよろしいですか？
         </p>
       </AppModal>
-    </div>
+    </>
   );
 }

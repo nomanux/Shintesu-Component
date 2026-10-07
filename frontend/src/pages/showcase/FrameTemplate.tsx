@@ -68,10 +68,14 @@ type Props = {
   fullScreen?: boolean;
   /** Extra header content on the right, e.g. a "Back to Showcase" button. */
   headerExtra?: React.ReactNode;
+  /** Replaces the default search bar above the table. */
+  filterBar?: React.ReactNode;
+  /** Replaces the default table inside .frame-table-wrapper. */
+  table?: React.ReactNode;
   onSave?: () => void;
 };
 
-export default function FrameTemplate({ fullScreen, headerExtra, onSave }: Props) {
+export default function FrameTemplate({ fullScreen, headerExtra, filterBar, table, onSave }: Props) {
   const [activeNav, setActiveNav] = React.useState("n1");
 
   return (
@@ -119,10 +123,10 @@ export default function FrameTemplate({ fullScreen, headerExtra, onSave }: Props
 
       {/* Content: filter bar + table */}
       <div className="frame-content">
-        <FrameFilterBar />
+        {filterBar ? <div className="ffb">{filterBar}</div> : <FrameFilterBar />}
         <Divider />
         <div className="frame-table-wrapper">
-          <GlobalTable height={fullScreen ? "fill" : 400} />
+          {table ?? <GlobalTable height={fullScreen ? "fill" : 400} />}
         </div>
       </div>
 
