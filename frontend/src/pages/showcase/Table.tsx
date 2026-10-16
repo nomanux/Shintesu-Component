@@ -621,7 +621,7 @@ const COLUMNS: AppColumn<Row>[] = [
 ];
 
 export function FormTable({ data }: { data: Row[] }) {
-  return <AppTable columns={COLUMNS} dataSource={data} height={400} />;
+  return <AppTable columns={COLUMNS} dataSource={data} height={200} />;
 }`;
 
 export function GlobalTable({ height = 400 }: { height?: number | "fill" }) {
@@ -845,7 +845,7 @@ export function EmptyTable() {
           <AppTable
             columns={FORM_TABLE_COLS}
             dataSource={splitTableData.slice(0, 10)}
-            height={400}
+            height={200}
           />
         }
         code={FORM_TABLE_CODE}

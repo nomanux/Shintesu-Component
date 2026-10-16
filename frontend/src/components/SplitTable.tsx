@@ -154,6 +154,12 @@ const SplitTable = ({
             .closest<HTMLElement>(".ant-table-container")
             ?.querySelector<HTMLElement>(".ant-table-header");
           const headerH = headerEl?.offsetHeight ?? 0;
+          // Stop the header where the body's content ends so the vertical
+          // scrollbar gets its own lane below the header instead of sitting
+          // under the last visible column.
+          if (headerEl) {
+            headerEl.style.marginRight = `${body.offsetWidth - body.clientWidth}px`;
+          }
           const targetH = containerH - headerH;
           if (targetH > 0) {
             body.style.maxHeight = "none";
